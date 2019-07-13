@@ -6,12 +6,13 @@ const express       = require('express'),
       cookieParser  = require('cookie-parser'),
       logger        = require('morgan'),
       bodyParser    = require('body-parser'),
-      mongoose      = require('mongoose')
+      mongoose      = require('mongoose'),
+      session       = require('express-session');
 
 // routes
 const indexRouter   = require('./routes/index'),
-      usersRouter   = require('./routes/users'),
-      apiRouter     = require('./routes/api')
+      loginRouter   = require('./routes/login'),
+      usersRouter   = require('./routes/users')
 
 // DB
 mongoose.Promise = global.Promise;
@@ -23,15 +24,20 @@ mongoose.connect(url, { useNewUrlParser: true })
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true
+}))
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', apiRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/login', loginRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));
