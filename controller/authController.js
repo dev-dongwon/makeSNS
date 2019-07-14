@@ -1,5 +1,5 @@
 const passport = require('passport');
-require('../model/passport').setup()
+require('../auth/passport').setup()
 
 const authController = {
   local : passport.authenticate('local-login', {
