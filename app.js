@@ -10,11 +10,11 @@ const express       = require('express'),
       session       = require('express-session'),
       RedisStore    = require('connect-redis')(session),
       passport      = require('passport'),
-      flash         = require('connect-flash'),
+      flash         = require('connect-flash')
 
 // routes module
 const indexRouter   = require('./routes/index'),
-      loginRouter   = require('./routes/login'),
+      authRouter    = require('./routes/auth'),
       usersRouter   = require('./routes/users')
 
 // DB
@@ -58,7 +58,7 @@ app.use(passport.session());
 // routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/login', loginRouter);
+app.use('/auth', authRouter);
 
 // error handler
 app.use(function(req, res, next) {
