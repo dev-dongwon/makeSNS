@@ -1,16 +1,13 @@
-const express = require('express');
-const router = express.Router();
+const express         = require('express'),
+      router          = express.Router(),
+      indexController = require('../controller/indexController');
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  const flashMessage = req.flash();
-  console.log(flashMessage)
-  res.render('index', { title: 'Express' });
+router.get('/', (req, res) => {
+  indexController.home(req, res);
 });
 
 router.get('/signin', (req, res) => {
-  console.log(req.user)
-  res.render('signin', { title: 'SIGN IN | SNS' , page : 'SIGN IN'});
+  indexController.signin(req, res);
 })
 
 module.exports = router;

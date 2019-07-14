@@ -6,11 +6,13 @@ const express       = require('express'),
       cookieParser  = require('cookie-parser'),
       logger        = require('morgan'),
       bodyParser    = require('body-parser'),
-      mongoose      = require('mongoose'),
       session       = require('express-session'),
-      RedisStore    = require('connect-redis')(session),
+      // RedisStore    = require('connect-redis')(session),
       passport      = require('passport'),
       flash         = require('connect-flash')
+
+// utils
+const connectMongoDb     = require('./db/connectMongoDb');
 
 // routes module
 const indexRouter   = require('./routes/index'),
@@ -18,15 +20,7 @@ const indexRouter   = require('./routes/index'),
       usersRouter   = require('./routes/users')
 
 // DB
-mongoose.Promise = global.Promise;
-const url = process.env.DATABASE_URL || "mongodb://localhost:27017/test";
-mongoose.connect(url, { useNewUrlParser: true });
-const db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Conneted mongoDB');
-});
+connectMongoDb();
 
 // http
 app.use(logger('dev'));
