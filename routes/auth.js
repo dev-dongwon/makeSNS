@@ -1,8 +1,8 @@
 const express = require('express'),
       router = express.Router(),
-      autoController = require('../controller/authController');
+      authController = require('../controller/authController');
 
 // local-login
-router.post('/local', autoController.local)
+router.post('/local-login', (req, res) => authController.localLogin(req, res))
 
 module.exports = router;
