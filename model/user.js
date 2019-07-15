@@ -14,14 +14,14 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.pre('save', async function(next) {
-  const user = this;
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
 })
 
-userSchema.methods.validPassword = function(password) {
-  return password === this.password;
+userSchema.methods.isValidPassword = async function(password) {
+  const compare = await bcrypt.compare(password, this.password);
+  return compare;
 }
 
 module.exports = mongoose.model('User', userSchema);
