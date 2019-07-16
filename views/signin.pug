@@ -1,14 +1,9 @@
-extends layout
-
-block content
-  h1.page= page
-  form.form-signin(action='/auth/local' method='POST')
-    .form-group
-      label(for='id') ID
-      input#id(type='text' name='id' placeholder='id를 입력하세요' required='' autofocus='')
-    .form-group
-      label(for='password') PASSWORD
-      input#password(type='password' name='password' placeholder='Password를 입력하세요' required='')
-    hr
-    button(type='submit') LOGIN
-  button#btn-register(onclick="location.href='/signup'") SIGN UP
+doctype html
+html(lang='ko')
+  head
+    include component/common/head.pug
+    link(rel='stylesheet', href='/stylesheets/signin.css')
+  body
+    include component/common/header.pug
+    div.main
+      include component/page/signin.pug

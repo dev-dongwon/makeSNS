@@ -1,0 +1,8 @@
+div.signin-box
+  form.signin-box-form(action="/auth/local-login" method='POST')
+    div.form-label-group
+      input(type='email' name='email' id='input-email' placeholder='Enter your email' required='' autofocus='')
+    div.form-label-group
+      input(type='password' name='password' placeholder='Enter your password' required='')
+    button#btn-signin(type='submit') LOGIN
+    a.signup(href='/signup') SIGNUP

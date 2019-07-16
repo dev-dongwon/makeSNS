@@ -1,0 +1,14 @@
+.signin-box {
+  position: absolute;
+  top : 30%;
+  left: 35%;
+  width: 30%;
+  text-align: center;
+  height: 50%;
+  background-color: antiquewhite
+}
+
+.signin-box-form {
+  position: relative;
+  top: 35%;
+}
