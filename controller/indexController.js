@@ -2,6 +2,7 @@ const indexController = {
   home: (req, res) => {
     res.render('main', {
       title: 'Daily Frame | The creators Network',
+      user: req.user
     });
   },
 
