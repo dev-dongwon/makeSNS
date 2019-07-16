@@ -5,10 +5,38 @@
   width: 30%;
   text-align: center;
   height: 50%;
-  background-color: antiquewhite
 }
 
 .signin-box-form {
   position: relative;
-  top: 35%;
+  top: 5%;
+}
+
+.form-label-group input {
+  font-size:1.0em;
+  height: 60px;
+  width: 70%;
+  margin: 5px 0;
+  background-color:aliceblue
+}
+
+.btn-signin {
+  margin: 5px 0;
+  width: 70%;
+  height:60px;
+  background: pink;
+  color:#fff;
+  border:none;
+  position:relative;
+  font-size:1.2em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:500ms ease all;
+  outline:none;
+  border-radius: 10px;
+}
+
+.siginin-title {
+  margin-bottom: 5%;
+  transition:500ms ease all;
 }
