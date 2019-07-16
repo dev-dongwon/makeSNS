@@ -11,7 +11,8 @@ const express       = require('express'),
       flash         = require('connect-flash')
 
 // utils
-const connectMongoDb     = require('./db/connectMongoDb');
+const connectMongoDb     = require('./db/connectMongoDb'),
+checkJwtToken      = require('./auth/checkJwtToken');
 
 // routes module
 const indexRouter   = require('./routes/index'),
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // passport
 app.use(passport.initialize());
+app.use(checkJwtToken());
 
 // routes
 app.use('/', indexRouter);
