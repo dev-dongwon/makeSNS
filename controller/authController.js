@@ -26,7 +26,7 @@ const authController = {
           const token = jwt.sign({ user: body }, config.jwtSecret);
           res.cookie('token', token, {
             httpOnly : true,
-            expires : new Date(Date.now()+ 900000)
+            maxAge: 10000
           });
           req.flash('INFO',info.message)
           return res.redirect('/');
@@ -35,6 +35,11 @@ const authController = {
         return next(error);
       }
     })(req, res, next)
+  },
+
+  logout : (req, res, next) => {
+    res.clearCookie('token', { path: '/' })
+    return res.redirect('/');
   }
 }
 
