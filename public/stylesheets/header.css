@@ -1,4 +1,6 @@
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
 html {
+  font-family:'Nanum Gothic';
   box-sizing: border-box;
 }
 
@@ -48,8 +50,7 @@ nav {
 }
 
 .nav-item:hover a {
-  text-decoration: underline;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .logo img {
