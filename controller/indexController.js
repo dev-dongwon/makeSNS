@@ -1,6 +1,6 @@
 const indexController = {
   home: (req, res) => {
-    res.render('index', {
+    res.render('main', {
       title: 'Daily Frame | The creators Network',
     });
   },

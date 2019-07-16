@@ -11,8 +11,9 @@ html {
 }
 
 .main {
-  padding-left: 12%;
-  padding-right: 12%;
+  width: 76%;
+  margin: auto;
+  padding-top: 6%;
 }
 
 .navbar {
@@ -58,6 +59,5 @@ nav {
 }
 
 .logo img {
-  width: 175px;
-  vertical-align: middle;
+  vertical-align: bottom;
 }
