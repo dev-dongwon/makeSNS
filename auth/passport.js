@@ -15,7 +15,7 @@ exports.setup = () => {
         if (!user) {
           return done(null, false, {message : 'invaild username or password'});
         }
-        if (!user.isValidPassword(password)) {
+        if (!await user.isValidPassword(password)) {
           return done(null, false, {message : 'invaild username or password'});
         }
         return done(null, user, { message : 'Logged in Successfully'});
