@@ -37,6 +37,10 @@ nav {
   display: inline-block;
 }
 
+.logo img {
+  max-height: 40px;
+}
+
 .nav-links {
   list-style: none;
   display: flex;
