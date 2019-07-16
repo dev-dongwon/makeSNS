@@ -1,0 +1,12 @@
+div.signup-box
+  form.signup-box-form(action="/users" method='POST')
+    div.siginup-title
+      h1 Join the Daily Frame
+      p The Network for Daily Artist
+    div.form-label-group
+      input(type='email' name='email' id='input-email' placeholder='Enter your email' required='' autofocus='')
+    div.form-label-group
+      input(type='password' name='password' placeholder='Enter your password' required='')
+    button.btn-signup(type='submit') SIGN UP
+    div.link-login
+      a(href='/signin') 이미 계정이 있으신가요?

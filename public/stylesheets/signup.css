@@ -1,4 +1,4 @@
-.signin-box {
+.signup-box {
   position: absolute;
   top : 30%;
   left: 35%;
@@ -7,7 +7,7 @@
   height: 50%;
 }
 
-.signin-box-form {
+.signup-box-form {
   position: relative;
   top: 5%;
 }
@@ -19,14 +19,16 @@
   margin: 5px 0;
   padding: 10px;
   border : none;
+  border-bottom: 2px solid black;
+  background: none;
   outline: none;
 }
 
-.btn-signin {
+.btn-signup {
   margin: 3% 0;
   width: 70%;
+  background: greenyellow;
   height:60px;
-  background: pink;
   color:#fff;
   border:none;
   position:relative;
@@ -38,15 +40,35 @@
   border-radius: 10px;
 }
 
-.btn-signin:hover {
+.btn-signup:hover {
   color: black
 }
 
-.siginin-title{
+.siginup-title{
   text-align: left;
   margin-left: 15%;
   margin-bottom: 5%;
   transition: 500ms ease all;
+}
+
+.siginup-title p {
+  margin-top: 2%;
+}
+
+.link-login {
+  text-align: left;
+  margin-left: 15%;
+}
+
+.link-login a {
+  text-decoration: none;
+  font-size: smaller;
+  color: gray
+}
+
+.link-login a:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 body {

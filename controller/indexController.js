@@ -5,11 +5,11 @@ const indexController = {
 
   signin : (req, res) => {
     console.log(req.flash('INFO'))
-    res.render('signin', { title: 'SIGN IN | Daily Frame' });
+    res.render('signin', { title: 'Sign in | Daily Frame' });
   },
 
   signup : (req, res) => {
-    res.render('signin', { title: 'SIGN IN | Daily Frame' });
+    res.render('signup', { title: 'Sign up | Daily Frame' });
   }
 }
 
