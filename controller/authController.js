@@ -11,7 +11,7 @@ const authController = {
     }, async (err, user, info) => {
       try {
         if (err || !user) {
-          req.flash('INFO', "this is flash")
+          req.flash('INFO',info.message)
           return res.redirect('/signin')
         }
 
@@ -27,8 +27,8 @@ const authController = {
             httpOnly : true,
             expires : new Date(Date.now()+ 900000)
           });
-          req.flash('INFO',info)
-          return res.redirect('/signin');
+          req.flash('INFO',info.message)
+          return res.redirect('/');
         });
       } catch (error) {
         return next(error);
