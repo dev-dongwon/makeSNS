@@ -1,34 +1,39 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const config = require('../config/index');
 
 require('../auth/passport').setup()
 
 const authController = {
-
-  localLogin : (req, res) => {
+  localLogin: (req, res, next) => {
     passport.authenticate('local-login', {
-      successRedirect : '/',
-      failureRedirect : '/signin',
-      failureFlash : true,
-      successFlash : true,
-      session : false,
-    }, (err, user, info) => {
-    if (err || !user) {
-      return res.status(400).json({
-          message: 'Something is not right',
-          user   : user
-      });
-    }
-    
-    req.login(user, {session: false}, (err) => {
-      if (err) {
-        res.send(err);
+      session : false
+    }, async (err, user, info) => {
+      try {
+        if (err || !user) {
+          req.flash('INFO', "this is flash")
+          return res.redirect('/signin')
+        }
+
+        req.login(user, { session: false }, async (error) => {
+          if (error) return next(error)
+          const body = {
+            _id: user._id,
+            email: user.email
+          };
+
+          const token = jwt.sign({ user: body }, config.jwtSecret);
+          res.cookie('token', token, {
+            httpOnly : true,
+            expires : new Date(Date.now()+ 900000)
+          });
+          req.flash('INFO',info)
+          return res.redirect('/signin');
+        });
+      } catch (error) {
+        return next(error);
       }
-      const token = jwt.sign(user.toJSON(), 'secret');  
-      console.log(token)
-      return res.json({user, token});
-   });
-  })(req,res)
+    })(req, res, next)
   }
 }
 
