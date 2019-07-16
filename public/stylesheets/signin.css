@@ -17,7 +17,8 @@
   height: 60px;
   width: 70%;
   margin: 5px 0;
-  background-color:aliceblue
+  padding: 10px;
+  border : none;
 }
 
 .btn-signin {
@@ -36,7 +37,15 @@
   border-radius: 10px;
 }
 
+.btn-signin:hover {
+  color: black
+}
+
 .siginin-title {
   margin-bottom: 5%;
-  transition:500ms ease all;
+  transition: 500ms ease all;
+}
+
+body {
+  background-color : lightcyan
 }
