@@ -35,7 +35,7 @@ exports.setup = () => {
           return done(null, false, {message : 'member Exist'});
         }
         const user = await User.create({ email, password });
-        return done(null, user);
+        return done(null, user, { message : 'Join Successfully'});
       } catch (error) {
         done(error);
       }
