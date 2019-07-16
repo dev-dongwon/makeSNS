@@ -6,7 +6,13 @@ nav.navbar
       a(href='#') Discover
     li.nav-item
       a(href='#') Following
-    li.nav-item
-      a(href='/signin') Sign in
-    li.nav-item
-      a(href='/signup') Sign up
+    if user
+      li.nav-item#user-profile
+        a(href='#') #{user.username}
+      li.nav-item#btn-logout
+        a(href='#') Log out
+    else
+      li.nav-item
+        a(href='/signin') Sign in
+      li.nav-item
+        a(href='/signup') Sign up
