@@ -7,17 +7,20 @@ const User = require('../model/user');
 
 exports.setup = () => {
   passport.use('local-login', new LocalStrategy({
-      usernameField: 'email',
+      usernameField: 'usernameOrEmail',
       passwordField: 'password',
-    }, async (email, password, done) => {
+    }, async (usernameOrEmail, password, done) => {
       try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne().or([{ username : usernameOrEmail }, { email : usernameOrEmail}]);
+        
         if (!user) {
           return done(null, false, {message : 'invaild username or password'});
         }
+        
         if (!await user.isValidPassword(password)) {
           return done(null, false, {message : 'invaild username or password'});
         }
+        
         return done(null, user, { message : 'Logged in Successfully'});
       } catch (error) {
         return done(error);
@@ -28,14 +31,22 @@ exports.setup = () => {
   passport.use('signup', new LocalStrategy({
     usernameField : 'email',
     passwordField : 'password',
-  }, async (email, password, done) => {
+    passReqToCallback: true
+  }, async (req, email, password, done) => {
     try {
-        const existUser = await User.findOne({ email });
-        if (existUser) {
-          return done(null, false, {message : 'member Exist'});
+        const existEmail = await User.findOne({ email });
+        const existUsername = await User.findOne({ 'username' : req.body.username });
+        
+        if (existEmail) {
+          return done(null, false, {message : '같은 이메일 주소가 존재합니다'});
         }
-        const user = await User.create({ email, password });
-        return done(null, user, { message : 'Join Successfully'});
+
+        if (existUsername) {
+          return done(null, false, {message : '같은 유저 이름이 존재합니다'});
+        }
+
+        const user = await User.create({ "username" : req.body.username, email, password });
+        return done(null, user, { message :  `${user.username} is Joined Successfully`});
       } catch (error) {
         done(error);
       }
