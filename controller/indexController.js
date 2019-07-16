@@ -1,13 +1,15 @@
 const indexController = {
   home : (req, res) => {
-    const flashMessage = req.flash();
-    console.log(flashMessage)
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Daily Frame | The creators Network' });
   },
 
   signin : (req, res) => {
-    console.log(req.user)
-    res.render('signin', { title: 'SIGN IN | SNS' , page : 'SIGN IN'});
+    console.log(req.flash('INFO'))
+    res.render('signin', { title: 'SIGN IN | Daily Frame' });
+  },
+
+  signup : (req, res) => {
+    res.render('signin', { title: 'SIGN IN | Daily Frame' });
   }
 }
 
