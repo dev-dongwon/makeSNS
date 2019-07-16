@@ -7,7 +7,6 @@ const express       = require('express'),
       logger        = require('morgan'),
       bodyParser    = require('body-parser'),
       session       = require('express-session'),
-      // RedisStore    = require('connect-redis')(session),
       passport      = require('passport'),
       flash         = require('connect-flash')
 
@@ -31,23 +30,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// app.use(session({
-//   secret: 'secret',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: {
-//     httpOnly: true,
-//     secure: false,
-//   }
-// }))
+// session for flash
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  }
+}))
 
 app.use(cookieParser());
-// app.use(flash());
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // passport
 app.use(passport.initialize());
-// app.use(passport.session());
 
 // routes
 app.use('/', indexRouter);
