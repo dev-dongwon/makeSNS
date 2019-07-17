@@ -17,7 +17,8 @@ checkJwtToken      = require('./auth/checkJwtToken');
 // routes module
 const indexRouter   = require('./routes/index'),
       authRouter    = require('./routes/auth'),
-      usersRouter   = require('./routes/users')
+      usersRouter   = require('./routes/users'),
+      checkRouter   = require('./routes/check')
 
 // DB
 connectMongoDb();
@@ -54,6 +55,7 @@ app.use(checkJwtToken());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/check', checkRouter);
 
 // error handler
 app.use(function(req, res, next) {
