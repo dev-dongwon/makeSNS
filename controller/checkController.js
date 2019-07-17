@@ -11,9 +11,22 @@ const checkController = {
       return res.send(false);
 
     } catch (error) {
-      return next(error);      
+      next(error);
     }
+  },
 
+  checkDupleEmail : async (req, res, next) =>{
+    try {
+      const email = req.params.email;
+      const user = await User.findOne({ email });
+      if (user) {
+        return res.send(true);
+      }
+      return res.send(false);
+
+    } catch (error) {
+      next(error);      
+    }
   }
 }
 
