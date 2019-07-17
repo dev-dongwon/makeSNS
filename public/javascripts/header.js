@@ -1,8 +1,7 @@
 const HeaderHandler = class {
   constructor() {
-    this.logoutBtn = document.getElementById('btn-logout');
   }
-
+  
   ajaxEvent() {
     const logoutAjax = async () => {
       const url = `/auth/logout`;
@@ -12,19 +11,20 @@ const HeaderHandler = class {
       const ajaxText = await response.text(); 
       return ajaxText;
     }
-
+    
     return {
-      logoutAjax
+     logoutAjax
     }
   }
-
+  
   addEventLogout() {
-    this.logoutBtn.addEventListener('click', async (event) => {
+    const logoutBtn = document.getElementById('btn-logout');
+    logoutBtn.addEventListener('click', async (event) => {
       await this.ajaxEvent().logoutAjax();
       location.href = "/";
     })
   }
-
+  
   run() {
     this.addEventLogout();
   }
