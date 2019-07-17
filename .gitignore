@@ -61,4 +61,4 @@ typings/
 .next
 
 # config-secret Key
-/config
+# /config
