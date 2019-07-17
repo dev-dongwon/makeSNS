@@ -35,7 +35,7 @@
   font-size:1.2em;
   padding:0 2em;
   cursor:pointer;
-  transition:500ms ease all;
+  transition: 1s ease all;
   outline:none;
   border-radius: 10px;
 }
@@ -48,7 +48,7 @@
   text-align: left;
   margin-left: 15%;
   margin-bottom: 5%;
-  transition: 500ms ease all;
+  transition: 1s ease all;
 }
 
 .siginup-title p {
