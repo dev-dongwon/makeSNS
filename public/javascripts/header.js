@@ -19,10 +19,12 @@ const HeaderHandler = class {
   
   addEventLogout() {
     const logoutBtn = document.getElementById('btn-logout');
-    logoutBtn.addEventListener('click', async (event) => {
-      await this.ajaxEvent().logoutAjax();
-      location.href = "/";
-    })
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async (event) => {
+        await this.ajaxEvent().logoutAjax();
+        location.href = "/";
+      })
+    }
   }
   
   run() {

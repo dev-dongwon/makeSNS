@@ -1,6 +1,6 @@
 .signup-box {
   position: absolute;
-  top : 30%;
+  top : 25%;
   left: 35%;
   width: 30%;
   text-align: center;
@@ -38,6 +38,8 @@
   transition: 1s ease all;
   outline:none;
   border-radius: 10px;
+  transition-delay: 1s;
+
 }
 
 .btn-signup:hover {
@@ -48,6 +50,7 @@
   text-align: left;
   margin-left: 15%;
   margin-bottom: 5%;
+  transition-delay: 1s;
   transition: 1s ease all;
 }
 
@@ -69,6 +72,17 @@
 .link-login a:hover {
   color: black;
   text-decoration: underline;
+}
+
+.message-box {
+  position: relative;
+  text-align: left;
+  left: 16%;
+  margin-top: 2%;
+}
+
+.message-box p {
+  font-size: smaller;
 }
 
 body {
