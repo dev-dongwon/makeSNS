@@ -126,3 +126,24 @@ hr {
   border-color: lightgray;
   opacity: 0.5;
 }
+
+#header-btn-signup {
+  background: rgb(124, 233, 124);
+  border-radius: 5px;
+  padding: 0 5px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+#header-btn-signup a {
+  color: white;
+}
+
+#header-btn-signup a:hover {
+  color: black;
+}
+
+#header-btn-signup:hover {
+  opacity: 0.7;
+  transition: 0.5s ease all;
+}
