@@ -2,6 +2,27 @@ const HeaderHandler = class {
   constructor() {
   }
   
+  addOpenDrawerMenuEvent() {
+    const drawerMenu = document.getElementById('user-drawer-menu');
+    const profileDom = document.getElementById('user-profile');
+
+    profileDom.addEventListener('mouseover', (event) => {
+      drawerMenu.style.display = 'block';
+    })
+
+    profileDom.addEventListener('mouseout', (event) => {
+      drawerMenu.style.display = 'none';
+    })
+
+    drawerMenu.addEventListener('mouseover', (event) => {
+      drawerMenu.style.display = 'block';
+    })
+
+    drawerMenu.addEventListener('mouseout', (event) => {
+      drawerMenu.style.display = 'none';
+    })
+  }
+  
   ajaxEvent() {
     const logoutAjax = async () => {
       const url = `/auth/logout`;
@@ -29,6 +50,7 @@ const HeaderHandler = class {
   
   run() {
     this.addEventLogout();
+    this.addOpenDrawerMenuEvent();
   }
 }
 

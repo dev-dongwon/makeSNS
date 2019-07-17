@@ -62,6 +62,67 @@ nav {
   vertical-align: bottom;
 }
 
+#btn-post {
+  background: black;
+  border-radius: 5px;
+  padding: 0 15px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+#btn-post:hover {
+  background: pink;
+  opacity: 0.7;
+  transition: 0.5s ease all;
+}
+
+#btn-post a {
+  color: white;
+}
+
+#btn-post a:hover {
+  color: black;
+}
+
 #user-profile a{
   color: red;
+}
+
+.user-drawer-menu {
+  position: absolute;
+  width: 130px;
+  background: white;
+  left: 74.5%;
+  top : 6%;
+  z-index: 3;
+  float: left;
+  border: 1px solid lightgray;
+  display: none;
+}
+
+.menu-link {
+  list-style: none;
+  text-align: left;
+  padding: 5px;
+}
+
+.menu-item a {
+  text-decoration: none;
+  color: lightslategrey;
+  font-size: smaller;
+}
+
+.menu-item a:hover{
+  color: black;
+  font-weight: bolder;
+}
+
+.menu-item {
+  padding: 0 10px;
+  margin: 10px 0;
+}
+
+hr {
+  border-color: lightgray;
+  opacity: 0.5;
 }
