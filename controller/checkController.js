@@ -8,7 +8,7 @@ const checkController = {
       if (user) {
         return res.send(true);
       }
-      return res.send(false);
+      return res.send(null);
 
     } catch (error) {
       next(error);
@@ -22,7 +22,7 @@ const checkController = {
       if (user) {
         return res.send(true);
       }
-      return res.send(false);
+      return res.send(null);
 
     } catch (error) {
       next(error);      
