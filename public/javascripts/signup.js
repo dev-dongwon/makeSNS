@@ -60,7 +60,7 @@ const SignupHandler = class {
       console.log(this.isValidUser());
       if (!this.isValidUser()) {
         event.preventDefault();
-        alert('올바르지 않은 회원가입 정보가 있습니다');
+        alert('회원정보를 정확히 입력해주세요');
       }
     })
   }
