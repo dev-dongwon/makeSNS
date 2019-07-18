@@ -48,6 +48,23 @@
   margin-bottom: 5%;
 }
 
+
+.signin-link-forgot-password {
+  text-align: left;
+  margin-left: 15%;
+}
+
+.signin-link-forgot-password a {
+  text-decoration: none;
+  font-size: smaller;
+  color: gray
+}
+
+.signin-link-forgot-password a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
 body {
   background-color : lightcyan
 }
