@@ -14,4 +14,8 @@ router.get('/signup', (req, res) => {
   indexController.signup(req, res);
 })
 
+router.get('/forgotpassword', (req, res) => {
+  indexController.forgotpassword(req, res);
+})
+
 module.exports = router;

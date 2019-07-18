@@ -16,6 +16,12 @@ const indexController = {
     res.render('signup', {
       title: 'Sign up | Daily Frame'
     });
+  },
+
+  forgotpassword: (req, res) => {
+    res.render('forgotpassword', {
+      title: 'Forgot Password | Daily Frame'
+    });
   }
 }
 
