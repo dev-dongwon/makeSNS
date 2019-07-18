@@ -7,8 +7,6 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.GMAIL_OAUTH_REDIRECT_URL,
 );
 
-console.log(require('dotenv').config())
-
 const GMAIL_SCOPES = [
   'https://mail.google.com/',
   'https://www.googleapis.com/auth/gmail.modify',
