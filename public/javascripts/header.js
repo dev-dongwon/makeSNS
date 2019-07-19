@@ -6,21 +6,27 @@ const HeaderHandler = class {
     const drawerMenu = document.getElementById('user-drawer-menu');
     const profileDom = document.getElementById('user-profile');
 
-    profileDom.addEventListener('mouseover', (event) => {
-      drawerMenu.style.display = 'block';
-    })
+    if (profileDom) {
+      profileDom.addEventListener('mouseover', (event) => {
+        drawerMenu.style.display = 'block';
+      })
+  
+      profileDom.addEventListener('mouseout', (event) => {
+        drawerMenu.style.display = 'none';
+      })
+    }
 
-    profileDom.addEventListener('mouseout', (event) => {
-      drawerMenu.style.display = 'none';
-    })
+    if (profileDom) {
+      drawerMenu.addEventListener('mouseover', (event) => {
+        drawerMenu.style.display = 'block';
+      })
+  
+      drawerMenu.addEventListener('mouseout', (event) => {
+        drawerMenu.style.display = 'none';
+      })
+    }
 
-    drawerMenu.addEventListener('mouseover', (event) => {
-      drawerMenu.style.display = 'block';
-    })
 
-    drawerMenu.addEventListener('mouseout', (event) => {
-      drawerMenu.style.display = 'none';
-    })
   }
   
   ajaxEvent() {
