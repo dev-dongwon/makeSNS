@@ -16,7 +16,17 @@ const userController = {
 
         return res.redirect('/signin');
       })(req, res, next)
+    },
+
+  updateUser : async (req, res, next) => {
+
+    try {
+      let user = await User.findOneAndUpdate(req.params, req.body);
+      return res.json(user)
+    } catch (error) {
+      next(error);
     }
+  }
 }
 
 module.exports = userController;
