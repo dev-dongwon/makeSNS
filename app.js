@@ -12,7 +12,7 @@ const express       = require('express'),
 
 // utils
 const connectMongoDb     = require('./db/connectMongoDb'),
-checkJwtToken      = require('./auth/checkJwtToken');
+checkJwtToken      = require('./auth/checkjwttoken');
 
 // routes module
 const indexRouter   = require('./routes/index'),

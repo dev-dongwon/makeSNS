@@ -1,6 +1,6 @@
 const express = require('express'),
       router = express.Router(),
-      authController = require('../controller/authController');
+      authController = require('../controller/auth-controller');
 
 // local-login
 router.post('/local-login', (req, res, next) => {
