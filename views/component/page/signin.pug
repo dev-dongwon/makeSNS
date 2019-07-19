@@ -1,0 +1,10 @@
+div.signin-box
+  form.signin-box-form(action="/auth/local-login" method='POST')
+    p= message
+    div.siginin-title
+      h1 welcome
+    div.form-label-group
+      input(type='text' name='usernameOrEmail' placeholder='Enter your username or email' required='' autofocus='')
+    div.form-label-group
+      input(type='password' name='password' placeholder='Enter your password' required='')
+    button.btn-signin(type='submit') LOGIN

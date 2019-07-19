@@ -260,3 +260,55 @@
 ##### manage user
 
 - **유저 권한 상태 변경** : `PATCH /admin/status/:USER_ID`
+
+
+
+## DB
+
+```js
+const Post = new Schema({
+    content : String,
+    createdDate : {
+		type : Date,
+        default : Date.now
+    },
+    Photo : String,
+    comments : [Comment],
+    user : [User],
+    username : String,
+    useravatar : String
+})
+
+const Comment = new Shcema({
+    content : String,
+    createdDate : {
+		type : Date,
+        default : Date.now
+    },
+    user : [User],
+    username : String,
+    useravatar : String
+})
+
+const User = new Schema({
+    name : String,
+    status : String,
+    email : String,
+    password : String,
+    location : String,
+    bio : String,
+    avatar : String,
+    header : String,
+    createdDate : {
+        type : Date,
+        default : Date.now
+    },
+    posts : [Post],
+    followings : [User],
+    followers : [User],
+    loves : [Post]
+})
+```
+
+
+

@@ -1,0 +1,149 @@
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+html {
+  font-family:'Nanum Gothic';
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  width: 76%;
+  margin: auto;
+  padding-top: 6%;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  background-color: white;
+  padding-left: 12%;
+  padding-right: 12%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-bottom: 2%;
+}
+
+.logo {
+  display: inline-block;
+}
+
+.logo img {
+  max-height: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-item a {
+  display: inline-block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: black;
+}
+
+.nav-item:hover a {
+  font-weight: 800;
+}
+
+.logo img {
+  vertical-align: bottom;
+}
+
+#btn-post {
+  background: black;
+  border-radius: 5px;
+  padding: 0 15px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+#btn-post:hover {
+  background: pink;
+  opacity: 0.7;
+  transition: 0.5s ease all;
+}
+
+#btn-post a {
+  color: white;
+}
+
+#btn-post a:hover {
+  color: black;
+}
+
+#user-profile a{
+  color: red;
+}
+
+.user-drawer-menu {
+  position: absolute;
+  width: 130px;
+  background: white;
+  left: 74.5%;
+  top : 6%;
+  z-index: 3;
+  float: left;
+  border: 1px solid lightgray;
+  display: none;
+}
+
+.menu-link {
+  list-style: none;
+  text-align: left;
+  padding: 5px;
+}
+
+.menu-item a {
+  text-decoration: none;
+  color: lightslategrey;
+  font-size: smaller;
+}
+
+.menu-item a:hover{
+  color: black;
+  font-weight: bolder;
+}
+
+.menu-item {
+  padding: 0 10px;
+  margin: 10px 0;
+}
+
+hr {
+  border-color: lightgray;
+  opacity: 0.5;
+}
+
+#header-btn-signup {
+  background: rgb(124, 233, 124);
+  border-radius: 5px;
+  padding: 0 5px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+#header-btn-signup a {
+  color: white;
+}
+
+#header-btn-signup a:hover {
+  color: black;
+}
+
+#header-btn-signup:hover {
+  opacity: 0.7;
+  transition: 0.5s ease all;
+}

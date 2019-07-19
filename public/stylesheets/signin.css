@@ -1,0 +1,54 @@
+.signin-box {
+  position: absolute;
+  top : 30%;
+  left: 35%;
+  width: 30%;
+  text-align: center;
+  height: 50%;
+}
+
+.signin-box-form {
+  position: relative;
+  top: 5%;
+}
+
+.form-label-group input {
+  font-size:1.0em;
+  height: 60px;
+  width: 70%;
+  margin: 5px 0;
+  padding: 10px;
+  border : none;
+  outline: none;
+}
+
+.btn-signin {
+  margin: 3% 0;
+  width: 70%;
+  height:60px;
+  background: pink;
+  color:#fff;
+  border:none;
+  position:relative;
+  font-size:1.2em;
+  padding:0 2em;
+  cursor:pointer;
+  transition: 0.5s ease all;
+  outline:none;
+  border-radius: 10px;
+}
+
+.btn-signin:hover {
+  color: black
+}
+
+.siginin-title{
+  text-align: left;
+  margin-left: 15%;
+  margin-bottom: 5%;
+  transition: 0.5s ease all;
+}
+
+body {
+  background-color : lightcyan
+}
