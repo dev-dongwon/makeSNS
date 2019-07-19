@@ -11,7 +11,7 @@ const express       = require('express'),
       flash         = require('connect-flash')
 
 // utils
-const connectMongoDb     = require('./db/connectMongoDb'),
+const connectMongoDb     = require('./db/connect-mongodb'),
 checkJwtToken      = require('./auth/checkjwttoken');
 
 // routes module
