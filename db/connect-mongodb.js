@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'),
-      config   = require('../config/index');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 mongoose.Promise = global.Promise;
 
@@ -10,7 +10,7 @@ const connectMongoDb = async () => {
     db.once('open', function() {
       console.log('Conneted mongoDB');
     });
-    await mongoose.connect(config.mongoUrl, { useNewUrlParser: true });
+    await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
     
   } catch (error) {
     console.error('Connection Error');

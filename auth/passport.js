@@ -2,8 +2,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
-const config = require('../config/index');
 const User = require('../model/user');
+require('dotenv').config()
 
 exports.setup = () => {
   passport.use('local-login', new LocalStrategy({
@@ -53,7 +53,7 @@ exports.setup = () => {
   })),
 
   passport.use('jwt', new JwtStrategy({
-    secretOrKey : config.jwtSecret,
+    secretOrKey : process.env.JWT_SECRET,
     jwtFromRequest : ExtractJWT.fromAuthHeaderAsBearerToken()
   }, async (token, done) => {
     try {

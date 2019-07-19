@@ -1,6 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const config = require('../config/index');
+require('dotenv').config()
 
 require('../auth/passport').setup()
 
@@ -23,7 +23,7 @@ const authController = {
             email: user.email
           };
 
-          const token = jwt.sign({ user: body }, config.jwtSecret);
+          const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
           res.cookie('token', token, {
             httpOnly : true,
             maxAge: 1000 * 60 * 10

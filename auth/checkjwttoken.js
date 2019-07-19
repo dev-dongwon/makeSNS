@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const config = require('../config/index');
+require('dotenv').config()
 
 const checkJwtToken = () => async (req, res, next) => {
   
@@ -11,7 +11,7 @@ const checkJwtToken = () => async (req, res, next) => {
   const token = req.cookies.token;
 
   try {
-    const decodedToken = jwt.verify(token, config.jwtSecret);
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decodedToken.user
     return next();
   } catch (error) {
