@@ -19,8 +19,11 @@ const indexController = {
   },
 
   forgotpassword: (req, res) => {
+    const message = req.flash('INFO')[0];
     res.render('forgotpassword', {
-      title: 'Forgot Password | Daily Frame'
+      title: 'Forgot Password | Daily Frame',
+      user: req.user,
+      message: message || false
     });
   }
 }
