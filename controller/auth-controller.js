@@ -1,5 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+
 require('dotenv').config()
 
 require('../auth/passport').setup()
@@ -40,6 +41,22 @@ const authController = {
   logout : (req, res, next) => {
     res.clearCookie('token', { path: '/' })
     return res.redirect('/');
+  },
+
+  resetPassword : (req, res, next) => {
+    const token = req.query.token;
+    let decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!decodedToken.address) {
+      req.flash('message', '올바르지 않은 접근 경로입니다');
+      return res.redirect('/');
+    }
+
+    res.render('resetpassword', {
+      title: 'Reset password | Daily Frame',
+      email: decodedToken.address,
+      token: token
+    });
   }
 }
 

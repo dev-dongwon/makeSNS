@@ -11,4 +11,8 @@ router.post('/logout', (req, res, next) => {
   authController.logout(req, res, next);
 })
 
+router.get('/resetpassword', (req, res, next) => {
+  authController.resetPassword(req, res, next);
+})
+
 module.exports = router;
