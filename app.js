@@ -12,14 +12,15 @@ const express       = require('express'),
 
 // utils
 const connectMongoDb     = require('./db/connect-mongodb'),
-checkJwtToken      = require('./auth/checkjwttoken');
+      checkJwtToken      = require('./auth/checkjwttoken');
 
 // routes module
 const indexRouter   = require('./routes/index'),
       authRouter    = require('./routes/auth'),
       usersRouter   = require('./routes/users'),
       checkRouter   = require('./routes/check'),
-      apiRouter     = require('./routes/api')
+      apiRouter     = require('./routes/api'),
+      postRouter    = require('./routes/post')
 
 // DB
 connectMongoDb();
@@ -58,6 +59,7 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/check', checkRouter);
 app.use('/api', apiRouter);
+app.use('/post', postRouter);
 
 // error handler
 app.use(function(req, res, next) {
