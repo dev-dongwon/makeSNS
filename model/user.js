@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
+const postSchema = require('./post');
 const bcrypt = require('bcrypt');
+const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({
   username : String,
   email : String,
-  password : String
+  password : String,
+  posts : [postSchema],
+  createdDate : {
+    type : Date,
+    default : Date.now()
+  },
+  followings : [{ type : Schema.Types.ObjectId, ref : 'User' }],
+  followers : [{ type : Schema.Types.ObjectId, ref : 'User' }]
 });
 
 userSchema.pre('save', async function(next) {
