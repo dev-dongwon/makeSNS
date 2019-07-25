@@ -1,0 +1,93 @@
+#post-box {
+  min-height: 440px;
+  display: none;
+  margin : auto;
+}
+
+#post-form {
+  width: 30%;
+  float: left;
+  margin-right: 10px;
+}
+
+#preview {
+  width: 69%;
+  min-height: 385px;
+  float : left;
+  border: 1px solid lightgray;
+  text-align: center;
+}
+
+#preview p {
+  margin-top: 170px;
+}
+
+#post-image-area {
+  border: 1px dashed black;
+  min-height: 200px;
+  background-color: aliceblue;
+}
+
+#post-drag-info {
+  text-align: center;
+  margin-top: 90px;
+  font-weight: 900;
+}
+
+#content {
+  resize: none;
+  width: 100%;
+  min-height: 100px;
+  padding: 20px;
+  outline: none;
+  margin-top: 5px;
+}
+
+#post-text-area {
+  height: 100px;
+}
+
+#post-btn-area {
+  margin-top: 15px;
+  height: 100px;
+}
+
+#post-btn-area a{
+  text-decoration: none;
+  vertical-align: sub;
+}
+
+hr {
+  margin-top: 20px;
+
+}
+
+.btn {
+  cursor: pointer;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  float: right;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.filebox label {
+  padding: 14.5px 32px;
+}
+
+#post-image-btn {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

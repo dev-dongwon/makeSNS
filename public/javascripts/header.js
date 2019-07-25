@@ -1,5 +1,6 @@
 const HeaderHandler = class {
   constructor() {
+    this.postBox = document.getElementById('post-box');
   }
   
   addOpenDrawerMenuEvent() {
@@ -25,8 +26,6 @@ const HeaderHandler = class {
         drawerMenu.style.display = 'none';
       })
     }
-
-
   }
   
   ajaxEvent() {
@@ -53,10 +52,24 @@ const HeaderHandler = class {
       })
     }
   }
+
+  addOpenPostEvent() {
+    const postBtn = document.getElementById('btn-post');
+    if (postBtn) {
+      postBtn.addEventListener('click', (event) => {
+        if (this.postBox.style.display === 'block') {
+          this.postBox.style.display = 'none';
+          return;
+        } 
+          this.postBox.style.display = 'block';
+      })
+    }
+  }
   
   run() {
     this.addEventLogout();
     this.addOpenDrawerMenuEvent();
+    this.addOpenPostEvent();
   }
 }
 
