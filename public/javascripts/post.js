@@ -1,43 +1,26 @@
 const PostHandler = class {
   constructor() {
-    this.dropArea = document.getElementById('post-image-area');
+    this.dropArea = document.getElementById('content');
+    this.previewArea = document.getElementById('post-preview-area');
   }
 
-  addDragImageEvent() {
-    this.dropArea.addEventListener("dragenter", (event) => {
-      this.dragenter(event);
-    }, false);
-
-    this.dropArea.addEventListener("dragover", (event) => {
-      this.dragover(event);
-    }, false);
-
-    this.dropArea.addEventListener("drop", (event) => {
-      this.drop(event);
-    }, false);
+  addChangeInputEvent() {
+    const files = document.getElementById('post-image-btn');
+    files.addEventListener('change', (event) => {
+      this.handleFiles(event.target.files);
+    })
   }
 
-  dragenter(e) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
-
-  dragover(e) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
-
-  drop(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    let dt = e.dataTransfer;
-    let files = dt.files;
-
-    this.handleFiles(files);
+  makeImgNode(file, reader) {
+    const img = document.createElement("img");
+    img.classList.add("preview");
+    img.file = file;
+    img.src = reader.result;
+    return img;
   }
 
   handleFiles(files) {
+    this.previewArea.style.display = 'block';
     for (let i=0; i < files.length; i++) {
       const file = files[i];
       const imageType = /image.*/;
@@ -51,36 +34,18 @@ const PostHandler = class {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        document.getElementById('preview').src = reader.result;
-
-        let img = document.createElement("img");
-        img.classList.add("obj");
-        img.file = file;
-        img.src = reader.result;
-        console.log(img)
+        let img = this.makeImgNode(file, reader);
 
         const tempImage = new Image();
         tempImage.src = reader.result;
 
-        tempImage.onload = function () {
-            const canvas = document.createElement('canvas');
-            const canvasContext = canvas.getContext("2d");
-
-            canvas.width = img.width;
-            canvas.height = img.height;
-
-            canvasContext.drawImage(this, 0, 0);
-
-            var dataURI = canvas.toDataURL("image/jpeg");
-
-            document.getElementById('post-hidden').setAttribute("value", dataURI);
-        };
+        this.previewArea.appendChild(img);
       }
     }
   }
 
   run() {
-    this.addDragImageEvent();
+    this.addChangeInputEvent();
   }
 }
 
