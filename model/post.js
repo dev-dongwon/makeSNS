@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const UserSchema = require('./user');
+const UserSchema = require('./user').schema;
 const CommentSchema = require('./comment').schema;
 const Schema = mongoose.Schema;
 
@@ -19,6 +19,10 @@ const postSchema = mongoose.Schema({
       type : Number,
       default : 0
     },
+    comments : {
+      type : Number,
+      default : 0
+    }
   },
   author : UserSchema,
   likeUser : [{ type : Schema.Types.ObjectId, ref : 'User' }],
