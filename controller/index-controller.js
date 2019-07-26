@@ -1,3 +1,5 @@
+const Post = require('../model/post');
+
 const indexController = {
   home: (req, res) => {
     res.render('main', {
@@ -27,9 +29,15 @@ const indexController = {
     });
   },
 
-  discover : (req, res) => {
+  discover : async (req, res) => {
+
+    const page = req.query.page || 0;
+    const limit = req.query.limit || 25;
+
+    const postArr = await Post.find().sort({createdDate : -1}).skip(page*limit).limit(limit);
     res.render('discover', {
-      title: 'Discover | Daily Frame'
+      title: 'Discover | Daily Frame',
+      posts : postArr
     });
   }
 }
