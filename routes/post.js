@@ -3,7 +3,7 @@ const express         = require('express'),
       postController  = require('../controller/post-controller'),
       upload          = require('../utils/multer-upload');
 
-router.post('/', upload.single('image'), (req, res, next) => {
+router.post('/', upload.array('image', 4), (req, res, next) => {
   postController.uploadImage(req, res, next);
 })
 
