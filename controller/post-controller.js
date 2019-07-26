@@ -1,10 +1,35 @@
-const postController = {
-  uploadImage: (req, res, next) => {
-    try {
-      console.log("req.file: ", req.file); // 테스트 => req.file.location에 이미지 링크(s3-server)가 담겨있음 
+const User = require('../model/user');
+const Post = require('../model/post');
 
-      let payLoad = { url: req.file.location };
-      res.json(payLoad);
+const postController = {
+  uploadImage: async (req, res, next) => {
+    try {
+
+      if (req.files && req.body.content === undefined) {
+        return res.redirect('/');
+      }
+
+      const postObj = req.body;
+      const user = req.user;
+      
+      const targetUser = await User.findOne({username : user.username});
+      const arr = [];
+      
+      req.files.forEach((img) => {
+        arr.push(img.location);
+      });
+
+      const post = await Post.create({
+        'content' : postObj.content,
+        'photo' : arr || [],
+        'author' : targetUser,
+      })
+
+      targetUser.posts.push(post._id);
+      targetUser.save();
+
+      return res.redirect('/')
+
     } catch (err) {
       next(err);
     }
