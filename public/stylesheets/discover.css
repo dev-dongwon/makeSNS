@@ -1,0 +1,160 @@
+.main {
+  width: 100%;  
+  margin: 0 0;
+}
+
+.discover-title {
+  height: 300px;
+  border: 1px solid black;
+}
+
+.discover-menu {
+  height: 100px;
+  border: 1px solid black;
+}
+
+.discover-content-box {
+  width: 20%;
+  height: auto;
+  padding: 15px;
+  overflow: auto;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.discover-content-box-header {
+  height: 60px;
+  position: relative;
+}
+
+.discover-content-box-body {
+  position: relative;
+  min-height: 300px;
+  overflow: auto;
+  padding: 5px;
+}
+
+.box-body-img {
+  width: 100%;
+  height: auto;
+}
+
+.box-body-content {
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.discover-content-box-bottom {
+  height: 70px;
+}
+
+.box-bottom-like {
+  width: 23px;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.box-bottom-see {
+  width: 20px;
+  margin-top: 15px;
+}
+
+.box-bottom-comment {
+  width: 20px;
+  margin-top: 17px;
+}
+
+.box-icon-box {
+  vertical-align: top;
+  float: left;
+  margin-left: 12px;
+}
+
+.box-see-couint {
+  margin-top: 20px;
+  font-size: x-small;
+  font-weight: bolder;
+}
+
+.box-like-count {
+  margin-top: 20px;
+  font-size: x-small;
+  font-weight: bolder;
+}
+
+.box-header-avatar {
+  border-radius: 50%;
+  border: 1px solid black;
+  width: 40px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.box-header-plus {
+  width: 13px;
+  margin-left: 10px;
+  vertical-align: bottom
+}
+
+.box-header-id {
+  margin-left: 10px;
+  position: absolute;
+  top: 30%;
+  left: 13%;
+  color: gray;
+  font-size: 13px;
+}
+
+.box-header-time {
+  float: right;
+  margin-right: 10px;
+  margin-top: 20px;
+  font-size: 12px;
+  color: gray;
+}
+
+.discover-more-content {
+  height: 50px;
+  width: 20%;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 10px;  
+  border-radius: 10px;
+  padding-top: 14px;
+  color: white;
+  font-weight: 800;
+
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+background-size: 1800% 1800%;
+
+-webkit-animation: rainbow 18s ease infinite;
+-z-animation: rainbow 18s ease infinite;
+-o-animation: rainbow 18s ease infinite;
+  animation: rainbow 18s ease infinite;}
+
+@-webkit-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@-moz-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@-o-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@keyframes rainbow { 
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+
+.box-comment-count {
+  margin-top: 20px;
+  font-size: x-small;
+  font-weight: bolder;
+}
