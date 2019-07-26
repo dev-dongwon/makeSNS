@@ -7,7 +7,11 @@ const userSchema = mongoose.Schema({
   username : String,
   email : String,
   password : String,
-  posts : [postSchema],
+  profilePhoto : {
+    type : String,
+    default : `/images/profile_dummy.png`
+  },
+  posts : [{ type : Schema.Types.ObjectId, ref : 'Post' }],
   createdDate : {
     type : Date,
     default : Date.now()
@@ -17,7 +21,6 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.pre('save', async function(next) {
-  console.log(this.isModified("password"))
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
