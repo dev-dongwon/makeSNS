@@ -21,6 +21,11 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.pre('save', async function(next) {
+
+  if (this.password.length > 12) {
+    next();
+  }
+
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
@@ -28,7 +33,7 @@ userSchema.pre('save', async function(next) {
 
 userSchema.pre('findOneAndUpdate', async function(next) {
   if (this._update.password.length > 12) {
-    return next();
+    next();
   }
   
   const hash = await bcrypt.hash(this._update.password, 10);
@@ -39,6 +44,7 @@ userSchema.pre('findOneAndUpdate', async function(next) {
 
 userSchema.methods.isValidPassword = async function(password) {
   const compare = await bcrypt.compare(password, this.password);
+  console.log(compare)
   return compare;
 }
 
