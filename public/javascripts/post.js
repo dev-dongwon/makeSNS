@@ -52,5 +52,4 @@ const PostHandler = class {
 window.addEventListener('load', () => {
   const postHandler = new PostHandler();
   postHandler.run();
-  console.log('hi')
 })
