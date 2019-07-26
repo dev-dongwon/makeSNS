@@ -18,4 +18,8 @@ router.get('/forgotpassword', (req, res) => {
   indexController.forgotpassword(req, res);
 })
 
+router.get('/discover', (req, res) => {
+  indexController.discover(req, res);
+})
+
 module.exports = router;

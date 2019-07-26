@@ -25,6 +25,12 @@ const indexController = {
       user: req.user,
       message: message || false
     });
+  },
+
+  discover : (req, res) => {
+    res.render('discover', {
+      title: 'Discover | Daily Frame'
+    });
   }
 }
 

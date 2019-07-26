@@ -12,7 +12,7 @@ exports.setup = () => {
     }, async (usernameOrEmail, password, done) => {
       try {
         const user = await User.findOne().or([{ username : usernameOrEmail }, { email : usernameOrEmail}]);
-        
+        console.log(user)
         if (!user) {
           return done(null, false, {message : 'invaild username or password'});
         }
