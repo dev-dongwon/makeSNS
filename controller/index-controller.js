@@ -37,7 +37,8 @@ const indexController = {
     const postArr = await Post.find().sort({createdDate : -1}).skip(page*limit).limit(limit);
     res.render('discover', {
       title: 'Discover | Daily Frame',
-      posts : postArr
+      posts : postArr,
+      user : req.user
     });
   }
 }
