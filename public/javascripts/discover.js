@@ -24,7 +24,7 @@ const DiscoverHandler = class {
     const gapByDay = Math.floor(gapByHours / 24);
 
     if (gapByDay < 7) {
-      return `${gapByHours} d`
+      return `${gapByDay} d`
     }
 
     const gapByWeek = Math.floor(gapByDay / 7);
