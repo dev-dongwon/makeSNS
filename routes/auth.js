@@ -7,6 +7,14 @@ router.post('/local-login', (req, res, next) => {
   authController.localLogin(req, res, next)
 })
 
+router.get('/google-login', (req, res, next) => {
+  authController.googleLogin(req, res, next);
+})
+
+router.get('/google-login/callback', (req, res, next) => {
+  authController.googleLoginCallback(req, res, next);
+})
+
 router.post('/logout', (req, res, next) => {
   authController.logout(req, res, next);
 })
