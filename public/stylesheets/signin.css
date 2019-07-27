@@ -1,6 +1,6 @@
 .signin-box {
   position: absolute;
-  top : 30%;
+  top : 28%;
   left: 35%;
   width: 30%;
   text-align: center;
@@ -26,7 +26,7 @@
   margin: 3% 0;
   width: 70%;
   height:60px;
-  background: pink;
+  background: rgb(134, 134, 255);
   color:#fff;
   border:none;
   position:relative;
@@ -39,6 +39,21 @@
 }
 
 .btn-signin:hover {
+  color: black
+}
+
+hr {
+  width: 70%;
+  margin: auto;
+}
+
+#btn-signin-google {
+  background: rgb(255, 73, 73);
+  color: white;
+  margin-bottom: 3%;
+}
+
+#btn-signin-google:hover {
   color: black
 }
 

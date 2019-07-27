@@ -1,6 +1,6 @@
 .signup-box {
   position: absolute;
-  top : 25%;
+  top : 22%;
   left: 35%;
   width: 30%;
   text-align: center;
@@ -27,7 +27,7 @@
 .btn-signup {
   margin: 3% 0;
   width: 70%;
-  background: greenyellow;
+  background: rgb(134, 134, 255);
   height:60px;
   color:#fff;
   border:none;
@@ -40,6 +40,16 @@
   border-radius: 10px;
 }
 
+#btn-google-signup {
+  background: rgb(255, 73, 73);
+  color: white;
+  margin-bottom: 3%;
+}
+
+#btn-google-signup:hover {
+  color: black;
+}
+
 .btn-signup:hover {
   color: black
 }
@@ -48,6 +58,7 @@
   text-align: left;
   margin-left: 15%;
   margin-bottom: 5%;
+  margin-top: 0px;
 }
 
 .siginup-title p {
@@ -79,6 +90,11 @@
 
 .message-box p {
   font-size: smaller;
+}
+
+.seperator {
+  width: 70%;
+  margin: auto;
 }
 
 body {
