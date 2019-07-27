@@ -2,6 +2,8 @@ const DiscoverHandler = class {
   constructor() {
     this.dateDomArr = document.getElementsByClassName('post-created-time');
     this.displayDateDomArr = document.getElementsByClassName('box-header-time');
+    this.trendTabBtn = document.getElementById('discover-order-trend');
+    this.recentTabBtn = document.getElementById('discover-order-recent');
   }
   
   calcDate(postDate) {
@@ -43,9 +45,44 @@ const DiscoverHandler = class {
     })
   }
 
+  addGetTrendingPageEvent() {
+    this.trendTabBtn.addEventListener('click', (event) => {
+      event.target.style.color = 'black';
+      this.recentTabBtn.style.color = 'gray';
+    })
+  }
+
+  addGetRecentPageEvent() {
+    this.recentTabBtn.addEventListener('click', (event) => {
+      event.target.style.color = 'black';
+      this.trendTabBtn.style.color = 'gray';
+    })
+  }
+
+
+  ajax() {
+    const getTrendingPageEvent = async () => {
+      const url = `/discover/trending`;
+      const response = await fetch(url, {
+        method : 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      return await response.json();
+    }
+
+    return {
+      getTrendingPageEvent
+    }
+  }
+
 
   run() {
     this.displayTime();
+    this.addGetTrendingPageEvent();
+    this.addGetRecentPageEvent()
   }
 }
 

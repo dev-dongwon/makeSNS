@@ -11,13 +11,17 @@
   height: 100px;
 }
 
+.discover-content {
+  padding-left: 3px;
+}
+
 .discover-content-box {
-  width: 20%;
-  height: auto;
+  width: 19.1%;
   padding: 15px;
-  overflow: auto;
-  display: inline-block;
-  vertical-align: top;
+  float: left;
+  margin: 8px;
+  border: 10px solid black;
+  border-radius: 20px;
 }
 
 .discover-content-box-header {
@@ -116,7 +120,7 @@
   height: 50px;
   width: 20%;
   text-align: center;
-  margin: auto;
+  margin: 50px auto;
   margin-bottom: 10px;  
   border-radius: 10px;
   padding-top: 14px;
@@ -168,8 +172,10 @@ background-size: 1800% 1800%;
 .discover-order-recent {
   color: black;
   cursor: pointer;
+  padding: 20px 40px 20px 40px;
 }
 
 .discover-order-trend {
   cursor: pointer;
+  padding: 20px 40px 20px 40px;
 }
