@@ -21,7 +21,7 @@ const indexRouter   = require('./routes/index'),
       checkRouter   = require('./routes/check'),
       apiRouter     = require('./routes/api'),
       postRouter    = require('./routes/post'),
-      discoverRouter= require('./routes/discover'),
+      discoverRouter= require('./routes/discover')
 
 // DB
 connectMongoDb();
