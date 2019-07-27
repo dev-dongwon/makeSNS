@@ -89,4 +89,5 @@ const DiscoverHandler = class {
 window.addEventListener('load', () => {
   const discoverHandler = new DiscoverHandler();
   discoverHandler.run();
+  new Isotope( '.discover-content', {});
 })
