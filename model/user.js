@@ -7,6 +7,9 @@ const userSchema = mongoose.Schema({
   username : String,
   email : String,
   password : String,
+  auth : {
+    googleId : String
+  },
   profilePhoto : {
     type : String,
     default : `/images/profile_dummy.png`
