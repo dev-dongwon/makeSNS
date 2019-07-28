@@ -25,6 +25,10 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save', async function(next) {
 
+  if (this.auth.googleId) {
+    next();
+  }
+
   if (this.password.length > 12) {
     next();
   }
