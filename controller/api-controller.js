@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const apiController = {
   sendPasswordCheckEmail : async (req, res, next) =>{
     emailsendUtil(req.body.email);
-    req.flash('INFO', `[ ${req.body.email} ]로 안내 링크가 전송되었습니다`);
+    req.flash('message', {'info' : `[ ${req.body.email} ]로 안내 링크가 전송되었습니다`});
     res.redirect('/forgotpassword')
   },
 
@@ -14,7 +14,7 @@ const apiController = {
     let decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     
     if (!decodedToken.address) {
-      req.flash('message', '올바르지 않은 접근 경로입니다');
+      req.flash('message', {'error' : '올바르지 않은 접근 경로입니다'});
       return res.redirect('/');
     }
 
