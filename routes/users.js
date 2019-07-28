@@ -12,4 +12,8 @@ router.patch('/:username', (req, res, next) => {
   userController.updateUser(req, res, next);
 })
 
+router.get('/settings', (req, res) => {
+  userController.getSettingsPage(req, res)
+})
+
 module.exports = router;

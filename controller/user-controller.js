@@ -26,6 +26,13 @@ const userController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  getSettingsPage : (req, res) => {
+    res.render('settings', {
+      title: 'Settings | Daily Frame',
+      user : req.user,
+    });
   }
 }
 
