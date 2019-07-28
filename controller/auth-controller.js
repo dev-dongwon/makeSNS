@@ -13,7 +13,7 @@ const authController = {
     }, async (err, user, info) => {
       try {
         if (err || !user) {
-          req.flash('INFO',info.message)
+          req.flash('message',info.message)
           return res.redirect('/signin')
         }
 
@@ -30,7 +30,7 @@ const authController = {
             httpOnly : true,
             maxAge: 1000 * 60 * 10
           });
-          req.flash('INFO',info.message)
+          req.flash('message',info.message)
           return res.redirect('/');
         });
       } catch (error) {
@@ -41,6 +41,38 @@ const authController = {
 
   googleLogin : (req, res, next) => {
     return res.redirect(googleAuthApi.url)
+  },
+
+  googleRegister : (req, res, next) => {
+    return res.redirect(googleAuthApi.registerUrl);
+  },
+
+  googleRegisterCallback : async (req, res, next) => {
+    
+    try {
+      const code = req.query.code;
+      const {tokens} = await googleAuthApi.oauth2ClientForRegister.getToken(code);
+      googleAuthApi.oauth2ClientForRegister.setCredentials(tokens);
+  
+      const plus = googleAuthApi.getGooglePlusApi(googleAuthApi.oauth2ClientForRegister);
+      const me = await plus.people.get({ userId: 'me' });
+      const email = me.data.emails[0].value;
+      const profilePhoto = me.data.image.url;
+      const existEmail = await User.findOne({ 'auth.googleId' : email });
+  
+      if (existEmail) {
+        req.flash('message', {'info' : '이미 google 회원가입이 되어 있습니다!'});
+        res.redirect('/signin');
+        return;
+      }
+      
+      const user = await User.create({'auth.googleId' : email, 'profilePhoto' :profilePhoto});
+      req.flash('message', {'success' : 'google 회원가입이 완료되었습니다'});
+      return res.redirect('/signin')
+
+    } catch (error) {
+      next(error);
+    }
   },
 
   googleLoginCallback : async (req, res, next) => {
@@ -59,7 +91,7 @@ const authController = {
     }
 
       req.user = user;
-      const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
+      const token = jwt.sign({ user }, process.env.JWT_SECRET);
       res.cookie('token', token, {
         httpOnly : true,
         maxAge: 1000 * 60 * 10
@@ -77,7 +109,7 @@ const authController = {
     let decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!decodedToken.address) {
-      req.flash('message', '올바르지 않은 접근 경로입니다');
+      req.flash('message', {'error' : '올바르지 않은 접근 경로입니다'});
       return res.redirect('/');
     }
 
