@@ -4,19 +4,22 @@ const indexController = {
   home: (req, res) => {
     res.render('main', {
       title: 'Daily Frame | The creators Network',
-      user: req.user
+      user: req.user,
+      message : req.flash('message')
     });
   },
 
   signin: (req, res) => {
     res.render('signin', {
       title: 'Sign in | Daily Frame',
+      message : req.flash('message')
     });
   },
 
   signup: (req, res) => {
     res.render('signup', {
-      title: 'Sign up | Daily Frame'
+      title: 'Sign up | Daily Frame',
+      message : req.flash('message')
     });
   },
 
