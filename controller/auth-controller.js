@@ -28,7 +28,7 @@ const authController = {
           const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
           res.cookie('token', token, {
             httpOnly : true,
-            maxAge: 1000 * 60 * 10
+            maxAge: 1000*60*60
           });
           req.flash('message',info.message)
           return res.redirect('/');
