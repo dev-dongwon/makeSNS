@@ -4,12 +4,12 @@ const DiscoverHandler = class {
     this.displayDateDomArr = document.getElementsByClassName('box-header-time');
     this.trendTabBtn = document.getElementById('discover-order-trend');
     this.recentTabBtn = document.getElementById('discover-order-recent');
+    this.date = Date.now();
   }
   
   calcDate(postDate) {
-    const date = Date.now();
     const parsedDate = Date.parse(postDate);
-    const gapByMinute = Math.floor((date - parsedDate)/(1000*60));
+    const gapByMinute = Math.floor((this.date - parsedDate)/(1000*60));
 
     if (gapByMinute < 60) {
       return `${gapByMinute} m`
@@ -30,7 +30,7 @@ const DiscoverHandler = class {
     const gapByWeek = Math.floor(gapByDay / 7);
 
     if (gapByWeek < 4) {
-      return `${gapByWeek} w`
+      return `${gapByWeek} w` 
     }
   }
 
