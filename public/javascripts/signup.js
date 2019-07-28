@@ -8,6 +8,7 @@ const SignupHandler = class {
     this.messageBoxOfUsername = document.getElementById('message-username');
     this.messageBoxOfEmail = document.getElementById('message-email');
     this.messageBoxOfPassword = document.getElementById('message-password');
+    this.googleRegisterBtn = document.getElementById('btn-google-signup');
 
     this.reg = {
       validEmail : /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/,
@@ -57,7 +58,6 @@ const SignupHandler = class {
 
   addCheckValidUserEvent() {
     this.signupBtn.addEventListener('click', (event) => {
-      console.log(this.isValidUser());
       if (!this.isValidUser()) {
         event.preventDefault();
         alert('회원정보를 정확히 입력해주세요');
@@ -80,6 +80,17 @@ const SignupHandler = class {
   addCheckValidPasswordEvent() {
     this.passwordInput.addEventListener('keyup', (event) => {
       this.checkValidPassword(event);
+    })
+  }
+
+  googleRegisterEvent(event) {
+    event.preventDefault();
+    location.href = '/auth/google-register';
+  }
+
+  addGoogleRegisterEvent() {
+    this.googleRegisterBtn.addEventListener('click', (event) => {
+      this.googleRegisterEvent(event);
     })
   }
 
@@ -181,6 +192,7 @@ const SignupHandler = class {
     this.addCheckDupleEmailEvent();
     this.addCheckValidPasswordEvent();
     this.addCheckValidUserEvent();
+    this.addGoogleRegisterEvent();
   }
 }
 
