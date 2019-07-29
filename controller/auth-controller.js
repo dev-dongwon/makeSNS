@@ -87,16 +87,23 @@ const authController = {
     const user = await User.findOne({ 'auth.googleId' : email });
 
     if(!user) {
-      return res.redirect('/signup')
+      req.flash('message', {'info' : '아직 회원 가입을 안하셨군요?'});
+      return res.redirect('/signup');
     }
 
-      req.user = user;
-      const token = jwt.sign({ user }, process.env.JWT_SECRET);
-      res.cookie('token', token, {
-        httpOnly : true,
-        maxAge: 1000 * 60 * 10
-      });
-      res.redirect('/')
+    req.user = user;
+    const token = jwt.sign({ user }, process.env.JWT_SECRET);
+    res.cookie('token', token, {
+      httpOnly : true,
+      maxAge: 1000 * 60 * 10
+    });
+
+    if (!user.username) {
+      req.flash('message', {'info' : '회원 정보를 입력해주세요 (username 필수)'});
+      return res.redirect('/users/settings');
+    }
+
+    res.redirect('/')
   },
 
   logout : (req, res, next) => {
