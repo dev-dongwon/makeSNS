@@ -37,7 +37,7 @@ const indexController = {
     const page = req.query.page || 0;
     const limit = req.query.limit || 25;
 
-    const postArr = await Post.find().sort({createdDate : -1}).skip(page*limit).limit(limit);
+    const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
     res.render('discover', {
       title: 'Discover | Daily Frame',
       posts : postArr,
