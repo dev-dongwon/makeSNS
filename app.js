@@ -21,7 +21,8 @@ const indexRouter   = require('./routes/index'),
       checkRouter   = require('./routes/check'),
       apiRouter     = require('./routes/api'),
       postRouter    = require('./routes/post'),
-      discoverRouter= require('./routes/discover')
+      discoverRouter= require('./routes/discover'),
+      contentRouter = require('./routes/contents')
 
 // DB
 connectMongoDb();
@@ -56,6 +57,7 @@ app.use(checkJwtToken());
 
 // routes
 app.use('/', indexRouter);
+app.use('/contents', contentRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/check', checkRouter);
