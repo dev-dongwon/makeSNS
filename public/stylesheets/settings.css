@@ -1,7 +1,7 @@
 .settings-prorile-wrapper {
   display: grid;
   margin: auto;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 25% 75%;
   margin-top: 5%;
 }
 
@@ -44,7 +44,7 @@
 }
 
 
-.btn-settings {
+#btn-settings {
   margin: 3% 0;
   width: 20%;
   background: rgb(134, 134, 255);
@@ -93,4 +93,15 @@
 .main {
   width: 60%;
   margin: auto;
+}
+
+.message-box {
+  position: relative;
+  text-align: left;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.message-box p {
+  font-size: smaller;
 }

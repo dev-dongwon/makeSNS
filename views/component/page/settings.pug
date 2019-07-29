@@ -8,14 +8,15 @@ div.settings-prorile-wrapper
       label.btn(for='post-image-btn') Upload Avatar
       input#post-image-btn(type='file' name='image' multiple)
   div.settings-profile-content
-    form.signin-box-form(action="/auth/local-login" method='POST')
+    form.signin-box-form(action="#")
       if user.auth.googleId
         div.form-label-group
-          input(type='text' name='username' placeholder='Enter your username' required='' autofocus='')
+          input(type='text' name='username' id='input-username' placeholder='Enter your username' required='' autofocus='')
+          div.message-box#message-username
         div.form-label-group
-          input(type='text' name='location' placeholder='Location')
+          input(type='text' name='location' id='input-location' placeholder='Location')
         div.form-label-group
-          input(type='text' name='bio' placeholder='Bio')
+          input(type='text' name='bio' id='input-bio' placeholder='Bio')
         div.form-label-group
-          input(type='text' name='link' placeholder='Link' required='')
-        button.btn-settings(type='submit') Complete
+          input(type='text' name='link' id='input-link' placeholder='Link' required='')
+        button#btn-settings(type='submit') Complete
