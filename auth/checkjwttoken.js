@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const User = require('../model/user');
 require('dotenv').config()
 
 const checkJwtToken = () => async (req, res, next) => {
@@ -12,7 +13,14 @@ const checkJwtToken = () => async (req, res, next) => {
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decodedToken.user
+
+    let user = decodedToken.user;
+
+    if (!decodedToken.user.username) {
+      user = await User.findOne({ 'auth.googleId' : decodedToken.user.auth.googleId});
+    }
+
+    req.user = user;
     return next();
   } catch (error) {
     return next(error);
