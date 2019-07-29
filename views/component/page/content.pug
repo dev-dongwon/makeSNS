@@ -1,0 +1,37 @@
+if content
+  .content-wrapper
+    div.content-photo
+      img(src=`${content.photo}`)
+      .content-body
+        p #{content.content}
+    div.content-describe
+      .content-header
+        .content-header-avatar
+          img(src=`${content.author.profilePhoto}`)
+        .content-header-username
+          p @#{content.author.username}
+        .content-header-icon-wrapper
+          .content-header-icon-modified
+            img(src='/images/content/modify.png')
+          .content-header-icon-delete
+            img(src='/images/content/delete.png')
+          .content-header-time
+            p 55m
+      hr
+      .content-footer
+        div.box-icon-box
+          img.box-bottom-see(src='/images/board/see.png')
+        div.box-icon-box
+          p.box-see-couint #{content.meta.views}
+        div.box-icon-box
+          img.box-bottom-comment(src='/images/board/comment.png')
+        div.box-icon-box
+          p.box-comment-count #{content.meta.comments}
+        div.box-icon-box
+          img.box-bottom-like(src='/images/board/like.png')
+        div.box-icon-box
+          p.box-like-count #{content.meta.likes}
+      hr
+      .content-comment-box
+        textarea#content-comment-area(name="", cols="30", rows="5" placeholder="commnet here")
+        button.btn#btn-comment-submit comment
