@@ -32,6 +32,7 @@ const userController = {
     res.render('settings', {
       title: 'Settings | Daily Frame',
       user : req.user,
+      message : req.flash('message')
     });
   }
 }
