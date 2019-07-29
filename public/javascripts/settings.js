@@ -1,7 +1,13 @@
 const SettingsHandler = class {
   constructor() {
     this.completeBtn = document.getElementById('btn-settings');
+
     this.usernameInput = document.getElementById('input-username');
+    this.locationInput = document.getElementById('input-location');
+    this.bioInput = document.getElementById('input-bio');
+    this.linkInput = document.getElementById('input-link');
+    this.userIdentifier = document.getElementById('input-user-origin-identifier');
+
     this.messageBoxOfUsername = document.getElementById('message-username');
 
     this.reg = {
@@ -34,8 +40,6 @@ const SettingsHandler = class {
     const inputValue = this.usernameInput.value;
     const isExistUser = await this.ajax().checkUsernameForAjax(inputValue);
 
-    console.log(isExistUser);
-    
     if (inputValue === "") {
       const message = this.messages.id.default;
       this.messageBoxOfUsername.innerHTML = message;
@@ -60,13 +64,27 @@ const SettingsHandler = class {
     return;
   }
 
-  updateUserInfoEvent(event) {
+  async updateUserInfoEvent(event) {
+    const userInfoObj = {
+      username : this.usernameInput.value,
+      location : this.locationInput.value,
+      bio : this.bioInput.value,
+      link : this.linkInput.value
+    }
+
+    const updatedUser = await this.ajax().updateUserInfoAjax(userInfoObj);
+    console.log(updatedUser);
 
   }
 
   addUpdateUserInfoEvent() {
     this.completeBtn.addEventListener('click', (event) => {
       event.preventDefault();
+      if (!this.isValidUsernameFlag) {
+        alert('회원 정보를 정확히 입력해주세요');
+        return;
+      }
+      this.updateUserInfoEvent(event);
     })
   }
 
@@ -79,13 +97,28 @@ const SettingsHandler = class {
       return await response.text();
     }
 
+    const updateUserInfoAjax = async (userInfoObj) => {
+      const url = `/users/${this.userIdentifier.value}`;
+      const response = await fetch(url, {
+        method : 'PATCH',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(userInfoObj)
+      })
+      return await response.text();
+    }
+
     return {
       checkUsernameForAjax,
+      updateUserInfoAjax
     }
   }
 
   run() {
     this.addCheckDupleUsernameEvent();
+    this.addUpdateUserInfoEvent()
   }
 }
 
