@@ -3,7 +3,7 @@ const express         = require('express'),
       contentController = require('../controller/content-controller');
 
 router.get('/:contentNumber', (req, res) => {
-  contentController
+  contentController.getContentPage(req, res);
 });
 
 module.exports = router;
