@@ -7,6 +7,9 @@ const userSchema = mongoose.Schema({
   username : String,
   email : String,
   password : String,
+  location : String,
+  bio : String,
+  link : String,
   auth : {
     googleId : String
   },
@@ -51,7 +54,6 @@ userSchema.pre('findOneAndUpdate', async function(next) {
 
 userSchema.methods.isValidPassword = async function(password) {
   const compare = await bcrypt.compare(password, this.password);
-  console.log(compare)
   return compare;
 }
 
