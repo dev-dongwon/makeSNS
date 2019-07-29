@@ -17,7 +17,8 @@ div.discover-content
           .box-header-time 
           input.post-created-time(type='hidden' value=`${post.createdDate}`)
         .discover-content-box-body
-          img.box-body-img(src=`${post.photo[0]}`)
+          a(href=`/contents/${post._id}`)
+            img.box-body-img(src=`${post.photo[0]}`)
           .box-body-content #{post.content}
         .discover-content-box-bottom
           div.box-icon-box
