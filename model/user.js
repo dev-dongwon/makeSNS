@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const postSchema = require('./post').schema;
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
@@ -41,7 +40,12 @@ userSchema.pre('save', async function(next) {
   next();
 })
 
-userSchema.pre('findOneAndUpdate', async function(next) {
+userSchema.pre('update', async function(next) {
+
+  if (this.auth.googleId) {
+    next();
+  }
+
   if (this._update.password.length > 12) {
     next();
   }
