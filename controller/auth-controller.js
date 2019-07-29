@@ -95,12 +95,12 @@ const authController = {
     const token = jwt.sign({ user }, process.env.JWT_SECRET);
     res.cookie('token', token, {
       httpOnly : true,
-      maxAge: 1000 * 60 * 10
+      maxAge: 1000 * 60 * 60,
     });
 
     if (!user.username) {
-      req.flash('message', {'info' : '회원 정보를 입력해주세요 (username 필수)'});
-      return res.redirect('/users/settings');
+      req.flash('message', {'info' : '회원정보를 입력하시면 가입이 완료됩니다 (username 필수)'});
+      return res.redirect('/users/initSettings');
     }
 
     res.redirect('/')
