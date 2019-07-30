@@ -9,6 +9,7 @@
   min-height: 800px;
   text-align: center;
   border-right: 1px solid lightgray;
+  overflow: auto;
 }
 
 hr {
@@ -100,6 +101,7 @@ hr {
   background: rgb(250, 241, 241);
   border: none;
   padding: 5%;
+  outline: none;
 }
 
 .main {
@@ -113,6 +115,7 @@ hr {
 #btn-comment-submit {
   height: 50%;
   margin-top: 5%;
+  outline: none;
 }
 
 .modal {
@@ -153,4 +156,33 @@ hr {
   border-radius: 10px;
   padding : 7px 0px;
   margin-left: 3px;
+}
+
+#content-update-box {
+  width: 80%;
+  margin: auto;
+  display: none;
+}
+
+.content-update-preview-image {
+  width: 80%;
+  padding: 5%;
+}
+
+#content-update-preview-area {
+  /* background: rgb(235, 235, 235); */
+  margin-bottom: 2%;
+  border: 1px dashed black;
+}
+
+#content-update-btn-area {
+  margin-top: 2%;
+}
+
+#content-cancel-btn {
+  float: left;
+  background: white;
+  color: black;
+  border: 1px solid black;
+  
 }

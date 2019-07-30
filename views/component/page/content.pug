@@ -6,9 +6,21 @@ if content
       .modal-btn#modal-btn-no No
   .content-wrapper
     div.content-photo
-      img(src=`${content.photo}`)
+      img.content-image(src=`${content.photo}`)
       .content-body
         p #{content.content}
+      div#content-update-box
+        #content-update-preview-area
+          img.content-update-preview-image(src=`${content.photo}`)
+        #content-update-text-area
+          textarea#content(name="content" placeholder="Texting here" autofocus="") #{content.content}
+        hr
+        #content-update-btn-area
+          button.btn#content-cancel-btn cancel
+          button.btn#content-update-btn Update
+          #filebox
+            label.btn(for='post-image-btn') Change Image
+            input#post-image-btn(type='file' name='image' multiple)
     div.content-describe
       input#hidden-content-id(type="hidden" value= content._id)
       .content-header
