@@ -31,6 +31,30 @@ const contentController = {
     }
   },
 
+  updateContent : async (req, res, next) => {
+
+    try {
+      const content = await Post.findById(req.body.id);
+  
+      if (req.files) {
+        const arr = [];
+        req.files.forEach((img) => {
+          arr.push(img.location);
+        });
+        content.photo = arr;
+      }
+  
+      if (req.body.content) {
+        content.content = req.body.content;
+      }
+  
+      content.save();
+      return res.end('success');
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 module.exports = contentController;
