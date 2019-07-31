@@ -6,7 +6,7 @@ div.discover-menu
     span |
     span.discover-order-trend#discover-order-trend T r e n d
 div.discover-content
-  if posts
+  if posts.length > 0
     for post in posts
       .discover-content-box
         .discover-content-box-header
@@ -14,10 +14,10 @@ div.discover-content
           .box-header-id
             span @#{post.author.username}
             img.box-header-plus(src='/images/board/plus.svg')
-          .box-header-time 
+          .box-header-time#box-header-time
           input.post-created-time(type='hidden' value=`${post.createdDate}`)
         .discover-content-box-body
-          a(href=`/contents/${post._id}`)
+          a.disdover-content-link(href=`/contents/${post._id}`)
             img.box-body-img(src=`${post.photo[0]}`)
           .box-body-content #{post.content}
         .discover-content-box-bottom
@@ -33,8 +33,4 @@ div.discover-content
             img.box-bottom-like(src='/images/board/like.png')
           div.box-icon-box
             p.box-like-count #{post.meta.likes}
-  else
-    p 게시글을 올려보세요~
-
-
 div.discover-more-content More Content

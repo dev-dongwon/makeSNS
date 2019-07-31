@@ -78,11 +78,20 @@ const DiscoverHandler = class {
     }
   }
 
+  setContentTimeParams() {
+    const contentTimes = document.getElementsByClassName('box-header-time');
+    const contentLinks = document.getElementsByClassName('disdover-content-link');
+    Array.from(contentLinks).forEach((dom, index) => {
+      dom.href = `${dom.href}?time=${contentTimes[index].textContent}`
+    })
+  }
+
 
   run() {
     this.displayTime();
     this.addGetTrendingPageEvent();
     this.addGetRecentPageEvent()
+    this.setContentTimeParams();
   }
 }
 

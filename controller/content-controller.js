@@ -10,7 +10,8 @@ const contentController = {
       res.render('content', {
         title: 'Daily Frame | The creators Network',
         user: req.user,
-        content
+        content,
+        time : req.query.time
       });
       
     } catch (error) {
@@ -43,8 +44,6 @@ const contentController = {
         });
         content.photo = arr;
       }
-
-      console.log(req.body.content);
   
       if (req.body.content) {
         content.content = req.body.content;
