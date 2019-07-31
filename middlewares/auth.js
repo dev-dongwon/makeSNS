@@ -7,4 +7,12 @@ const isLoggedIn = (req, res, next) => {
   return res.redirect('/signin');
 };
 
- module.exports = { isLoggedIn };
+const isLoggedInforAjax = (req, res, next) => {
+	if (req.user) {
+		return next();
+  }
+  
+  return res.end('notLoggedIn');
+}
+
+ module.exports = { isLoggedIn, isLoggedInforAjax };
