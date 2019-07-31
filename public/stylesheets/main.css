@@ -52,3 +52,22 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+.img-like {
+  position: relative;
+  top: 50%;
+  left: 44%;
+  text-align: center;
+  width: 12%;
+  background: black;
+}
+
+.img-like img{
+  width: 35%;
+}
+
+.img-like p {
+  color: white;
+  font-size: larger;
+  font-weight: bolder;
+}
