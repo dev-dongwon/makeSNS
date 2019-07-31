@@ -65,7 +65,14 @@ const contentController = {
     const user = req.user;
 
     if (content.likeUsers && content.likeUsers.get(`${user._id}`)) {
-      return res.end('alreadyLike')
+      content.set(`likeUsers.${req.user._id}`, undefined);
+      content.meta.likes -= 1
+      content.save();
+
+      user.set(`likePosts.${content._id}`, undefined);
+      user.save();
+      
+      return res.end('unlike');
     }
 
     user.set(`likePosts.${content._id}`, content._id)
@@ -75,7 +82,7 @@ const contentController = {
     content.set(`likeUsers.${req.user._id}`, req.user._id);
     content.save();
 
-    return res.end('success')
+    return res.end('like')
   }
 
 }

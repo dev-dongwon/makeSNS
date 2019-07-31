@@ -72,15 +72,20 @@ const DiscoverHandler = class {
           return;
         }
 
-        if (result === 'alreadyLike') {
-          return alert('이미 추천하셨습니다');
+        if (result === 'unlike') {
+          event.target.src = '/images/board/like.png'
+          let likeNumber = event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent * 1 - 1;
+          event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent = likeNumber;
+          likeNumber -= 1;
+          return;
         }
         
-        if (result === 'success') {
+        if (result === 'like') {
           event.target.src = '/images/board/fill-like.png'
           let likeNumber = event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent * 1 + 1;
           event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent = likeNumber;
           likeNumber += 1;
+          return;
         }
       })
     })
