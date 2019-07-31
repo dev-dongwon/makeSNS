@@ -59,6 +59,32 @@ const DiscoverHandler = class {
     })
   }
 
+  addUpdateLikeEvent() {
+    const likeBtns = document.getElementsByClassName('box-bottom-like');
+    Array.from(likeBtns).forEach((btn) => {
+      btn.addEventListener('click', async (event) => {
+        const contentNumber = event.target.parentNode.firstChild.value;
+        const result = await this.ajax().updateLikeStatus(contentNumber);
+
+        if (result === 'notLoggedIn') {
+          alert('로그인이 필요한 서비스입니다');
+          location.href = '/signin';
+          return;
+        }
+
+        if (result === 'alreayLike') {
+          return alert('이미 추천하셨습니다');
+        }
+        
+        if (result === 'success') {
+          event.target.src = 'http://localhost:3000/images/board/fill-like.png'
+          let likeNumber = event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent * 1 + 1;
+          event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent = likeNumber;
+          likeNumber += 1;
+        }
+      })
+    })
+  }
 
   ajax() {
     const getTrendingPageEvent = async () => {
@@ -73,8 +99,18 @@ const DiscoverHandler = class {
       return await response.json();
     }
 
+
+    const updateLikeStatus = async (contentsNumber) => {
+      const url = `/contents/meta/${contentsNumber}/like`
+      const response = await fetch(url, {
+        method : 'PATCH'
+      })
+      return await response.text();
+    }
+
     return {
-      getTrendingPageEvent
+      getTrendingPageEvent,
+      updateLikeStatus
     }
   }
 
@@ -90,8 +126,9 @@ const DiscoverHandler = class {
   run() {
     this.displayTime();
     this.addGetTrendingPageEvent();
-    this.addGetRecentPageEvent()
+    this.addGetRecentPageEvent();
     this.setContentTimeParams();
+    this.addUpdateLikeEvent();
   }
 }
 
