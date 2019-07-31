@@ -40,16 +40,18 @@ const ContentsHandler = class {
   }
 
   addGetUpdateForm() {
-    this.updateContentBtn.addEventListener('click', () => {
-      const imageArea = document.getElementsByClassName('content-image')[0];
-      const textArea = document.getElementsByClassName('content-body')[0];
-
-      const updateForm = document.getElementById('content-update-box');
-
-      imageArea.style.display = 'none';
-      textArea.style.display = 'none';
-      updateForm.style.display = 'block';
-    })
+    if (this.updateContentBtn) {
+      this.updateContentBtn.addEventListener('click', () => {
+        const imageArea = document.getElementsByClassName('content-image')[0];
+        const textArea = document.getElementsByClassName('content-body')[0];
+  
+        const updateForm = document.getElementById('content-update-box');
+  
+        imageArea.style.display = 'none';
+        textArea.style.display = 'none';
+        updateForm.style.display = 'block';
+      })
+    }
   }
 
   addCancelUpdateEvent() {
@@ -120,10 +122,12 @@ const ContentsHandler = class {
   }
 
   addDeleteContentEvent() {
-    this.deleteIcon.addEventListener('click', (event) => {
-      this.infoModal.style.display = "block";
-      this.addExcuteDeleteEvent();
-    })
+    if (this.deleteIcon) {
+      this.deleteIcon.addEventListener('click', (event) => {
+        this.infoModal.style.display = "block";
+        this.addExcuteDeleteEvent();
+      })
+    }
   }
 
   ajax() {
