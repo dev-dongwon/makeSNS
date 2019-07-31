@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema({
     type : Date,
     default : Date.now()
   },
+  likePosts : {
+    type : Map,
+    of : { type : Schema.Types.ObjectId, ref : 'Post' },
+  },
   followings : [{ type : Schema.Types.ObjectId, ref : 'User' }],
   followers : [{ type : Schema.Types.ObjectId, ref : 'User' }]
 });

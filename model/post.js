@@ -25,7 +25,10 @@ const postSchema = mongoose.Schema({
     }
   },
   author : UserSchema,
-  likeUser : [{ type : Schema.Types.ObjectId, ref : 'User' }],
+  likeUsers : {
+    type : Map,
+    of : { type : Schema.Types.ObjectId, ref : 'User' },
+  },
   comment : [CommentSchema],
   display : {
     type : Boolean,
