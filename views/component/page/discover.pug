@@ -30,8 +30,10 @@ div.discover-content
           div.box-icon-box
             p.box-comment-count #{post.meta.comments}
           div.box-icon-box
-            input.box-icon-box-hidden-id(type='hidden' value=`${post._id}`)
-            img.box-bottom-like(src='/images/board/like.png')
+            if JSON.parse(likes).hasOwnProperty(`${post._id}`)
+              img.box-bottom-like(src='/images/board/fill-like.png')
+            else
+              img.box-bottom-like(src='/images/board/like.png')
           div.box-icon-box
             p.box-like-count #{post.meta.likes}
 div.discover-more-content More Content

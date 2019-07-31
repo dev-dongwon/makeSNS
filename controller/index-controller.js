@@ -41,12 +41,14 @@ const indexController = {
 
     const page = req.query.page || 0;
     const limit = req.query.limit || 25;
+    const likes = JSON.stringify(req.user.likePosts);
 
     const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
     res.render('discover', {
       title: 'Discover | Daily Frame',
       posts : postArr,
-      user : req.user
+      user : req.user,
+      likes : likes
     });
   }
 }
