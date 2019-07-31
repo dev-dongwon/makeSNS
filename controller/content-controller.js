@@ -54,6 +54,25 @@ const contentController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  updateLike : (req, res, next) => {
+
+    const content = req.content;
+    const user = req.user;
+
+    if (content.likeUsers && content.likeUsers.get(`${user._id}`)) {
+      return res.end('alreayLike')
+    }
+
+    user.set(`likePosts.${content._id}`, content._id)
+    user.save();
+
+    content.meta.likes += 1;
+    content.set(`likeUsers.${req.user._id}`, req.user._id);
+    content.save();
+
+    return res.end('success')
   }
 
 }
