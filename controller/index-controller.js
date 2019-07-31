@@ -48,7 +48,7 @@ const indexController = {
       title: 'Discover | Daily Frame',
       posts : postArr,
       user : req.user,
-      likes : likes
+      likes : likes || null
     });
   }
 }

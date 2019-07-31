@@ -6,12 +6,15 @@ const contentController = {
       const content = await Post.findById(req.params.contentNumber);
       content.meta.views += 1;
       await content.save();
-  
+      
+      const likes = JSON.stringify(req.user.likePosts);
+      
       res.render('content', {
         title: 'Daily Frame | The creators Network',
         user: req.user,
         content,
-        time : req.query.time
+        time : req.query.time,
+        likes : likes || null
       });
       
     } catch (error) {
@@ -62,7 +65,7 @@ const contentController = {
     const user = req.user;
 
     if (content.likeUsers && content.likeUsers.get(`${user._id}`)) {
-      return res.end('alreayLike')
+      return res.end('alreadyLike')
     }
 
     user.set(`likePosts.${content._id}`, content._id)
