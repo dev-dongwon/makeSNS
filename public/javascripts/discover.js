@@ -72,7 +72,7 @@ const DiscoverHandler = class {
           return;
         }
 
-        if (result === 'alreayLike') {
+        if (result === 'alreadyLike') {
           return alert('이미 추천하셨습니다');
         }
         

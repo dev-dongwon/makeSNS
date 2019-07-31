@@ -182,3 +182,7 @@ background-size: 1800% 1800%;
 #post-box {
   width: 80%;
 }
+
+.box-bottom-like {
+  cursor: pointer;
+}
