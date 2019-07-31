@@ -21,13 +21,15 @@ const ContentsHandler = class {
 
     const data = new FormData();
     const image = document.getElementById('post-image-btn').files[0];
-    const content = document.getElementById('content-update-text-area').firstElementChild.textContent;
+    const content = document.getElementById('content-update-text-area').firstElementChild.value;
     
     data.append('image', image);
     data.append('content', content);
     data.append('id', this.contentId )
     const result = await this.ajax().updateContent(data);
-    console.log(result);
+    if (result === 'success') {
+      location.href = `/contents/${this.contentId}`;
+    }
   }
 
   addupdateContentEvent() {
