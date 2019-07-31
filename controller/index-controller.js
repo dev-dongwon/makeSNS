@@ -1,10 +1,15 @@
 const Post = require('../model/post');
 
 const indexController = {
-  home: (req, res) => {
+  home: async (req, res) => {
+    const page = req.query.page || 0;
+    const limit = req.query.limit || 25;
+    const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
+
     res.render('main', {
       title: 'Daily Frame | The creators Network',
       user: req.user,
+      posts : postArr,
       message : req.flash('message')
     });
   },
