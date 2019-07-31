@@ -130,6 +130,36 @@ const ContentsHandler = class {
     }
   }
 
+  addUpdateLikeEvent() {
+    const likeBtn = document.getElementsByClassName('box-bottom-like')[0];
+    likeBtn.addEventListener('click', async (event) => {
+      const result = await this.ajax().updateLikeStatus(this.contentId);
+      const likeNumber = document.getElementsByClassName('box-like-count')[0];
+      
+      if (result === 'notLoggedIn') {
+        alert('로그인이 필요한 서비스입니다');
+        location.href = '/signin';
+        return;
+      }
+      
+      if (result === 'unlike') {
+        event.target.src = '/images/board/like.png'
+        const updatedNumber = likeNumber.textContent * 1 - 1;
+        likeNumber.textContent = updatedNumber;
+        likeNumber -= 1;
+        return;
+      }
+      
+      if (result === 'like') {
+        event.target.src = '/images/board/fill-like.png'
+        const updatedNumber = likeNumber.textContent * 1 + 1;
+        likeNumber.textContent = updatedNumber;
+        likeNumber += 1;
+        return;
+      }
+    })
+  }
+
   ajax() {
     const deleteContent = async () => {
       const url = `/contents/${this.contentId}`;
@@ -148,6 +178,14 @@ const ContentsHandler = class {
       return await response.text();
     }
 
+    const updateLikeStatus = async (contentsNumber) => {
+      const url = `/contents/meta/${contentsNumber}/like`
+      const response = await fetch(url, {
+        method : 'PATCH'
+      })
+      return await response.text();
+    }
+
     const getTrendingPageEvent = async () => {
       const url = `/discover/trending`;
       const response = await fetch(url, {
@@ -162,7 +200,8 @@ const ContentsHandler = class {
 
     return {
       deleteContent,
-      updateContent
+      updateContent,
+      updateLikeStatus
     }
   }
 
@@ -173,6 +212,7 @@ const ContentsHandler = class {
     this.addChangeInputEvent();
     this.addCancelUpdateEvent();
     this.addupdateContentEvent();
+    this.addUpdateLikeEvent();
   }
 }
 

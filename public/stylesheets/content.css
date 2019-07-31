@@ -186,3 +186,7 @@ hr {
   border: 1px solid black;
   
 }
+
+.box-bottom-like {
+  cursor: pointer;
+}

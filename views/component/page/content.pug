@@ -52,7 +52,13 @@ if content
         div.box-icon-box
           p.box-comment-count #{content.meta.comments}
         div.box-icon-box
-          img.box-bottom-like(src='/images/board/like.png')
+          if likes
+            if JSON.parse(likes).hasOwnProperty(`${content._id}`)
+              img.box-bottom-like(src='/images/board/fill-like.png')
+            else
+              img.box-bottom-like(src='/images/board/like.png')
+          else
+            img.box-bottom-like(src='/images/board/like.png')
         div.box-icon-box
           p.box-like-count #{content.meta.likes}
       hr
