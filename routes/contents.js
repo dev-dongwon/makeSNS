@@ -17,4 +17,8 @@ router.patch('/:contentNumber', authMiddlewares.isLoggedIn, contentsMiddlewares.
   contentController.updateContent(req, res, next);
 })
 
+router.patch('/meta/:contentNumber/like', authMiddlewares.isLoggedInforAjax, contentsMiddlewares.isNotAuthorForAjax, (req, res, next) => {
+  contentController.updateLike(req, res, next);
+})
+
 module.exports = router;
