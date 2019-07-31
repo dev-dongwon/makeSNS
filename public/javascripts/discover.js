@@ -77,7 +77,7 @@ const DiscoverHandler = class {
         }
         
         if (result === 'success') {
-          event.target.src = 'http://localhost:3000/images/board/fill-like.png'
+          event.target.src = '/images/board/fill-like.png'
           let likeNumber = event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent * 1 + 1;
           event.target.parentNode.parentNode.getElementsByClassName('box-like-count')[0].textContent = likeNumber;
           likeNumber += 1;
