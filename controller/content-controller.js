@@ -21,10 +21,10 @@ const contentController = {
   deleteContent : async (req, res, next) => {
 
     try {
-      const content = await Post.findById(req.params.contentNumber);
+      const content = req.content;
       content.display = false;
       await content.save();
-  
+      
       return res.end('success');
     } catch (error) {
       next(error);
@@ -34,7 +34,7 @@ const contentController = {
   updateContent : async (req, res, next) => {
 
     try {
-      const content = await Post.findById(req.body.id);
+      const content = req.content;
   
       if (req.files) {
         const arr = [];
@@ -43,6 +43,8 @@ const contentController = {
         });
         content.photo = arr;
       }
+
+      console.log(req.body.content);
   
       if (req.body.content) {
         content.content = req.body.content;
