@@ -59,9 +59,11 @@ const HeaderHandler = class {
       postBtn.addEventListener('click', (event) => {
         if (this.postBox.style.display === 'block') {
           this.postBox.style.display = 'none';
+          event.target.firstChild.textContent = 'Post';
           return;
         } 
           this.postBox.style.display = 'block';
+          event.target.firstChild.textContent = 'Close';
       })
     }
   }
