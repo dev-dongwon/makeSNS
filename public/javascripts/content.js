@@ -8,8 +8,8 @@ const ContentsHandler = class {
     this.excuteDeleteBtn = document.getElementById('modal-btn-yes');
     this.updateContentBtn = document.getElementById('content-header-icon-modified');
     this.previewArea = document.getElementById('content-update-preview-area');
+    this.replyArea = document.getElementsByClassName('contnet-reply-box')[0];
     this.date = Date.now();
-
   }
 
   async deleteContentEvent(event) {
@@ -180,10 +180,34 @@ const ContentsHandler = class {
         return;
       }
 
-      const jsonData = JSON.parse(result);
-      console.log(jsonData)
-
+      const commentJsonData = JSON.parse(result);
+      const htmlForm = this.getHtmlForm(commentJsonData);
+      this.replyArea.appendChild(htmlForm);
     })
+  }
+
+  getHtmlForm(comment) {
+    const htmlForm =
+    `
+      <div class="content-reply-avatar"><img src="${comment.userAvatar}" /></div>
+      <div class="content-reply-comment">
+        <div class="content-reply-comment-id">
+          <p>@${comment.username}</p>
+        </div>
+        <div class="content-reply-comment-text">
+          <p>${comment.content}</p>
+        </div>
+      </div>
+      <div class="content-reply-time"><input class="reply-created-time" type="hidden" value="${comment.createdDate}" /></div>
+    `
+
+    const contentReply = document.createElement('div');
+    contentReply.className = 'content-reply';
+    contentReply.innerHTML = htmlForm;
+
+    console.log(contentReply)
+    
+    return contentReply;
   }
 
   calcDate(postDate) {
