@@ -7,14 +7,14 @@ const commentSchema = mongoose.Schema({
     type : Date,
     default : Date.now()
   },
-  meta : {
-    likes : Number,
-  },
-  author : { type : Schema.Types.ObjectId, ref : 'User' },
+  authorId : String,
+  postId : String,
   username : String,
   userAvatar : String,
-  likeUser : [{ type : Schema.Types.ObjectId, ref : 'User' }],
-  hidden : Boolean
+  display : {
+    type : Boolean,
+    default: true,
+  }
 });
 
 module.exports = mongoose.model('Comment', commentSchema);
