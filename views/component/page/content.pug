@@ -63,5 +63,20 @@ if content
           p.box-like-count #{content.meta.likes}
       hr
       .content-comment-box
-        textarea#content-comment-area(name="", cols="30", rows="5" placeholder="commnet here")
-        button.btn#btn-comment-submit comment
+        textarea#content-comment-area(name="comment", cols="30", rows="5" placeholder="commnet here")
+        button#btn-comment-submit(type='submit') comment
+      hr.comment-line
+      .contnet-reply-box
+        if content.comment.length > 0
+          for comment in content.comment
+            .content-reply
+              .content-reply-avatar
+                img(src=`${comment.userAvatar}`)
+              .content-reply-comment
+                .content-reply-comment-id
+                  p @#{comment.username}
+                .content-reply-comment-text
+                  p #{comment.content}
+              .content-reply-time
+                input.reply-created-time(type='hidden' value=`${comment.createdDate}`)
+            hr.reply-line
