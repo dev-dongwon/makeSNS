@@ -134,7 +134,7 @@ const ContentsHandler = class {
     const likeBtn = document.getElementsByClassName('box-bottom-like')[0];
     likeBtn.addEventListener('click', async (event) => {
       const result = await this.ajax().updateLikeStatus(this.contentId);
-      const likeNumber = document.getElementsByClassName('box-like-count')[0];
+      let likeNumber = document.getElementsByClassName('box-like-count')[0];
       
       if (result === 'notLoggedIn') {
         alert('로그인이 필요한 서비스입니다');
