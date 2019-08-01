@@ -8,6 +8,8 @@ const ContentsHandler = class {
     this.excuteDeleteBtn = document.getElementById('modal-btn-yes');
     this.updateContentBtn = document.getElementById('content-header-icon-modified');
     this.previewArea = document.getElementById('content-update-preview-area');
+    this.date = Date.now();
+
   }
 
   async deleteContentEvent(event) {
@@ -160,6 +162,72 @@ const ContentsHandler = class {
     })
   }
 
+  addSubmitCommentEvent() {
+    const commentBtn = document.getElementById('btn-comment-submit');
+    commentBtn.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const comment = document.getElementById('content-comment-area').value;
+      const contentId = document.getElementById('hidden-content-id').value;
+      const formData = {
+        comment: comment,
+        contentId : contentId
+      }
+      const result = await this.ajax().addComment(JSON.stringify(formData));
+
+      if (result === 'notLoggedIn') {
+        alert('로그인이 필요한 서비스입니다');
+        location.href = '/signin';
+        return;
+      }
+
+      const jsonData = JSON.parse(result);
+      console.log(jsonData)
+
+    })
+  }
+
+  calcDate(postDate) {
+    const parsedDate = Date.parse(postDate);
+    const gapByMinute = Math.floor((this.date - parsedDate)/(1000*60));
+
+    if (gapByMinute < 60) {
+      return `${gapByMinute} m`
+    }
+
+    const gapByHours = Math.floor(gapByMinute / 60);
+
+    if (gapByHours < 24) {
+      return `${gapByHours} h`
+    }
+
+    const gapByDay = Math.floor(gapByHours / 24);
+
+    if (gapByDay < 7) {
+      return `${gapByDay} d`
+    }
+
+    const gapByWeek = Math.floor(gapByDay / 7);
+
+    if (gapByWeek < 4) {
+      return `${gapByWeek} w` 
+    }
+  }
+
+  displayTime() {
+    const gapTimeArr = [];
+    
+    const dateDomArr = document.getElementsByClassName('reply-created-time');
+    const displayDateDomArr = document.getElementsByClassName('content-reply-time');
+    
+    Array.from(dateDomArr).forEach((dom) => {
+      gapTimeArr.push(this.calcDate(dom.value));
+    })
+
+    Array.from(displayDateDomArr).forEach((dom, index) => {
+      dom.innerHTML = `${gapTimeArr[index]}`
+    })
+  }
+
   ajax() {
     const deleteContent = async () => {
       const url = `/contents/${this.contentId}`;
@@ -186,6 +254,20 @@ const ContentsHandler = class {
       return await response.text();
     }
 
+    const addComment = async (formData) => {
+      const url = '/comments';
+      const response = await fetch(url, {
+        method : 'POST',
+        body : formData,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+
+      })
+      return await response.text();
+    }
+
     const getTrendingPageEvent = async () => {
       const url = `/discover/trending`;
       const response = await fetch(url, {
@@ -201,7 +283,8 @@ const ContentsHandler = class {
     return {
       deleteContent,
       updateContent,
-      updateLikeStatus
+      updateLikeStatus,
+      addComment
     }
   }
 
@@ -213,6 +296,8 @@ const ContentsHandler = class {
     this.addCancelUpdateEvent();
     this.addupdateContentEvent();
     this.addUpdateLikeEvent();
+    this.addSubmitCommentEvent();
+    this.displayTime();
   }
 }
 
