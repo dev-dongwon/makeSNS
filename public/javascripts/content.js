@@ -189,16 +189,26 @@ const ContentsHandler = class {
   getHtmlForm(comment) {
     const htmlForm =
     `
-      <div class="content-reply-avatar"><img src="${comment.userAvatar}" /></div>
+      <div class="content-reply-avatar">
+        <img src="${comment.userAvatar}" />
+      </div>
       <div class="content-reply-comment">
         <div class="content-reply-comment-id">
           <p>@${comment.username}</p>
         </div>
         <div class="content-reply-comment-text">
           <p>${comment.content}</p>
-        </div>
+          </div>
       </div>
-      <div class="content-reply-time"><input class="reply-created-time" type="hidden" value="${comment.createdDate}" /></div>
+      <div class="content-reply-icon-update">
+        <img class="reply-update-icon" src="/images/content/modify.png">
+      </div>
+      <div class="content-reply-icon-remove">
+        <img class="reply-remove-icon" src="/images/content/delete.png">
+      </div>
+      <div class="content-reply-time">
+        ${this.calcDate(comment.createdDate)}
+      </div>
     `
 
     const contentReply = document.createElement('div');
