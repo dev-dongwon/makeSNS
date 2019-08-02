@@ -24,6 +24,24 @@ const commentsController = {
       next(error);
     }
   },
+
+  removeComment : async (req, res, next) => {
+    try {
+      const commentId = req.params.commentId;
+      const comment = await Comment.findById(commentId);
+      comment.display = false;
+      comment.save();
+  
+      const post = await Post.findById(comment.postId);
+      post.comment.filter(val => `${val._id}` === commentId )[0].display = false;
+      post.meta.comments -= 1;
+      post.save();
+  
+      res.json('success');
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = commentsController;

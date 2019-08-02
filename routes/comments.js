@@ -7,4 +7,8 @@ router.post('/', authMiddlewares.isLoggedInforAjax, (req, res, next) => {
   commentsController.addComment(req, res, next);
 });
 
+router.delete('/:commentId', (req, res, next) => {
+  commentsController.removeComment(req, res, next);
+})
+
 module.exports = router;
