@@ -86,4 +86,4 @@ if content
                     img.reply-remove-icon(src='/images/content/delete.png' id=`${comment._id}`)
                 .content-reply-time
                   input.reply-created-time(type='hidden' value=`${comment.createdDate}`)
-              hr.reply-line
+              hr.reply-line(id=`reply-line-${comment._id}`)

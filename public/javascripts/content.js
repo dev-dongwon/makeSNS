@@ -9,6 +9,7 @@ const ContentsHandler = class {
     this.updateContentBtn = document.getElementById('content-header-icon-modified');
     this.previewArea = document.getElementById('content-update-preview-area');
     this.replyArea = document.getElementsByClassName('contnet-reply-box')[0];
+    this.commentInputArea = document.getElementById('content-comment-area');
     this.date = Date.now();
   }
 
@@ -182,8 +183,13 @@ const ContentsHandler = class {
 
       const commentJsonData = JSON.parse(result);
       const htmlForm = this.getHtmlForm(commentJsonData);
-      this.replyArea.appendChild(htmlForm);
+      this.replyArea.appendChild(htmlForm.contentReply);
+      this.replyArea.appendChild(htmlForm.replyLine);
+      this.commentInputArea.value='';
     })
+  }
+
+  getReplyBorderLine() {
   }
 
   getHtmlForm(comment) {
@@ -215,9 +221,14 @@ const ContentsHandler = class {
     contentReply.className = 'content-reply';
     contentReply.innerHTML = htmlForm;
 
-    console.log(contentReply)
+    const replyLine = document.createElement('hr');
+    replyLine.className = 'reply-line';
+    replyLine.id = `${comment._id}`;
     
-    return contentReply;
+    return {
+      contentReply,
+      replyLine
+    }
   }
 
   calcDate(postDate) {
