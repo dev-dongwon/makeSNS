@@ -69,14 +69,21 @@ if content
       .contnet-reply-box
         if content.comment.length > 0
           for comment in content.comment
-            .content-reply
-              .content-reply-avatar
-                img(src=`${comment.userAvatar}`)
-              .content-reply-comment
-                .content-reply-comment-id
-                  p @#{comment.username}
-                .content-reply-comment-text
-                  p #{comment.content}
-              .content-reply-time
-                input.reply-created-time(type='hidden' value=`${comment.createdDate}`)
-            hr.reply-line
+            if comment.display === true
+              .content-reply(id=`content-reply-${comment._id}`)
+                .content-reply-avatar
+                  img(src=`${comment.userAvatar}`)
+                .content-reply-comment
+                  .content-reply-comment-id
+                    p @#{comment.username}
+                  .content-reply-comment-text
+                    p #{comment.content}
+                .content-reply-icon-update
+                  if comment.authorId === `${user._id}`
+                    img.reply-update-icon(src='/images/content/modify.png')
+                .content-reply-icon-remove
+                  if comment.authorId === `${user._id}`
+                    img.reply-remove-icon(src='/images/content/delete.png' id=`${comment._id}`)
+                .content-reply-time
+                  input.reply-created-time(type='hidden' value=`${comment.createdDate}`)
+              hr.reply-line

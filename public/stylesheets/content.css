@@ -206,7 +206,8 @@ hr {
   padding: 5px;
   margin-top: 4%;
   display: grid;
-  grid-template-columns: 20% 70% 10%;
+  grid-template-columns: 20% 50% 10% 10% 10%;
+  /* grid-template-columns: 20% 70% 10%; */
 }
 
 .content-reply-avatar {
@@ -244,4 +245,16 @@ hr {
   width: 80%;
   position: relative;
   left: 19%;
+}
+
+.content-reply-icon-update img {
+  width: 50%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.content-reply-icon-remove img{
+  width: 50%;
+  margin-top: 10px;
+  cursor: pointer;
 }
