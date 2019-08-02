@@ -189,9 +189,6 @@ const ContentsHandler = class {
     })
   }
 
-  getReplyBorderLine() {
-  }
-
   getHtmlForm(comment) {
     const htmlForm =
     `
