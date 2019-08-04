@@ -42,13 +42,13 @@ const contentController = {
     try {
       const user = req.user;
       const content = await Post.findById(req.params.contentNumber);
-  
+      
       if (content.likeUsers && content.likeUsers.get(`${user._id}`)) {
-        Post.updateToBeUnLikeStatus(content, user);
+        await Post.updateToBeUnLikeStatus(content, user);
         return res.end('unlike');
       }
   
-      Post.updateToBeLikeStatus(content, user);
+      await Post.updateToBeLikeStatus(content, user);
       return res.end('like')
     
     } catch (error) {
