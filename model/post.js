@@ -36,4 +36,46 @@ const postSchema = mongoose.Schema({
   },
 });
 
+postSchema.statics.getContentByContentNumber = async function(postNumber) {
+  const content = await this.findById(postNumber);
+  await content.updateOne({ $inc : {'meta.views' : 1}});
+  return content;
+}
+
+
+postSchema.statics.deleteContentByContentNumber = async function(content) {
+  await content.updateOne({display : false});
+}
+
+postSchema.statics.updateContent = async function(content, files, text) {
+
+  if (files) {
+    const updatedImg = files.reduce((acc, img) => {
+      acc.push(img.location);
+      return acc;
+    },[]);
+    await content.updateOne({photo : updatedImg});
+  }
+
+  if (text) {
+    await content.updateOne({content : text})
+  }
+}
+
+postSchema.statics.updateToBeUnLikeStatus = async function(content, user) {
+  await content.set(`likeUsers.${user._id}`, undefined)
+  await content.updateOne({ $inc : {'meta.likes' : -1}});
+  content.save();
+  await user.set(`likePosts.${content._id}`, undefined)
+  user.save();
+}
+
+postSchema.statics.updateToBeLikeStatus = async function(content, user) {
+  await content.set(`likeUsers.${user._id}`, user._id)
+  await content.updateOne({ $inc : {'meta.likes' : 1}});
+  content.save();
+  await user.set(`likePosts.${content._id}`, content._id)
+  user.save();
+}
+
 module.exports = mongoose.model('Post', postSchema);
