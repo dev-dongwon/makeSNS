@@ -2,7 +2,9 @@ doctype html
 html(lang='ko')
   head
     include component/common/head.pug
+    link(rel='stylesheet', href='/stylesheets/profile.css')
   body
     include component/common/header.pug
     div.main
       include component/page/profile.pug
+  script(src='/javascripts/profile.js')

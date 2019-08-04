@@ -1,0 +1,95 @@
+.main {
+  width: 100%;
+}
+
+.profile-info-wrapper {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  height: auto;
+  grid-column-gap: 20px;
+  /* background-image :url( "https://dailyframe.s3.ap-northeast-2.amazonaws.com/41199ac2598d36778c932124e5f43b50-vertical.jpg" ); */
+  background-color: rgb(78, 19, 78);
+  background-size: 100%;
+  opacity: 2;
+  color: white;
+  padding: 0 30%;
+}
+
+.profile-photo {
+  height: 400px;
+  margin-top: 20%;
+}
+
+.profile-info {
+  min-height: 400px;
+  margin-top: 30%;
+}
+
+.profile-photo-area img{
+  position: absolute; top:0; left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.profile-photo-area {
+  width: 85%;
+  height: 80%;;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  float: right;
+  background: white;
+}
+
+.profile-info-meta {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20%; 
+}
+
+.profile-info-username {
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 10%;
+  text-align: center;
+  margin-right: 25%;
+}
+
+.profile-info-content {
+  margin-top: 5%;
+}
+
+.info-line {
+  width: 80%;
+  margin-top: 5%;
+}
+
+.meta-title {
+  font-size: x-small;
+  text-align: center;
+}
+
+.meta-number {
+  text-align: center;
+  font-weight: 900;
+  padding: 5px;
+}
+
+.profile-info-lcoation {
+  text-align: center;
+  margin-right: 25%;
+}
+
+.profile-info-bio {
+  text-align: center;
+  margin-right: 25%;
+}
+
+.profile-user-board {
+  height: 500px;
+  border: 1px solid black;
+}
+
+.wrapper-line {
+  margin : 50px 0px;
+}

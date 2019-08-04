@@ -1,1 +1,28 @@
-h1 hi, profile
+div.profile-info-wrapper
+  .profile-photo
+    .profile-photo-area
+      img(src=user.profilePhoto || '/images/profile_dummy.png')
+  .profile-info
+    .profile-info-username
+      p @#{user.username}
+    .profile-info-content.profile-info-lcoation
+      p #{user.location || 'location info is empty'}
+    hr.info-line
+    .profile-info-content.profile-info-meta
+      .profile-info-meta-posts
+        p.meta-number #{user.posts.length}
+        p.meta-title Posts
+      .profile-info-meta-followings
+        p.meta-number #{user.followings.length}
+        p.meta-title Followings
+      .profile-info-meta-followers
+        p.meta-number #{user.followers.length}
+        p.meta-title Followers
+      .profile-info-meta-likes
+        p.meta-number #{Object.keys((user.likePosts)).length}
+        p.meta-title Likes
+    hr.info-line
+    .profile-info-content.profile-info-bio
+        p #{user.bio || 'Bio info is empty'}
+hr.wrapper-line
+.profile-user-board
