@@ -8,11 +8,10 @@
   width: 100%;
   height: auto;
   grid-column-gap: 20px;
-  /* background-image :url( "https://dailyframe.s3.ap-northeast-2.amazonaws.com/41199ac2598d36778c932124e5f43b50-vertical.jpg" ); */
   background-color: rgb(78, 19, 78);
   background-size: 100%;
-  opacity: 2;
-  color: white;
+  opacity: 0.8;
+  color: black;
   padding: 0 30%;
 }
 
@@ -62,6 +61,7 @@
 .info-line {
   width: 80%;
   margin-top: 5%;
+  border :1px solid black;
 }
 
 .meta-title {
@@ -90,6 +90,166 @@
   border: 1px solid black;
 }
 
+.profile-settings {
+  border-radius: 10px;
+  background: white;
+  position: relative;
+  bottom: 50%;
+  padding: 5%;
+  left: 80%;;
+  text-align: center;
+  color: black;
+  width: 50%;
+  text-decoration: none;
+}
+
+.profile-settings:hover {
+  background: rgb(73, 73, 73);
+  color: white;
+  transition: all ease 0.2s;
+}
+
 .wrapper-line {
   margin : 50px 0px;
+}
+
+
+
+
+.main {
+  width: 98%;  
+  margin: auto;
+}
+
+.discover-title {
+  text-align: center;
+}
+
+.discover-menu {
+  height: 100px;
+}
+
+.discover-content {
+  padding-left: 3px;
+}
+
+.discover-content-box {
+  width: 17.7%;
+  padding: 15px;
+  float: left;
+  margin: 1.1%;
+  border: 1px solid gray; 
+}
+
+.discover-content-box-header {
+  height: 60px;
+  position: relative;
+}
+
+.discover-content-box-body {
+  position: relative;
+  min-height: 300px;
+  overflow: auto;
+  padding: 5px;
+}
+
+.box-body-img {
+  width: 100%;
+  height: auto;
+}
+
+.box-body-content {
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.discover-content-box-bottom {
+  height: 70px;
+}
+
+.box-bottom-like {
+  width: 23px;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.box-bottom-see {
+  width: 20px;
+  margin-top: 15px;
+}
+
+.box-bottom-comment {
+  width: 20px;
+  margin-top: 17px;
+  margin-left: 10px;
+}
+
+.box-icon-box {
+  vertical-align: top;
+  float: left;
+  margin-left: 12px;
+}
+
+.box-see-couint {
+  margin-top: 20px;
+  font-size: x-small;
+  font-weight: bolder;
+}
+
+.box-like-count {
+  margin-top: 20px;
+  font-size: x-small;
+  font-weight: bolder;
+}
+
+.box-header-avatar {
+  border-radius: 50%;
+  border: 1px solid lightgray;
+  width: 40px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.box-header-plus {
+  width: 13px;
+  margin-left: 10px;
+  vertical-align: bottom
+}
+
+.box-header-id {
+  margin-left: 10px;
+  position: absolute;
+  top: 30%;
+  left: 13%;
+  color: gray;
+  font-size: 13px;
+}
+
+.box-header-time {
+  float: right;
+  margin-right: 10px;
+  margin-top: 20px;
+  font-size: 12px;
+  color: gray;
+}
+
+.box-comment-count {
+  margin-top: 20px;
+  font-size: x-small;
+  font-weight: bolder;
+}
+
+.discover-menu-wrapper {
+  text-align: center;
+  padding-top: 40px;
+  font-weight: 900;
+  color: gray;
+}
+
+#post-box {
+  width: 80%;
+}
+
+.box-bottom-like {
+  cursor: pointer;
 }
