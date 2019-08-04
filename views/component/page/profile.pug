@@ -19,8 +19,12 @@ div.profile-info-wrapper#profile-info-wrapper
         p.meta-number #{user.followers.length}
         p.meta-title Followers
       .profile-info-meta-likes
-        p.meta-number #{Object.keys((user.likePosts)).length}
-        p.meta-title Likes
+        if user.linkePosts
+          p.meta-number #{Object.keys((user.likePosts)).length || 0}
+          p.meta-title Likes
+        else
+          p.meta-number 0
+          p.meta-title Likes
     hr.info-line
     .profile-info-content.profile-info-bio
         p #{user.bio || 'Bio info is empty'}
