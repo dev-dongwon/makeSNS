@@ -9,7 +9,7 @@ const contentController = {
       let user, likes;
 
       if (req.user) {
-        user = await User.findById(req.user);
+        user = await User.findById(req.user._id);
         likes = JSON.stringify(user.likePosts);
       }
       
