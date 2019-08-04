@@ -28,7 +28,7 @@ div.profile-info-wrapper#profile-info-wrapper
 hr.wrapper-line
 div.discover-content
   if user.posts.length > 0
-    for post in user.posts
+    for post in posts
       .discover-content-box
         .discover-content-box-header
           img.box-header-avatar(src=`${post.author.profilePhoto}`)
@@ -53,7 +53,7 @@ div.discover-content
             p.box-comment-count #{post.meta.comments}
           div.box-icon-box
             input.post-number(type='hidden' value=`${post._id}`)
-            if likes
+            if likes !== null || likes !== undefined
               if JSON.parse(likes).hasOwnProperty(`${post._id}`)
                 img.box-bottom-like(src='/images/board/fill-like.png')
               else
