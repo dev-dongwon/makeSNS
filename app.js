@@ -23,7 +23,8 @@ const indexRouter   = require('./routes/index'),
       postRouter    = require('./routes/post'),
       discoverRouter= require('./routes/discover'),
       contentRouter = require('./routes/contents'),
-      commentRouter = require('./routes/comments')
+      commentRouter = require('./routes/comments'),
+      profileRouter = require('./routes/profile')
 
 // DB
 connectMongoDb();
@@ -66,6 +67,7 @@ app.use('/api', apiRouter);
 app.use('/post', postRouter);
 app.use('/discover', discoverRouter);
 app.use('/comments', commentRouter);
+app.use('/profile', profileRouter)
 
 // error handler
 app.use(function(req, res, next) {
