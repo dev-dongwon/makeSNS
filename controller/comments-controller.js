@@ -1,10 +1,11 @@
 const Post = require('../model/post');
+const User= require('../model/user');
 const Comment = require('../model/comment');
 
 const commentsController = {
   addComment : async (req, res, next) => {
     try {
-      const user = req.user;
+      const user = await User.findById(req.user._id);
       const {comment, contentId} = req.body
       
       const newComment = await Comment.create({

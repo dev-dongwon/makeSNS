@@ -1,44 +1,46 @@
 div.profile-info-wrapper#profile-info-wrapper
   .profile-photo
     .profile-photo-area
-      img(src=user.profilePhoto || '/images/profile_dummy.png')
+      img(src=author.profilePhoto || '/images/profile_dummy.png')
   .profile-info
     .profile-info-username
-      p @#{user.username}
+      p @#{author.username}
     .profile-info-content.profile-info-lcoation
-      p #{user.location || 'location info is empty'}
+      p #{author.location || 'location info is empty'}
     hr.info-line
     .profile-info-content.profile-info-meta
       .profile-info-meta-posts
-        p.meta-number #{user.posts.length}
+        p.meta-number #{author.posts.length}
         p.meta-title Posts
       .profile-info-meta-followings
-        p.meta-number #{user.followings.length}
+        p.meta-number #{author.followings.length}
         p.meta-title Followings
       .profile-info-meta-followers
-        p.meta-number #{user.followers.length}
+        p.meta-number #{author.followers.length}
         p.meta-title Followers
       .profile-info-meta-likes
-        if user.linkePosts
-          p.meta-number #{Object.keys((user.likePosts)).length || 0}
+        if author.likePosts
+          p.meta-number #{Object.keys((author.likePosts)).length || 0}
           p.meta-title Likes
         else
           p.meta-number 0
           p.meta-title Likes
     hr.info-line
     .profile-info-content.profile-info-bio
-        p #{user.bio || 'Bio info is empty'}
-  a.profile-settings(href='/users/settings') go to settings
+        p #{author.bio || 'Bio info is empty'}
+  if user && (user.username === requestUser)
+    a.profile-settings(href='/users/settings') go to settings
 hr.wrapper-line
 div.discover-content
-  if user.posts.length > 0
+  if author.posts.length > 0
     for post in posts
       .discover-content-box
         .discover-content-box-header
-          img.box-header-avatar(src=`${post.author.profilePhoto}`)
+          a(href=`/profile/${author.username}`)
+            img.box-header-avatar(src=`${post.author.profilePhoto}`)
           .box-header-id
             span @#{post.author.username}
-            if `${post.author._id}` !== `${user._id}`
+            if user && (`${post.author._id}` !== `${user._id}`)
               img.box-header-plus(src='/images/board/plus.svg')
           .box-header-time#box-header-time
           input.post-created-time(type='hidden' value=`${post.createdDate}`)
@@ -58,7 +60,7 @@ div.discover-content
           div.box-icon-box
             input.post-number(type='hidden' value=`${post._id}`)
             if likes !== null || likes !== undefined
-              if JSON.parse(likes).hasOwnProperty(`${post._id}`)
+              if likes && JSON.parse(likes).hasOwnProperty(`${post._id}`)
                 img.box-bottom-like(src='/images/board/fill-like.png')
               else
                 img.box-bottom-like(src='/images/board/like.png')

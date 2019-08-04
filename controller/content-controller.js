@@ -1,14 +1,21 @@
 const Post = require('../model/post');
+const User = require('../model/user');
 
 const contentController = {
   getContentPage: async (req, res, next) => {
     try {
       const content = await Post.getContentByContentNumber(req.params.contentNumber);
-      const likes = JSON.stringify(req.user.likePosts);
+      
+      let user, likes;
+
+      if (req.user) {
+        user = await User.findById(req.user);
+        likes = JSON.stringify(user.likePosts);
+      }
       
       res.render('content', {
         title: 'Daily Frame | The creators Network',
-        user: req.user,
+        user: user || null,
         content,
         time : req.query.time,
         likes : likes || null
@@ -40,7 +47,7 @@ const contentController = {
   updateLike : async (req, res, next) => {
 
     try {
-      const user = req.user;
+      const user = await User.findById(req.user._id);
       const content = await Post.findById(req.params.contentNumber);
       
       if (content.likeUsers && content.likeUsers.get(`${user._id}`)) {

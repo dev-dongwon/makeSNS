@@ -3,16 +3,26 @@ const User = require('../model/user')
 
 const profileController = {
   home: async (req, res) => {
-    const user = await User.findOne({username : req.user.username})
+
+    const author = await User.findOne({username : req.params.username})
                            .populate({path : 'posts'});
 
-    const posts = user.posts.filter(val => val.display === true);
+    let user, likes;
+
+    if (req.user) {
+      user = await User.findById(req.user._id);
+      likes = JSON.stringify(user.likePosts);
+    }
+
+    const posts = author.posts.filter(val => val.display === true);
     
     res.render('profile', {
       title: 'Profile | The creators Network',
-      user: user,
-      posts : posts,
-      likes : JSON.stringify(user.likePosts)
+      user: user || null,
+      author,
+      posts,
+      likes : likes || null,
+      requestUser : req.params.username
     });
   },
 }

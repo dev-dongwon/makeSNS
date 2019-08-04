@@ -1,14 +1,16 @@
 const Post = require('../model/post');
+const User =require('../model/user');
 
 const indexController = {
   home: async (req, res) => {
+    const user = await User.findById(req.user._id);
     const page = req.query.page || 0;
     const limit = req.query.limit || 25;
     const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
 
     res.render('main', {
       title: 'Daily Frame | The creators Network',
-      user: req.user,
+      user: user,
       posts : postArr,
       message : req.flash('message')
     });
@@ -41,13 +43,22 @@ const indexController = {
 
     const page = req.query.page || 0;
     const limit = req.query.limit || 25;
-    const likes = JSON.stringify(req.user.likePosts);
+
+    let user;
+    let likes;
+
+    if (req.user) {
+      user = await User.findById(req.user._id);
+      if (user.likePosts) {
+        likes = JSON.stringify(user.likePosts);
+      }
+    }
 
     const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
     res.render('discover', {
       title: 'Discover | Daily Frame',
       posts : postArr,
-      user : req.user,
+      user : user || null,
       likes : likes || null
     });
   }

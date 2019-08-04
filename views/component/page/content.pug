@@ -29,7 +29,7 @@ if content
         .content-header-username
           p @#{content.author.username}
         .content-header-icon-wrapper
-          if content.author.username === user.username
+          if user && (content.author.username === user.username)
             .content-header-icon-modified
               img#content-header-icon-modified(src='/images/content/modify.png')
             .content-header-icon-delete
