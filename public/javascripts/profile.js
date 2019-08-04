@@ -3,12 +3,12 @@ const ProfileHandler = class {
     this.dateDomArr = document.getElementsByClassName('post-created-time');
     this.displayDateDomArr = document.getElementsByClassName('box-header-time');
     this.profileBackground = document.getElementById('profile-info-wrapper');
-    this.date = Date.now();
   }
   
   calcDate(postDate) {
     const parsedDate = Date.parse(postDate);
-    const gapByMinute = Math.floor((this.date - parsedDate)/(1000*60));
+    const nowDate = Date.now();
+    const gapByMinute = Math.floor((nowDate - parsedDate)/(1000*60));
 
     if (gapByMinute < 60) {
       return `${gapByMinute} m`
@@ -100,10 +100,11 @@ const ProfileHandler = class {
   }
 
   addBackgroundImageEvent() {
-    const image = document.getElementsByClassName('box-body-img')[0];
-    if (image) {
-      this.profileBackground.style.backgroundImage = `url(${image.src})`;
-      console.log(image.src)
+    const images = document.getElementsByClassName('box-body-img');
+    const randomNumber = Math.floor(Math.random() * ((images.length-1)+1));
+
+    if (images) {
+      this.profileBackground.style.backgroundImage = `url(${images[randomNumber].src})`;
     }
   }
 
