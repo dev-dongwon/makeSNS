@@ -1,6 +1,6 @@
 .main {
-  width: 100%;  
-  margin: 0 0;
+  width: 98%;  
+  margin: auto;
 }
 
 .discover-title {
@@ -16,10 +16,10 @@
 }
 
 .discover-content-box {
-  width: 19.1%;
+  width: 17.7%;
   padding: 15px;
   float: left;
-  margin: 8px;
+  margin: 1.1%;
   border: 1px solid gray; 
 }
 

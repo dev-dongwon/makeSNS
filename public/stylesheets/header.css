@@ -108,13 +108,12 @@ nav {
 .menu-link {
   list-style: none;
   text-align: left;
-  padding: 5px;
 }
 
 .menu-item a {
   text-decoration: none;
   color: lightslategrey;
-  font-size: smaller;
+  font-size: small;
 }
 
 .menu-item a:hover{
@@ -123,8 +122,8 @@ nav {
 }
 
 .menu-item {
-  padding: 0 10px;
-  margin: 10px 0;
+  padding: 0 5px;
+  margin: 7px 0;
 }
 
 hr {
