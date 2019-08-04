@@ -8,7 +8,7 @@
   width: 100%;
   height: auto;
   grid-column-gap: 20px;
-  background-color: rgb(78, 19, 78);
+  background-color: rgba(145, 145, 145, 0.425);
   background-size: 100%;
   opacity: 0.8;
   color: black;
