@@ -141,7 +141,6 @@ const ContentsHandler = class {
       
       if (result === 'notLoggedIn') {
         alert('로그인이 필요한 서비스입니다');
-        location.href = '/signin';
         return;
       }
       
@@ -177,7 +176,6 @@ const ContentsHandler = class {
 
       if (result === 'notLoggedIn') {
         alert('로그인이 필요한 서비스입니다');
-        location.href = '/signin';
         return;
       }
 
