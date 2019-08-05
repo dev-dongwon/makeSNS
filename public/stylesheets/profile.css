@@ -11,8 +11,9 @@
   background-color: rgba(145, 145, 145, 0.425);
   background-size: 100%;
   opacity: 0.8;
-  color: black;
+  color: white;
   padding: 0 30%;
+  text-shadow: 3px 3px 3px black;
 }
 
 .profile-photo {
@@ -61,7 +62,7 @@
 .info-line {
   width: 80%;
   margin-top: 5%;
-  border :1px solid black;
+  border :1px solid white;
 }
 
 .meta-title {
