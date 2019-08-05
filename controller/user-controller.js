@@ -30,11 +30,16 @@ const userController = {
     }
   },
 
-  getSettingsPage : (req, res) => {
+  getSettingsPage : async (req, res) => {
+    
+    let user;
+    if (req.user) {
+      user = await User.findById(req.user._id);
+    }
+
     res.render('settings', {
       title: 'Settings | Daily Frame',
-      user : req.user,
-      message : req.flash('message')
+      user : user,
     });
   },
 
