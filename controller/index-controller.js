@@ -64,8 +64,26 @@ const indexController = {
   },
 
   following : async (req, res, next) => {
+
+    const user = await User.findById(req.user._id)
+                           .populate({path : 'followings'});
+
+    const followingArr = user.followings;
+    const posts = await Array.from(followingArr).reduce( async function (acc, following, index) {
+      const target = await User.findById(following[1]._id)
+                                .populate({path : 'posts'})
+      target.posts.forEach( val => acc.push(val) )
+      return acc;
+    },[])
+
+    posts.sort((a, b) => {
+      return a.createdDate < b.createdDate
+    })
+
     res.render('following', {
       title: 'Following | Daily Frame',
+      user,
+      posts
     });
   }
 }
