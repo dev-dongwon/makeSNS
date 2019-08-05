@@ -2,6 +2,8 @@ div.discover-title
   h1 My Friend's Art
 div.discover-menu
   div.discover-menu-wrapper 같은 취향, 우린 친구군요
+if posts.length === 0
+  p.discover-empty 취향이 맞는 친구를 follow 해보세요
 div.discover-content
   if posts.length > 0
     for post in posts
