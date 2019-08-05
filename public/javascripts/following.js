@@ -101,7 +101,6 @@ const DiscoverHandler = class {
     const targetBtn = event.target;
     const targetBtnId = targetBtn.id;
     const followUserId = targetBtnId.split('-')[2];
-    const statusBadge = targetBtn.parentNode.getElementsByClassName('follow-status')[0];
     const result = await this.ajax().updateFollowStatus(followUserId);
 
     if (result === 'notLoggedIn') {
@@ -110,16 +109,24 @@ const DiscoverHandler = class {
     }
 
     if (result === 'follow') {
-      targetBtn.src = '/images/board/check.png';
-      statusBadge.innerHTML = 'now following'
-      statusBadge.style.background = 'green';
+      const board = document.getElementsByClassName(`${followUserId}`);
+      Array.from(board).forEach((val) => {
+        const badge = val.parentElement.getElementsByClassName('follow-status')[0]
+        val.src = '/images/board/check.png';
+        badge.innerHTML = 'now following'
+        badge.style.background = 'green';
+      })
       return;
     }
 
     if (result === 'unfollow') {
-      targetBtn.src = '/images/board/plus.svg';
-      statusBadge.innerHTML = 'not followed'
-      statusBadge.style.background = 'red';
+      const board = document.getElementsByClassName(`${followUserId}`);
+      Array.from(board).forEach((val) => {
+        const badge = val.parentElement.getElementsByClassName('follow-status')[0]
+        val.src = '/images/board/plus.svg';
+        badge.innerHTML = 'not followed'
+        badge.style.background = 'red';
+      })
       return;
     }
   }

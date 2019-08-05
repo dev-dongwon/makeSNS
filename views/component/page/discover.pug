@@ -17,10 +17,10 @@ div.discover-content
             if user && (`${post.author._id}` !== `${user._id}`)
               if user.followings.has(`${post.author._id}`)
                 div.follow-status now following
-                img.box-header-follow(src='/images/board/check.png' id=`follow-btn-${post.author._id}`)
+                img.box-header-follow(src='/images/board/check.png' class=`${post.author._id}` id=`follow-btn-${post.author._id}`)
               else
                 div.follow-status(style='background : red') not followed
-                img.box-header-follow(src='/images/board/plus.svg' id=`follow-btn-${post.author._id}`)
+                img.box-header-follow(src='/images/board/plus.svg' class=`${post.author._id}` id=`follow-btn-${post.author._id}`)
           .box-header-time#box-header-time
           input.post-created-time(type='hidden' value=`${post.createdDate}`)
         .discover-content-box-body
