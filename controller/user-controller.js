@@ -44,7 +44,30 @@ const userController = {
       user : req.user,
       message : req.flash('message')
     });
-  }
+  },
+
+  getLikesPage : async (req, res, next) => {
+    try {
+      const author = await User.findOne({username : req.params.username}).populate({path : 'likePosts'});
+      const posts = [];
+      Array.from(author.likePosts).filter(val => val[1].display === true)
+                                  .forEach(post => posts.push(post[1]));
+  
+      let user;
+      if (req.user) {
+        user = await User.findById(req.user._id);
+      }
+  
+      res.render('likes', {
+        title: 'likes | Daily Frame',
+        user,
+        posts,
+        author
+      });
+    } catch (error) {
+      next(error);
+    }
+    }
 }
 
 module.exports = userController;

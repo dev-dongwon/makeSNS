@@ -21,4 +21,8 @@ router.get('/initSettings', auth.isLoggedIn, (req, res) => {
   userController.getInitSettingsPage(req, res)
 })
 
+router.get('/:username/likes', (req, res, next) => {
+  userController.getLikesPage(req, res, next);
+})
+
 module.exports = router;
