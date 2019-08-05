@@ -3,20 +3,6 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({
-  meta : {
-    posts : {
-      type : Number,
-      default : 0
-    },
-    followings : {
-      type : Number,
-      default : 0
-    },
-    followers : {
-      type : Number,
-      default : 0
-    }
-  },
   username : String,
   email : String,
   password : String,
@@ -89,21 +75,17 @@ userSchema.pre('update', async function(next) {
 
 userSchema.statics.addFollow = async function(user, followTarget) {
   await user.set(`followings.${followTarget._id}`, followTarget._id);
-  await user.updateOne({ $inc : {'meta.followings' : 1}});
   await user.save();
   
   await followTarget.set(`followers.${user._id}`, user._id);
-  await followTarget.updateOne({ $inc : {'meta.followers' : 1}});
   await followTarget.save();
 }
 
 userSchema.statics.cancelFollow = async function(user, followTarget) {
   await user.set(`followings.${followTarget._id}`, undefined);
-  await user.updateOne({ $inc : {'meta.followings' : -1}});
   await user.save();
   
   await followTarget.set(`followers.${user._id}`, undefined);
-  await followTarget.updateOne({ $inc : {'meta.followers' : -1}});
   await followTarget.save();
 }
 
