@@ -4,12 +4,12 @@ const DiscoverHandler = class {
     this.displayDateDomArr = document.getElementsByClassName('box-header-time');
     this.trendTabBtn = document.getElementById('discover-order-trend');
     this.recentTabBtn = document.getElementById('discover-order-recent');
-    this.date = Date.now();
   }
   
   calcDate(postDate) {
     const parsedDate = Date.parse(postDate);
-    const gapByMinute = Math.floor((this.date - parsedDate)/(1000*60));
+    const nowDate = Date.now();
+    const gapByMinute = Math.floor((nowDate - parsedDate)/(1000*60));
 
     if (gapByMinute < 60) {
       return `${gapByMinute} m`
@@ -90,6 +90,77 @@ const DiscoverHandler = class {
     })
   }
 
+  addFollowAndUnfollowEvent() {
+    const followBtn = document.getElementsByClassName('box-header-plus');
+    const unfollowBtn = document.getElementsByClassName('box-header-unfollow');
+
+    if(followBtn) {
+      Array.from(followBtn).forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+          this.followEvent(event);
+        })
+
+        btn.addEventListener('mouseenter', (event) => {
+          const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
+          statusBadge.style.display = 'block'
+        })
+
+        btn.addEventListener('mouseout', (event) => {
+          const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
+          statusBadge.style.display = 'none'
+        })
+        
+      })
+    }
+
+    if (unfollowBtn) {
+      Array.from(unfollowBtn).forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+          this.unfollowEvent(event);
+        })
+
+        btn.addEventListener('mouseenter', (event) => {
+          const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
+          statusBadge.style.display = 'block'
+        })
+
+        btn.addEventListener('mouseout', (event) => {
+          const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
+          statusBadge.style.display = 'none'
+        })
+      })
+    }
+  }
+  
+
+  async followEvent(event) {
+    const targetBtn = event.target;
+    const targetBtnId = targetBtn.id;
+    const followUserId = targetBtnId.split('-')[2];
+    const statusBadge = targetBtn.parentNode.getElementsByClassName('follow-status')[0];
+    const result = await this.ajax().addFollowStatus(followUserId);
+
+    if (result === 'success') {
+      targetBtn.src = '/images/board/check.png';
+      statusBadge.innerHTML = 'now following'
+      statusBadge.style.background = 'green';
+    }
+  }
+
+  async unfollowEvent(event) {
+    const targetBtn = event.target;
+    const targetBtnId = targetBtn.id;
+    const followUserId = targetBtnId.split('-')[2];
+    const statusBadge = targetBtn.parentNode.getElementsByClassName('follow-status')[0];
+    const result = await this.ajax().deleteFollowStatus(followUserId);
+    
+    if (result === 'success') {
+      targetBtn.src = '/images/board/plus.svg';
+      statusBadge.innerHTML = 'not followed'
+      statusBadge.style.background = 'red';
+    }
+  }
+
   ajax() {
     const getTrendingPageEvent = async () => {
       const url = `/discover/trending`;
@@ -112,9 +183,27 @@ const DiscoverHandler = class {
       return await response.text();
     }
 
+    const addFollowStatus = async (followUserId) => {
+      const url = `/api/follow/${followUserId}`
+      const response = await fetch(url, {
+        method : 'POST'
+      })
+      return await response.text();
+    }
+
+    const deleteFollowStatus = async (followUserId) => {
+      const url = `/api/follow/${followUserId}`
+      const response = await fetch(url, {
+        method : 'DELETE'
+      })
+      return await response.text();
+    }
+
     return {
       getTrendingPageEvent,
-      updateLikeStatus
+      updateLikeStatus,
+      addFollowStatus,
+      deleteFollowStatus
     }
   }
 
@@ -133,6 +222,7 @@ const DiscoverHandler = class {
     this.addGetRecentPageEvent();
     this.setContentTimeParams();
     this.addUpdateLikeEvent();
+    this.addFollowAndUnfollowEvent();
   }
 }
 

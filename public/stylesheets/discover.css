@@ -95,7 +95,15 @@
 .box-header-plus {
   width: 13px;
   margin-left: 10px;
-  vertical-align: bottom
+  vertical-align: bottom;
+  cursor: pointer;
+}
+
+.box-header-unfollow {
+  width: 13px;
+  margin-left: 10px;
+  vertical-align: bottom;
+  cursor: pointer;
 }
 
 .box-header-id {
@@ -178,11 +186,26 @@ background-size: 1800% 1800%;
   cursor: pointer;
   padding: 20px 40px 20px 40px;
 }
-
 #post-box {
+
   width: 80%;
 }
 
 .box-bottom-like {
   cursor: pointer;
+}
+
+.follow-status {
+  position: absolute;
+  float: left;
+  top: 20%;
+  left: 110%;
+  font-size: x-small;
+  color: white;
+  border-radius: 5px;
+  width: 100px;
+  text-align: center;
+  height: 100;
+  background: green;
+  display: none;
 }
