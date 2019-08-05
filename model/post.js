@@ -65,17 +65,19 @@ postSchema.statics.updateContent = async function(content, files, text) {
 postSchema.statics.updateToBeUnLikeStatus = async function(content, user) {
   await content.set(`likeUsers.${user._id}`, undefined)
   await content.updateOne({ $inc : {'meta.likes' : -1}});
-  content.save();
+  await content.save();
+  
   await user.set(`likePosts.${content._id}`, undefined)
-  user.save();
+  await user.save();
 }
 
 postSchema.statics.updateToBeLikeStatus = async function(content, user) {
   await content.set(`likeUsers.${user._id}`, user._id)
   await content.updateOne({ $inc : {'meta.likes' : 1}});
-  content.save();
+  await content.save();
+  
   await user.set(`likePosts.${content._id}`, content._id)
-  user.save();
+  await user.save();
 }
 
 module.exports = mongoose.model('Post', postSchema);

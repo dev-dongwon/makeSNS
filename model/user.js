@@ -3,6 +3,20 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({
+  meta : {
+    posts : {
+      type : Number,
+      default : 0
+    },
+    followings : {
+      type : Number,
+      default : 0
+    },
+    followers : {
+      type : Number,
+      default : 0
+    }
+  },
   username : String,
   email : String,
   password : String,
@@ -25,8 +39,18 @@ const userSchema = mongoose.Schema({
     type : Map,
     of : { type : Schema.Types.ObjectId, ref : 'Post' },
   },
-  followings : [{ type : Schema.Types.ObjectId, ref : 'User' }],
-  followers : [{ type : Schema.Types.ObjectId, ref : 'User' }]
+  likeUsers : {
+    type : Map,
+    of : { type : Schema.Types.ObjectId, ref : 'User' },
+  },
+  followings : {
+    type : Map,
+    of : { type : Schema.Types.ObjectId, ref : 'User' }
+  },
+  followers : {
+    type : Map,
+    of : { type : Schema.Types.ObjectId, ref : 'User' }
+  }
 });
 
 userSchema.pre('save', async function(next) {
@@ -58,6 +82,26 @@ userSchema.pre('update', async function(next) {
   this._update.password = hash;
   next();
 })
+
+userSchema.statics.addFollow = async function(user, followTarget) {
+  await user.set(`followings.${followTarget._id}`, followTarget._id);
+  await user.updateOne({ $inc : {'meta.followings' : 1}});
+  await user.save();
+  
+  await followTarget.set(`followers.${user._id}`, user._id);
+  await followTarget.updateOne({ $inc : {'meta.followers' : 1}});
+  await followTarget.save();
+}
+
+userSchema.statics.cancelFollow = async function(user, followTarget) {
+  await user.set(`followings.${followTarget._id}`, undefined);
+  await user.updateOne({ $inc : {'meta.followings' : -1}});
+  await user.save();
+  
+  await followTarget.set(`followers.${user._id}`, undefined);
+  await followTarget.updateOne({ $inc : {'meta.followers' : -1}});
+  await followTarget.save();
+}
 
 
 userSchema.methods.isValidPassword = async function(password) {
