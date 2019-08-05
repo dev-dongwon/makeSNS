@@ -1,6 +1,7 @@
 const express         = require('express'),
       router          = express.Router(),
-      indexController = require('../controller/index-controller');
+      indexController = require('../controller/index-controller'),
+      authMiddlewares = require('../middlewares/auth')
 
 router.get('/', (req, res) => {
   indexController.home(req, res);
@@ -22,7 +23,7 @@ router.get('/discover', (req, res, next) => {
   indexController.discover(req, res, next);
 })
 
-router.get('/following', (req, res, next) => {
+router.get('/following', authMiddlewares.isLoggedIn, (req, res, next) => {
   indexController.following(req, res, next);
 })
 
