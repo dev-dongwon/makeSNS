@@ -52,8 +52,8 @@ if content
         div.box-icon-box
           p.box-comment-count #{content.meta.comments}
         div.box-icon-box
-          if likes
-            if JSON.parse(likes).hasOwnProperty(`${content._id}`)
+          if user && user.likePosts
+            if user.likePosts.has(`${content._id}`)
               img.box-bottom-like(src='/images/board/fill-like.png')
             else
               img.box-bottom-like(src='/images/board/like.png')

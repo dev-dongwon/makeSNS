@@ -45,13 +45,9 @@ const indexController = {
     const limit = req.query.limit || 25;
 
     let user;
-    let likes;
 
     if (req.user) {
       user = await User.findById(req.user._id);
-      if (user.likePosts) {
-        likes = JSON.stringify(user.likePosts);
-      }
     }
 
     const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
@@ -59,7 +55,6 @@ const indexController = {
       title: 'Discover | Daily Frame',
       posts : postArr,
       user : user || null,
-      likes : likes || null
     });
   }
 }

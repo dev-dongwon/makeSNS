@@ -6,11 +6,10 @@ const contentController = {
     try {
       const content = await Post.getContentByContentNumber(req.params.contentNumber);
       
-      let user, likes;
+      let user;
 
       if (req.user) {
         user = await User.findById(req.user._id);
-        likes = JSON.stringify(user.likePosts);
       }
       
       res.render('content', {
@@ -18,7 +17,6 @@ const contentController = {
         user: user || null,
         content,
         time : req.query.time,
-        likes : likes || null
       });
       
     } catch (error) {

@@ -7,11 +7,10 @@ const profileController = {
     const author = await User.findOne({username : req.params.username})
                            .populate({path : 'posts'});
 
-    let user, likes;
+    let user;
 
     if (req.user) {
       user = await User.findById(req.user._id);
-      likes = JSON.stringify(user.likePosts);
     }
 
     const posts = author.posts.filter(val => val.display === true);
@@ -21,7 +20,6 @@ const profileController = {
       user: user || null,
       author,
       posts,
-      likes : likes || null,
       requestUser : req.params.username
     });
   },

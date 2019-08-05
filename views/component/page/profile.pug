@@ -20,7 +20,7 @@ div.profile-info-wrapper#profile-info-wrapper
         p.meta-title Followers
       .profile-info-meta-likes
         if author.likePosts
-          p.meta-number #{Object.keys((author.likePosts)).length || 0}
+          p.meta-number #{author.likePosts.size}
           p.meta-title Likes
         else
           p.meta-number 0
@@ -59,11 +59,8 @@ div.discover-content
             p.box-comment-count #{post.meta.comments}
           div.box-icon-box
             input.post-number(type='hidden' value=`${post._id}`)
-            if likes !== null || likes !== undefined
-              if likes && JSON.parse(likes).hasOwnProperty(`${post._id}`)
-                img.box-bottom-like(src='/images/board/fill-like.png')
-              else
-                img.box-bottom-like(src='/images/board/like.png')
+            if user && user.likePosts.has(`${post._id}`)
+              img.box-bottom-like(src='/images/board/fill-like.png')
             else
               img.box-bottom-like(src='/images/board/like.png')
           div.box-icon-box
