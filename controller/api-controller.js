@@ -31,29 +31,18 @@ const apiController = {
     }
   },
 
-  addFollower : async (req, res, next) => {
-    try {
-      const user = await User.findById(req.user._id);
-      const followTarget = await User.findById(req.params.userId);
-      await User.addFollow(user, followTarget);
-      return res.end('success');
-      
-    } catch (error) {
-      next(error);  
-    }
-  },
+  updateFollowStatus : async (req, res, next) => {
+    const user = await User.findById(req.user._id);
+    const followTarget = await User.findById(req.params.userId);
 
-  deleteFollower : async (req, res, next) => {
-    try {
-      const user = await User.findById(req.user._id);
-      const followTarget = await User.findById(req.params.userId);
+    if (user.followings.has(req.params.userId)) {
       await User.cancelFollow(user, followTarget);
-      return res.end('success');
-      
-    } catch (error) {
-      next(error);  
+      return res.end('unfollow');
     }
-  }
+
+    await User.addFollow(user, followTarget);
+    return res.end('follow');
+  },
 }
 
 module.exports = apiController;

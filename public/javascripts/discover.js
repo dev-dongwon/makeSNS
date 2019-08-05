@@ -91,8 +91,7 @@ const DiscoverHandler = class {
   }
 
   addFollowAndUnfollowEvent() {
-    const followBtn = document.getElementsByClassName('box-header-plus');
-    const unfollowBtn = document.getElementsByClassName('box-header-unfollow');
+    const followBtn = document.getElementsByClassName('box-header-follow');
 
     if(followBtn) {
       Array.from(followBtn).forEach((btn) => {
@@ -102,31 +101,12 @@ const DiscoverHandler = class {
 
         btn.addEventListener('mouseenter', (event) => {
           const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
-          statusBadge.style.display = 'block'
+          statusBadge.style.display = 'block';
         })
 
         btn.addEventListener('mouseout', (event) => {
           const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
-          statusBadge.style.display = 'none'
-        })
-        
-      })
-    }
-
-    if (unfollowBtn) {
-      Array.from(unfollowBtn).forEach((btn) => {
-        btn.addEventListener('click', (event) => {
-          this.unfollowEvent(event);
-        })
-
-        btn.addEventListener('mouseenter', (event) => {
-          const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
-          statusBadge.style.display = 'block'
-        })
-
-        btn.addEventListener('mouseout', (event) => {
-          const statusBadge = event.target.parentNode.getElementsByClassName('follow-status')[0];
-          statusBadge.style.display = 'none'
+          statusBadge.style.display = 'none';
         })
       })
     }
@@ -138,13 +118,27 @@ const DiscoverHandler = class {
     const targetBtnId = targetBtn.id;
     const followUserId = targetBtnId.split('-')[2];
     const statusBadge = targetBtn.parentNode.getElementsByClassName('follow-status')[0];
-    const result = await this.ajax().addFollowStatus(followUserId);
+    const result = await this.ajax().updateFollowStatus(followUserId);
 
-    if (result === 'success') {
+    if (result === 'notLoggedIn') {
+      alert('로그인이 필요한 서비스입니다');
+      return;
+    }
+
+    if (result === 'follow') {
       targetBtn.src = '/images/board/check.png';
       statusBadge.innerHTML = 'now following'
       statusBadge.style.background = 'green';
+      return;
     }
+
+    if (result === 'unfollow') {
+      targetBtn.src = '/images/board/plus.svg';
+      statusBadge.innerHTML = 'not followed'
+      statusBadge.style.background = 'red';
+      return;
+    }
+
   }
 
   async unfollowEvent(event) {
@@ -155,9 +149,6 @@ const DiscoverHandler = class {
     const result = await this.ajax().deleteFollowStatus(followUserId);
     
     if (result === 'success') {
-      targetBtn.src = '/images/board/plus.svg';
-      statusBadge.innerHTML = 'not followed'
-      statusBadge.style.background = 'red';
     }
   }
 
@@ -183,18 +174,10 @@ const DiscoverHandler = class {
       return await response.text();
     }
 
-    const addFollowStatus = async (followUserId) => {
+    const updateFollowStatus = async (followUserId) => {
       const url = `/api/follow/${followUserId}`
       const response = await fetch(url, {
-        method : 'POST'
-      })
-      return await response.text();
-    }
-
-    const deleteFollowStatus = async (followUserId) => {
-      const url = `/api/follow/${followUserId}`
-      const response = await fetch(url, {
-        method : 'DELETE'
+        method : 'PATCH'
       })
       return await response.text();
     }
@@ -202,8 +185,7 @@ const DiscoverHandler = class {
     return {
       getTrendingPageEvent,
       updateLikeStatus,
-      addFollowStatus,
-      deleteFollowStatus
+      updateFollowStatus
     }
   }
 

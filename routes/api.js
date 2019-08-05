@@ -11,12 +11,8 @@ router.patch('/resetpassword', (req, res, next) => {
   apiController.resetPassword(req, res, next);
 })
 
-router.post('/follow/:userId', authMiddlewares.isLoggedInforAjax, (req, res, next) => {
-  apiController.addFollower(req, res, next);
-})
-
-router.delete('/follow/:userId', authMiddlewares.isLoggedInforAjax, (req, res, next) => {
-  apiController.deleteFollower(req, res, next);
+router.patch('/follow/:userId', authMiddlewares.isLoggedInforAjax, (req, res, next) => {
+  apiController.updateFollowStatus(req, res, next);
 })
 
 

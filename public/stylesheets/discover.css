@@ -92,14 +92,7 @@
   margin-left: 5px;
 }
 
-.box-header-plus {
-  width: 13px;
-  margin-left: 10px;
-  vertical-align: bottom;
-  cursor: pointer;
-}
-
-.box-header-unfollow {
+.box-header-follow {
   width: 13px;
   margin-left: 10px;
   vertical-align: bottom;
