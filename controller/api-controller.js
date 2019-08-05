@@ -29,8 +29,31 @@ const apiController = {
     } catch (error) {
       next(error);
     }
-  }
+  },
 
+  addFollower : async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user._id);
+      const followTarget = await User.findById(req.params.userId);
+      await User.addFollow(user, followTarget);
+      return res.end('success');
+      
+    } catch (error) {
+      next(error);  
+    }
+  },
+
+  deleteFollower : async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user._id);
+      const followTarget = await User.findById(req.params.userId);
+      await User.cancelFollow(user, followTarget);
+      return res.end('success');
+      
+    } catch (error) {
+      next(error);  
+    }
+  }
 }
 
 module.exports = apiController;
