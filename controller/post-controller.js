@@ -28,7 +28,7 @@ const postController = {
       targetUser.posts.push(post._id);
       targetUser.save();
 
-      return res.redirect('/')
+      return res.redirect(`/contents/${post._id}`)
 
     } catch (err) {
       next(err);
