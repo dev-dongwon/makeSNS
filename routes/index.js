@@ -18,8 +18,12 @@ router.get('/forgotpassword', (req, res) => {
   indexController.forgotpassword(req, res);
 })
 
-router.get('/discover', (req, res) => {
-  indexController.discover(req, res);
+router.get('/discover', (req, res, next) => {
+  indexController.discover(req, res, next);
+})
+
+router.get('/following', (req, res, next) => {
+  indexController.following(req, res, next);
 })
 
 module.exports = router;

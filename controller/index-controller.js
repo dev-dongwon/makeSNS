@@ -39,22 +39,33 @@ const indexController = {
     });
   },
 
-  discover : async (req, res) => {
+  discover : async (req, res, next) => {
 
-    const page = req.query.page || 0;
-    const limit = req.query.limit || 25;
-
-    let user;
-
-    if (req.user) {
-      user = await User.findById(req.user._id);
+    try {
+      const page = req.query.page || 0;
+      const limit = req.query.limit || 25;
+  
+      let user;
+  
+      if (req.user) {
+        user = await User.findById(req.user._id);
+      }
+  
+      const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
+      res.render('discover', {
+        title: 'Discover | Daily Frame',
+        posts : postArr,
+        user : user || null,
+      });
+      
+    } catch (error) {
+      next(error);
     }
+  },
 
-    const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
-    res.render('discover', {
-      title: 'Discover | Daily Frame',
-      posts : postArr,
-      user : user || null,
+  following : async (req, res, next) => {
+    res.render('following', {
+      title: 'Following | Daily Frame',
     });
   }
 }
