@@ -38,18 +38,22 @@ const userSchema = mongoose.Schema({
   likePosts : {
     type : Map,
     of : { type : Schema.Types.ObjectId, ref : 'Post' },
+    default : {}
   },
   likeUsers : {
     type : Map,
     of : { type : Schema.Types.ObjectId, ref : 'User' },
+    default : {}
   },
   followings : {
     type : Map,
-    of : { type : Schema.Types.ObjectId, ref : 'User' }
+    of : { type : Schema.Types.ObjectId, ref : 'User' },
+    default : {}
   },
   followers : {
     type : Map,
-    of : { type : Schema.Types.ObjectId, ref : 'User' }
+    of : { type : Schema.Types.ObjectId, ref : 'User' },
+    default : {}
   }
 });
 

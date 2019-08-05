@@ -28,6 +28,7 @@ const postSchema = mongoose.Schema({
   likeUsers : {
     type : Map,
     of : { type : Schema.Types.ObjectId, ref : 'User' },
+    default : {}
   },
   comment : [CommentSchema],
   display : {
