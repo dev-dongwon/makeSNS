@@ -29,7 +29,17 @@ hr {
 .content-header {
   height: 70px;
   display: grid;
-  grid-template-columns: 20% 45% 40%;
+  grid-template-columns: 20% 30% 15% 40%;
+}
+
+.content-header-follow img{
+  width: 30%;
+  cursor: pointer;
+}
+
+.content-header-follow {
+  height: 20%;
+  margin-top: 80%;
 }
 
 .content-header-avatar {
@@ -46,7 +56,7 @@ hr {
 }
 
 .content-header-username {
-  height: 100px;
+  margin-top: 10%;
 }
 
 .content-header-username p {
@@ -258,4 +268,40 @@ hr {
   width: 50%;
   margin-top: 10px;
   cursor: pointer;
+}
+
+[follow-tooltip-text]:hover {
+	position: relative;
+}
+
+[follow-tooltip-text]:hover:after {
+	content: attr(follow-tooltip-text);
+  position: absolute;
+	bottom: 100%;
+	left: 0;
+  background-color: rgba(58, 170, 14, 0.8);
+	color: #FFFFFF;
+	font-size: 12px;
+  width: 200%;
+  z-index: 9999;
+  text-align: center;
+  border-radius: 5px;
+}
+
+[unfollow-tooltip-text]:hover {
+	position: relative;
+}
+
+[unfollow-tooltip-text]:hover:after {
+	content: attr(unfollow-tooltip-text);
+  position: absolute;
+	bottom: 100%;
+	left: 0;
+  background-color: rgba(255, 0, 0, 0.8);
+	color: #FFFFFF;
+	font-size: 12px;
+  width: 200%;
+  z-index: 9999;
+  text-align: center;
+  border-radius: 5px;
 }

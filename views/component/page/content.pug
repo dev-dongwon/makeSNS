@@ -28,6 +28,12 @@ if content
           img(src=`${content.author.profilePhoto}`)
         .content-header-username
           p @#{content.author.username}
+        if user && user.followings.has(`${content.author._id}`)
+          .content-header-follow(follow-tooltip-text="now following")
+            img.box-header-unfollow(src='/images/board/check.png' id=`unfollow-btn-${content.author._id}`)
+        else
+          .content-header-follow(unfollow-tooltip-text="not followed")
+            img.box-header-unfollow(src='/images/board/plus.svg' id=`follow-btn-${content.author._id}`)
         .content-header-icon-wrapper
           if user && (content.author.username === user.username)
             .content-header-icon-modified
