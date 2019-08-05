@@ -138,18 +138,6 @@ const DiscoverHandler = class {
       statusBadge.style.background = 'red';
       return;
     }
-
-  }
-
-  async unfollowEvent(event) {
-    const targetBtn = event.target;
-    const targetBtnId = targetBtn.id;
-    const followUserId = targetBtnId.split('-')[2];
-    const statusBadge = targetBtn.parentNode.getElementsByClassName('follow-status')[0];
-    const result = await this.ajax().deleteFollowStatus(followUserId);
-    
-    if (result === 'success') {
-    }
   }
 
   ajax() {

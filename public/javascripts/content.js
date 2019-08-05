@@ -268,6 +268,56 @@ const ContentsHandler = class {
     })
   }
 
+
+  addFollowAndUnfollowEvent() {
+    const followBtn = document.getElementsByClassName('box-header-follow')[0];
+
+    if(followBtn) {
+      followBtn.addEventListener('click', (event) => {
+        this.followEvent(event);
+      })
+    }
+  }
+
+  async followEvent(event) {
+    const targetBtn = event.target;
+    const targetBtnId = targetBtn.id;
+    const followUserId = targetBtnId.split('-')[2];
+    const statusBadge = document.getElementsByClassName('content-header-follow')[0];
+    const result = await this.ajax().updateFollowStatus(followUserId);
+
+    if (result === 'notLoggedIn') {
+      alert('로그인이 필요한 서비스입니다');
+      return;
+    }
+
+    if (result === 'follow') {
+      targetBtn.src = '/images/board/check.png';
+      statusBadge.removeAttribute('unfollow-tooltip-text');
+      statusBadge.setAttribute('follow-tooltip-text', 'now follwing');
+      return;
+    }
+
+    if (result === 'unfollow') {
+      targetBtn.src = '/images/board/plus.svg';
+      statusBadge.removeAttribute('follow-tooltip-text');
+      statusBadge.setAttribute('unfollow-tooltip-text', 'not follwed');
+      return;
+    }
+  }
+
+  addTooltipForFollow() {
+    const followIcon = document.getElementsByClassName('box-header-follow')[0];
+
+    if (followIcon) {
+      if (followIcon.classList.contains('status-follow')) {
+        followIcon.parentElement.setAttribute('follow-tooltip-text', 'now follwing');
+      } else {
+        followIcon.parentElement.setAttribute('unfollow-tooltip-text', 'not follwed');
+      }
+    }
+  }
+
   ajax() {
     const deleteContent = async () => {
       const url = `/contents/${this.contentId}`;
@@ -308,6 +358,14 @@ const ContentsHandler = class {
       return await response.text();
     }
 
+    const updateFollowStatus = async (followUserId) => {
+      const url = `/api/follow/${followUserId}`
+      const response = await fetch(url, {
+        method : 'PATCH'
+      })
+      return await response.text();
+    }
+
     const getTrendingPageEvent = async () => {
       const url = `/discover/trending`;
       const response = await fetch(url, {
@@ -324,7 +382,8 @@ const ContentsHandler = class {
       deleteContent,
       updateContent,
       updateLikeStatus,
-      addComment
+      addComment,
+      updateFollowStatus
     }
   }
 
@@ -338,6 +397,8 @@ const ContentsHandler = class {
     this.addUpdateLikeEvent();
     this.addSubmitCommentEvent();
     this.displayTime();
+    this.addFollowAndUnfollowEvent();
+    this.addTooltipForFollow();
   }
 }
 
