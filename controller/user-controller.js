@@ -21,14 +21,22 @@ const userController = {
   updateUser : async (req, res, next) => {
 
     try {
-      let user = await User.findOne().or([{ username : req.params.usernameOrOauthId }, { 'auth.googleId' : req.params.usernameOrOauthId}]);
+      let user = await User.findOne().or([{ username : req.params.usernameOrOauthId }, { 'auth.googleId' : req.params.usernameOrOauthId}])
+                            .populate({path : 'posts'});
       
       if (req.files.length > 0) {
         req.body.profilePhoto = req.files[0].location
       }
       
       Object.assign(user, req.body);
+
+      user.posts.forEach((post) => {
+        post.author = user;
+        post.save();
+      })
+
       await user.save();
+
       return res.end('success');
     
     } catch (error) {
