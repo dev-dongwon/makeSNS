@@ -69,20 +69,18 @@ nav {
   padding: 0px 15px;
   cursor: pointer;
   margin-left: 20px;
+  color: white;
 }
 
 #btn-post:hover {
-  background:  rgb(134, 134, 255);
+  background:  rgb(83, 83, 255);
   opacity: 0.7;
-  transition: 0.5s ease all;
+  transition: 0.3s ease all;
+  color: white;
 }
 
 #btn-post a {
   color: white;
-}
-
-#btn-post a:hover {
-  color: black;
 }
 
 #user-profile {
