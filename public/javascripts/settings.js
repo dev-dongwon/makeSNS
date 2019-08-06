@@ -1,12 +1,15 @@
 const SettingsHandler = class {
   constructor() {
     this.completeBtn = document.getElementById('btn-settings');
-
+    this.infoModal = document.getElementById('content-modal');
     this.locationInput = document.getElementById('input-location');
     this.bioInput = document.getElementById('input-bio');
     this.linkInput = document.getElementById('input-link');
     this.userIdentifier = document.getElementById('input-user-origin-identifier');
     this.previewArea = document.getElementsByClassName('settings-profile-image-preview')[0];
+    this.closeModal = document.getElementById('modal-btn-no');
+    this.excuteDeleteBtn = document.getElementById('modal-btn-yes');
+
  }
 
  async updateUserInfoEvent(event) {
@@ -79,7 +82,23 @@ const SettingsHandler = class {
 
   addDeleteUserEvent() {
     const deleteBtn = document.getElementsByClassName('settings-profile-delete-btn')[0];
-    deleteBtn.addEventListener('click', async () => {
+    
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', (event) => {
+        this.infoModal.style.display = "block";
+        this.addExecuteDeleteUserEvent();
+      })
+    }
+  }
+
+  addCloseModalEvent() {
+    this.closeModal.addEventListener('click', () => {
+      this.infoModal.style.display = "none";
+    })
+  }
+
+  addExecuteDeleteUserEvent() {
+    this.excuteDeleteBtn.addEventListener('click', async () => {
       const result = await this.ajax().deleteUserAjax();
       if (result === 'success') {
         alert('GOODBYE, SEEYA');
