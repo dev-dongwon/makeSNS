@@ -216,17 +216,18 @@ hr {
   padding: 5px;
   margin-top: 4%;
   display: grid;
-  grid-template-columns: 20% 50% 10% 10% 10%;
+  grid-template-columns: 15% 55% 10% 10% 10%;
   /* grid-template-columns: 20% 70% 10%; */
 }
 
 .content-reply-avatar {
-  position: relative
+  position: relative;
 }
 
 .content-reply-avatar img{
   position: absolute;
-  width: 100%;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
 
