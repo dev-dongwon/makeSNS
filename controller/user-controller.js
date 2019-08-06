@@ -18,6 +18,16 @@ const userController = {
       })(req, res, next)
     },
 
+  deleteUser : async (req, res, next) => {
+    try {
+      await User.deleteOne({username : req.user.username});
+      res.clearCookie('token', { path: '/' })
+      res.end('success');
+    } catch (error) {
+      next(error);
+    }
+  },
+
   updateUser : async (req, res, next) => {
 
     try {

@@ -77,6 +77,17 @@ const SettingsHandler = class {
     })
   }
 
+  addDeleteUserEvent() {
+    const deleteBtn = document.getElementsByClassName('settings-profile-delete-btn')[0];
+    deleteBtn.addEventListener('click', async () => {
+      const result = await this.ajax().deleteUserAjax();
+      if (result === 'success') {
+        alert('GOODBYE, SEEYA');
+        location.href = '/';
+      }
+    })
+  }
+
   ajax() {
     const updateUserInfoAjax = async (userInfoObj) => {
       const url = `/users/${this.userIdentifier.value}`;
@@ -87,14 +98,24 @@ const SettingsHandler = class {
       return await response.text();
     }
 
+    const deleteUserAjax = async () => {
+      const url = `/users/${this.userIdentifier.value}`;
+      const response = await fetch(url, {
+        method : 'DELETE',
+      })
+      return await response.text();
+    }
+
     return {
-      updateUserInfoAjax
+      updateUserInfoAjax,
+      deleteUserAjax
     }
   }
 
   run() {
     this.addUpdateUserInfoEvent();
     this.addChangeInputEvent();
+    this.addDeleteUserEvent();
   }
 }
 

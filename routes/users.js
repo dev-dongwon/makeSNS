@@ -26,4 +26,8 @@ router.get('/:username/likes', (req, res, next) => {
   userController.getLikesPage(req, res, next);
 })
 
+router.delete('/:username', auth.isLoggedIn, (req, res, next) => {
+  userController.deleteUser(req, res, next);
+})
+
 module.exports = router;
