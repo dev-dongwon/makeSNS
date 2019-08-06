@@ -103,7 +103,7 @@ const ProfileHandler = class {
     const images = document.getElementsByClassName('box-body-img');
     const randomNumber = Math.floor(Math.random() * ((images.length-1)+1));
 
-    if (images) {
+    if (images.length > 0) {
       this.profileBackground.style.backgroundImage = `url(${images[randomNumber].src})`;
     }
   }
