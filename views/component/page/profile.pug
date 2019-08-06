@@ -20,8 +20,9 @@ div.profile-info-wrapper#profile-info-wrapper
         p.meta-title Followers
       .profile-info-meta-likes
         if author.likePosts
-          p.meta-number #{author.likePosts.size}
-          p.meta-title Likes
+          a(href=`/users/${author.username}/likes`)
+            p.meta-number #{author.likePosts.size}
+            p.meta-title Likes
         else
           p.meta-number 0
           p.meta-title Likes
@@ -29,7 +30,7 @@ div.profile-info-wrapper#profile-info-wrapper
     .profile-info-content.profile-info-bio
         p #{author.bio || 'Bio info is empty'}
   if user && (user.username === requestUser)
-    a.profile-settings(href='/users/settings') go to settings
+    a.profile-settings(href='/users/settings') Settings
 hr.wrapper-line
 div.discover-content
   if author.posts.length > 0
