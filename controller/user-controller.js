@@ -22,9 +22,15 @@ const userController = {
 
     try {
       let user = await User.findOne().or([{ username : req.params.usernameOrOauthId }, { 'auth.googleId' : req.params.usernameOrOauthId}]);
+      
+      if (req.files.length > 0) {
+        req.body.profilePhoto = req.files[0].location
+      }
+      
       Object.assign(user, req.body);
       await user.save();
-      return res.json(user);
+      return res.end('success');
+    
     } catch (error) {
       next(error);
     }
