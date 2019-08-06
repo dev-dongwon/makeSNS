@@ -50,8 +50,8 @@ hr {
 }
 
 .content-header-avatar img{
-  width: 100%;
-  height: auto;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
 

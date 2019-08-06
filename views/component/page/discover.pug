@@ -13,7 +13,8 @@ div.discover-content
           a(href=`/profile/${post.author.username}`)
             img.box-header-avatar(src=`${post.author.profilePhoto}`)
           .box-header-id
-            span @#{post.author.username}
+            a(href=`/profile/${post.author.username}`)
+              span @#{post.author.username}
             if user && (`${post.author._id}` !== `${user._id}`)
               if user.followings.has(`${post.author._id}`)
                 div.follow-status now following
