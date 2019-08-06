@@ -25,9 +25,11 @@ if content
       input#hidden-content-id(type="hidden" value= content._id)
       .content-header
         .content-header-avatar
-          img(src=`${content.author.profilePhoto}`)
+          a(href=`/profile/${content.author.username}`)
+            img(src=`${content.author.profilePhoto}`)
         .content-header-username
-          p @#{content.author.username}
+          a(href=`/profile/${content.author.username}`)
+            p @#{content.author.username}
         .content-header-follow
           if user && (`${user._id}` !== `${content.author._id}`)
             if user.followings.has(`${content.author._id}`)
@@ -78,10 +80,12 @@ if content
             if comment.display === true
               .content-reply(id=`content-reply-${comment._id}`)
                 .content-reply-avatar
-                  img(src=`${comment.userAvatar}`)
+                  a(href=`/profile/${comment.username}`)
+                    img(src=`${comment.userAvatar}`)
                 .content-reply-comment
                   .content-reply-comment-id
-                    p @#{comment.username}
+                    a(href=`/profile/${comment.username}`)
+                      p @#{comment.username}
                   .content-reply-comment-text
                     p #{comment.content}
                 .content-reply-icon-update

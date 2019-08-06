@@ -65,6 +65,10 @@ hr {
   color: gray;
 }
 
+.content-header-username a {
+  text-decoration: none;
+} 
+
 .content-header-icon-wrapper {
   height: 100px;
   display: grid;
@@ -305,4 +309,9 @@ hr {
   z-index: 9999;
   text-align: center;
   border-radius: 5px;
+}
+
+.content-reply-comment-id a {
+  text-decoration: none;
+  color: gray;
 }
