@@ -9,16 +9,12 @@ div.settings-prorile-wrapper
       label.btn(for='post-image-btn') Upload Avatar
       input#post-image-btn(type='file' name='image' multiple)
   div.settings-profile-content
-    form.signin-box-form(action="#")
-      if user
-        input(type="hidden" id='input-user-origin-identifier' value=`${user._id}`)
-        div.form-label-group
-          input(type='text' name='username' id='input-username' placeholder='Enter your username' required='' autofocus='' value=`${user.username}`)
-          div.message-box#message-username
-        div.form-label-group
-          input(type='text' name='location' id='input-location' placeholder='Location' value=`${user.location || ''}`)
-        div.form-label-group
-          input(type='text' name='bio' id='input-bio' placeholder='Bio' value=`${user.bio || ''}`)
-        div.form-label-group
-          input(type='text' name='link' id='input-link' placeholder='Link' value=`${user.link || ''}`)
-        button#btn-settings(type='submit') Complete
+    if user
+      input(type="hidden" id='input-user-origin-identifier' value=`${user.username}`)
+      div.form-label-group
+        input(type='text' name='location' id='input-location' placeholder='Location' value=`${user.location || ''}`)
+      div.form-label-group
+        input(type='text' name='bio' id='input-bio' placeholder='Bio' value=`${user.bio || ''}`)
+      div.form-label-group
+        input(type='text' name='link' id='input-link' placeholder='Link' value=`${user.link || ''}`)
+      button#btn-settings Complete

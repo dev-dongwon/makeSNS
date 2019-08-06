@@ -21,6 +21,12 @@
   margin: 3% 1%;
 }
 
+.settings-profile-image-preview img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
 .settings-prifile-content-title {
   margin-bottom: 2%;
   font-weight: 900
