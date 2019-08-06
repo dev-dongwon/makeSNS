@@ -1,6 +1,6 @@
 div.settings-header-img
 h1.settings-prifile-content-title Profile
-p.settings-prifile-content-describe Your username, name, bio and links appear on your public profile.
+p.settings-prifile-content-describe 멋진 사진과 자세한 소개를 담은 프로필에 사람들은 주목하기 마련입니다
 div.settings-prorile-wrapper
   div.settings-profile-image
     div.settings-profile-image-preview
@@ -18,3 +18,7 @@ div.settings-prorile-wrapper
       div.form-label-group
         input(type='text' name='link' id='input-link' placeholder='Link' value=`${user.link || ''}`)
       button#btn-settings Complete
+div.settings-prorile-remove
+h1.settings-prifile-content-title Account Deletion
+p.settings-prifile-content-describe 계정을 삭제하면 모든 개인정보와 게시물이 삭제되며, 정보를 복구할 수 없습니다. 동의하실 경우 아래 버튼을 눌러주세요.
+button.btn.settings-profile-delete-btn 계정 삭제

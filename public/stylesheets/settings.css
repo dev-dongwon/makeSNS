@@ -10,7 +10,7 @@
 }
 
 .settings-profile-content {
-  min-height: 500px;
+  min-height: 350px;
 }
 
 .settings-profile-image-preview {
@@ -111,4 +111,13 @@
 
 .message-box p {
   font-size: smaller;
+}
+
+.settings-profile-delete-btn {
+  margin:  0 0;
+  background: red;
+  border: none;
+  color: white;
+  float: right;
+  width: 15%;
 }
