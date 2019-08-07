@@ -75,8 +75,8 @@ if content
         button#btn-comment-submit(type='submit') comment
       hr.comment-line
       .contnet-reply-box
-        if content.comment.length > 0
-          for comment in content.comment
+        if content.comments.length > 0
+          for comment in content.comments
             if comment.display === true
               .content-reply(id=`content-reply-${comment._id}`)
                 .content-reply-avatar
@@ -87,13 +87,17 @@ if content
                     a(href=`/profile/${comment.username}`)
                       p @#{comment.username}
                   .content-reply-comment-text
-                    p #{comment.content}
+                    p(id=`content-reply-text-${comment._id}`) #{comment.content}
                 .content-reply-icon-update
                   if user && (comment.authorId === `${user._id}`)
-                    img.reply-update-icon(src='/images/content/modify.png')
+                    img.reply-update-icon(src='/images/content/modify.png' id=`update-${comment._id}`)
                 .content-reply-icon-remove
                   if user && (comment.authorId === `${user._id}`)
                     img.reply-remove-icon(src='/images/content/delete.png' id=`${comment._id}`)
                 .content-reply-time
                   input.reply-created-time(type='hidden' value=`${comment.createdDate}`)
+              .content-update-text-area-wrapper(id=`content-update-text-area-${comment._id}`)
+                textarea.content-update-text-area(id=`content-update-form-${comment._id}` name="content" placeholder="Texting here" autofocus="" value='')
+                .btn-comment-update-cancel(id=`btn-comment-update-cancel-${comment._id}`) cancel
+                button.btn.btn-comment-update(id=`btn-comment-update-${comment._id}`) update
               hr.reply-line(id=`reply-line-${comment._id}`)

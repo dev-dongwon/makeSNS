@@ -246,8 +246,13 @@ hr {
   margin-bottom: 2%;
 }
 
-.content-reply-comment-text {
-  font-size: smaller;
+.content-reply-comment-text{
+  font-size: small;
+  min-height: 30px;
+  /* border:1px solid black; */
+  overflow: hidden;
+  width: 160%;
+  padding: 5px;
 }
 
 .content-reply-time {
@@ -314,4 +319,39 @@ hr {
 .content-reply-comment-id a {
   text-decoration: none;
   color: gray;
+}
+
+.content-update-text-area {
+  width: 100%;
+  resize: none;
+  height: auto;
+  margin-top: 3%;
+  border: none;
+  padding: 5%;
+  outline: none;
+  border: 1px solid gray;
+}
+
+.content-update-text-area-wrapper {
+  display: none;
+}
+
+.btn-comment-update {
+  margin-bottom: 5%;
+  margin-top: 3.5%;
+  outline: none;
+  padding: 4px 9px;
+  outline: none;
+  float: right;
+  background-color:black;
+  color: white;
+  font-size: small;
+}
+
+.btn-comment-update-cancel {
+  font-size: small;
+  float: left;
+  padding: 5% 5% 5% 0;
+  color: gray;
+  cursor: pointer;
 }
