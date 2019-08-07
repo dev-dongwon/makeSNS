@@ -10,7 +10,6 @@ const ContentsHandler = class {
     this.previewArea = document.getElementById('content-update-preview-area');
     this.replyArea = document.getElementsByClassName('contnet-reply-box')[0];
     this.commentInputArea = document.getElementById('content-comment-area');
-    this.date = Date.now();
   }
 
   async deleteContentEvent(event) {
@@ -162,73 +161,10 @@ const ContentsHandler = class {
     })
   }
 
-  addSubmitCommentEvent() {
-    const commentBtn = document.getElementById('btn-comment-submit');
-    commentBtn.addEventListener('click', async (event) => {
-      event.preventDefault();
-      const comment = document.getElementById('content-comment-area').value;
-      const contentId = document.getElementById('hidden-content-id').value;
-      const formData = {
-        comment: comment,
-        contentId : contentId
-      }
-      const result = await this.ajax().addComment(JSON.stringify(formData));
-
-      if (result === 'notLoggedIn') {
-        alert('로그인이 필요한 서비스입니다');
-        return;
-      }
-
-      const commentJsonData = JSON.parse(result);
-      const htmlForm = this.getHtmlForm(commentJsonData);
-      this.replyArea.appendChild(htmlForm.contentReply);
-      this.replyArea.appendChild(htmlForm.replyLine);
-      this.commentInputArea.value='';
-    })
-  }
-
-  getHtmlForm(comment) {
-    const htmlForm =
-    `
-      <div class="content-reply-avatar">
-        <img src="${comment.userAvatar}" />
-      </div>
-      <div class="content-reply-comment">
-        <div class="content-reply-comment-id">
-          <p>@${comment.username}</p>
-        </div>
-        <div class="content-reply-comment-text">
-          <p>${comment.content}</p>
-          </div>
-      </div>
-      <div class="content-reply-icon-update">
-        <img class="reply-update-icon" src="/images/content/modify.png">
-      </div>
-      <div class="content-reply-icon-remove">
-        <img class="reply-remove-icon" src="/images/content/delete.png">
-      </div>
-      <div class="content-reply-time">
-        ${this.calcDate(comment.createdDate)}
-      </div>
-    `
-
-    const contentReply = document.createElement('div');
-    contentReply.className = 'content-reply';
-    contentReply.innerHTML = htmlForm;
-
-    const replyLine = document.createElement('hr');
-    replyLine.className = 'reply-line';
-    replyLine.id = `${comment._id}`;
-    
-    return {
-      contentReply,
-      replyLine
-    }
-  }
-
   calcDate(postDate) {
+    const nowDate = Date.now();
     const parsedDate = Date.parse(postDate);
-    const gapByMinute = Math.floor((this.date - parsedDate)/(1000*60));
+    const gapByMinute = Math.floor((nowDate - parsedDate)/(1000*60));
 
     if (gapByMinute < 60) {
       return `${gapByMinute} m`
@@ -382,7 +318,6 @@ const ContentsHandler = class {
       deleteContent,
       updateContent,
       updateLikeStatus,
-      addComment,
       updateFollowStatus
     }
   }
@@ -395,7 +330,6 @@ const ContentsHandler = class {
     this.addCancelUpdateEvent();
     this.addupdateContentEvent();
     this.addUpdateLikeEvent();
-    this.addSubmitCommentEvent();
     this.displayTime();
     this.addFollowAndUnfollowEvent();
     this.addTooltipForFollow();
