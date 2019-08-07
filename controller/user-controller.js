@@ -1,4 +1,5 @@
 const User = require('../model/user');
+const Post = require('../model/post');
 const passport = require('passport');
 require('../auth/passport').setup()
 
@@ -32,7 +33,8 @@ const userController = {
 
     try {
       let user = await User.findOne().or([{ username : req.params.usernameOrOauthId }, { 'auth.googleId' : req.params.usernameOrOauthId}])
-                            .populate({path : 'posts'});
+                            .populate({path : 'posts'})
+                            .populate({path : 'comments'})
       
       if (req.files.length > 0) {
         req.body.profilePhoto = req.files[0].location
@@ -40,15 +42,24 @@ const userController = {
       
       Object.assign(user, req.body);
 
-      user.posts.forEach((post) => {
+      user.posts.forEach(async (post) => {
         post.author = user;
-        post.save();
+        await post.save();
+      })
+
+      user.comments.forEach(async (comment) => {
+        const existPost = await Post.findById({_id : comment.postId});
+        if (existPost) {
+          existPost.comments.forEach(async (postComment) => {
+            postComment.userAvatar = user.profilePhoto;
+            await postComment.save();
+          })
+        }
+        await existPost.save();
       })
 
       await user.save();
-
       return res.end('success');
-    
     } catch (error) {
       next(error);
     }
