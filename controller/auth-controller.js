@@ -25,7 +25,7 @@ const authController = {
             email: user.email
           };
 
-          const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
+          const token = await jwt.sign({ user: body }, process.env.JWT_SECRET);
           res.cookie('token', token, {
             httpOnly : true,
             maxAge: 1000*60*60
