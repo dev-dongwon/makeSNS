@@ -17,9 +17,13 @@ const commentsController = {
       })
   
       const post = await Post.findById(contentId);
-      post.comment.push(newComment);
+      post.comments.push(newComment);
       post.meta.comments += 1;
-      post.save();
+      await post.save();
+      
+      user.comments.push(newComment);
+      await user.save();
+      
       return res.json(newComment);
     } catch (error) {
       next(error);
@@ -34,7 +38,7 @@ const commentsController = {
       comment.save();
   
       const post = await Post.findById(comment.postId);
-      post.comment.filter(val => `${val._id}` === commentId )[0].display = false;
+      post.comments.filter(val => `${val._id}` === commentId )[0].display = false;
       post.meta.comments -= 1;
       post.save();
   
@@ -42,6 +46,15 @@ const commentsController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  updateComment : async (req, res, next) => {
+    const {id, updatedReply, contentId} = req.body;
+    const post = await Post.findById(contentId);
+    post.comments.filter(comment => `${comment._id}` === id)[0]
+                  .content = updatedReply;
+    await post.save();
+    return res.end('success');
   }
 }
 
