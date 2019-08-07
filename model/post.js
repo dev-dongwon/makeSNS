@@ -30,7 +30,7 @@ const postSchema = mongoose.Schema({
     of : { type : Schema.Types.ObjectId, ref : 'User' },
     default : {}
   },
-  comment : [CommentSchema],
+  comments : [CommentSchema],
   display : {
     type : Boolean,
     default : true

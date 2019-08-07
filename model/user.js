@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema({
     default : '/images/profile_dummy.png'
   },
   posts : [{ type : Schema.Types.ObjectId, ref : 'Post' }],
+  comments : [{type : Schema.Types.ObjectId, ref : 'Comment' }],
   createdDate : {
     type : Date,
     default : Date.now()
