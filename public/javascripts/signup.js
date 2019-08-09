@@ -1,5 +1,6 @@
 const SignupHandler = class {
   constructor() {
+    this.timer;
     this.usernameInput = document.getElementById('input-username');
     this.emailInput = document.getElementById('input-email');
     this.passwordInput = document.getElementById('input-password');
@@ -67,13 +68,23 @@ const SignupHandler = class {
 
   addCheckDupleUsernameEvent() {
     this.usernameInput.addEventListener('keyup', (event) => {
-      this.checkDupleUsername(event);
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        this.checkDupleUsername(event);
+      }, 500);
     })
   }
   
   addCheckDupleEmailEvent() {
     this.emailInput.addEventListener('keyup', (event) => {
-      this.checkDupleEmail(event);
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        this.checkDupleEmail(event);
+      }, 500);
     })
   }
 
