@@ -69,9 +69,11 @@ const indexController = {
                            .populate({path : 'followings'});
 
     const followingArr = user.followings;
-    const posts = await Array.from(followingArr).reduce( async function (acc, following, index) {
+    const posts = await Array.from(followingArr).reduce( async (acc, following, index) => {
       const target = await User.findById(following[1]._id)
                                 .populate({path : 'posts'})
+      console.log(target.posts);
+      console.log('==== acc', acc);
       target.posts.forEach( val => acc.push(val) )
       return acc;
     },[])
