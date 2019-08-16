@@ -13,7 +13,7 @@ const authController = {
     }, async (err, user, info) => {
       try {
         if (err || !user) {
-          req.flash('message',info.message)
+          req.flash('message', info.message)
           return res.redirect('/signin')
         }
 

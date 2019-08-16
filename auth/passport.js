@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../model/user');
+const pool = require('../db/connect-mysql').pool;
 require('dotenv').config()
 
 exports.setup = () => {
@@ -9,7 +10,9 @@ exports.setup = () => {
       passwordField: 'password',
     }, async (usernameOrEmail, password, done) => {
       try {
-        const user = await User.findOne().or([{ username : usernameOrEmail }, { email : usernameOrEmail}]);
+        const [rows] =  await pool.query(`SELECT * FROM USERS WHERE username = "${usernameOrEmail}"`);
+        const user = rows[0];
+
         if (!user) {
           return done(null, false, {message : {'warning' : 'invaild username or password'}});
         }
