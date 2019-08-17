@@ -18,20 +18,24 @@ const authController = {
         }
 
         req.login(user, { session: false }, async (error) => {
-          if (error) return next(error)
-          const body = {
-            _id: user._id,
-            username : user.username || user.email,
-            email: user.email
-          };
 
+          if (error) return next(error)
+
+          const body = {
+            id: user.id,
+            username: user.username 
+          }
+  
           const token = await jwt.sign({ user: body }, process.env.JWT_SECRET);
+          
           res.cookie('token', token, {
             httpOnly : true,
             maxAge: 1000*60*60
           });
-          req.flash('message',info.message)
+          
+          req.flash('message', info.message)
           return res.redirect('/');
+        
         });
       } catch (error) {
         return next(error);
