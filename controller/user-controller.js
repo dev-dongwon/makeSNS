@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const User = require('../model/user');
 const Post = require('../model/post');
 const passport = require('passport');
@@ -8,14 +9,33 @@ const userController = {
   addUser : (req, res, next) => {
       passport.authenticate('signup', {
         session : false
-      }, (err, user, info) => {
-        req.flash('INFO',info.message)
-        
-        if (err || !user) {
+      }, async (err, user, info) => {
+
+        if (err) {
+          next(err);
+          return;
+        }
+
+        if (!user) {
+          req.flash('message', info.message)
           return res.redirect('/signup')
         }
 
-        return res.redirect('/signin');
+        const body = {
+          id: user.id,
+          username: user.username 
+        }
+
+        const token = await jwt.sign({ user: body }, process.env.JWT_SECRET);
+        
+        res.cookie('token', token, {
+          httpOnly : true,
+          maxAge: 1000*60*60
+        });
+
+        req.flash('INFO', info.message);
+        return res.redirect('/');
+      
       })(req, res, next)
     },
 
