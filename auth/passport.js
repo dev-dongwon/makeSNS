@@ -11,20 +11,28 @@ exports.setup = () => {
       passwordField: 'password',
     }, async (usernameOrEmail, password, done) => {
       try {
+
         const [rows] =  await pool.query(`SELECT * FROM USERS WHERE username = "${usernameOrEmail}" or email = "${usernameOrEmail}"`);
-        const userInfo = rows[0];
+        
+        // db에 유저 정보가 있으면 userInfo에 유저 정보 담음
+        let userInfo = false;
+        if (rows.length > 0 ) {
+          userInfo = rows[0];
+        }
 
         if (!userInfo) {
           return done(null, false, {message : {'warning' : 'invaild username or password'}});
         }
 
-        const user = new User(userInfo.id, userInfo.username, userinfo.email, userInfo.password);
-        
+        const user = new User(userInfo.id, userInfo.username, userInfo.email, userInfo.password);
+
+        // password validation 체크
         if (!await user.isValidPassword(password)) {
           return done(null, false, {message : {'warning' : 'invaild username or password'}});
         }
 
-        return done(null, user, { message : {'success' : 'Logged in Successfully'}});
+        return done(null, user, {message : {'success' : `${user.username} 님, 환영합니다!`}});
+      
       } catch (error) {
         return done(error);
       }
