@@ -53,7 +53,7 @@ exports.setup = () => {
         const {dupleUsernameCount} = dupleUsername[0];
 
         if (dupleUsernameCount > 0) {
-          return done(null, false, {'warning' : '동일한 username이 존재합니다'});
+          return done(null, false, { message : {'warning' : '동일한 유저 네임이 존재합니다.'}});
         }
 
         // email 중복 검사
@@ -71,7 +71,7 @@ exports.setup = () => {
         const {dupleEmailCount} = dupleEmail[0];
 
         if (dupleEmailCount > 0) {
-          return done(null, false, {'warning' : '동일한 이메일 주소가 존재합니다'});
+          return done(null, false, { message : {'warning' : '동일한 이메일 주소가 존재합니다.'}} );
         }
 
         const user = new User(null, req.body.username, email);
@@ -88,7 +88,7 @@ exports.setup = () => {
 
         if (result.affectedRows === 1 && result.serverStatus === 2) {
           user.id = result.insertId;
-          return done(null, user, { 'success' :  `${user.username} is Joined Successfully`});
+          return done(null, user, {message : { 'success' :  `${user.username} is Joined Successfully`}});
         } else {
           throw Error('db insert 오류');
         }
