@@ -1,6 +1,5 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-// const User = require('../model/user');
 const User = require('../model/User');
 const pool = require('../db/connect-mysql').pool;
 require('dotenv').config()
@@ -19,7 +18,7 @@ exports.setup = () => {
           return done(null, false, {message : {'warning' : 'invaild username or password'}});
         }
 
-        const user = new User(userInfo.id, userInfo.username, userInfo.password);
+        const user = new User(userInfo.id, userInfo.username, userinfo.email, userInfo.password);
         
         if (!await user.isValidPassword(password)) {
           return done(null, false, {message : {'warning' : 'invaild username or password'}});
@@ -39,31 +38,61 @@ exports.setup = () => {
     passReqToCallback: true
   }, async (req, email, password, done) => {
     try {
-        // username, email 중복 검사 쿼리
-        const checkDupleUserInfo = pool.Promise.query(
+        // username 중복 검사
+        const checkDupleUsernameInfo = await pool.query(
           `
           SELECT
-            COUNT(*) duple_user
+            COUNT(*) dupleUsernameCount
           FROM
             USERS
           WHERE
             username = "${req.body.username}"
-            OR
+        `)
+
+        const [dupleUsername] = checkDupleUsernameInfo;
+        const {dupleUsernameCount} = dupleUsername[0];
+
+        if (dupleUsernameCount > 0) {
+          return done(null, false, {'warning' : '동일한 username이 존재합니다'});
+        }
+
+        // email 중복 검사
+        const checkDupleEmailInfo = await pool.query(
+          `
+          SELECT
+            COUNT(*) dupleEmailCount
+          FROM
+            USERS
+          WHERE
             email = "${email}"
         `)
-        // const existEmail = await User.findOne({ email });
-        // const existUsername = await User.findOne({ 'username' : req.body.username });
-        
-        // if (existEmail) {
-        //   return done(null, false, {'warning' : '같은 이메일 주소가 존재합니다'});
-        // }
 
-        // if (existUsername) {
-        //   return done(null, false, {'warning' : '같은 유저 이름이 존재합니다'});
-        // }
+        const [dupleEmail] = checkDupleEmailInfo;
+        const {dupleEmailCount} = dupleEmail[0];
 
-        const user = await User.create({ "username" : req.body.username, email, password });
-        return done(null, user, { 'success' :  `${user.username} is Joined Successfully`});
+        if (dupleEmailCount > 0) {
+          return done(null, false, {'warning' : '동일한 이메일 주소가 존재합니다'});
+        }
+
+        const user = new User(null, req.body.username, email);
+        password = await user.getCryptoPassword(password);
+
+        const [result] = await pool.query(
+          `
+          INSERT INTO USERS
+            (username, email, password)
+          VALUES
+            ("${user.username}", "${user.email}", "${password}");
+          `
+        )
+
+        if (result.affectedRows === 1 && result.serverStatus === 2) {
+          user.id = result.insertId;
+          return done(null, user, { 'success' :  `${user.username} is Joined Successfully`});
+        } else {
+          throw Error('db insert 오류');
+        }
+
       } catch (error) {
         done(error);
       }
