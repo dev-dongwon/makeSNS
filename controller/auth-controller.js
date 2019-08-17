@@ -1,5 +1,5 @@
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
+const generateJWTToken = require('../utils/jwt-token-generator');
 const googleAuthApi = require('../auth/googleapis');
 const User = require('../model/user');
 
@@ -12,30 +12,29 @@ const authController = {
       session : false
     }, async (err, user, info) => {
       try {
-        if (err || !user) {
+
+        if (err) {
+          return next(err);
+        }
+
+        if (!user) {
           req.flash('message', info.message)
-          return res.redirect('/signin')
+          return res.redirect('/signin');
         }
 
         req.login(user, { session: false }, async (error) => {
-
           if (error) return next(error)
 
-          const body = {
+          user = {
             id: user.id,
-            username: user.username 
+            username: user.username
           }
-  
-          const token = await jwt.sign({ user: body }, process.env.JWT_SECRET);
           
-          res.cookie('token', token, {
-            httpOnly : true,
-            maxAge: 1000*60*60
-          });
-          
+          await generateJWTToken(res, user);
+
           req.flash('message', info.message)
           return res.redirect('/');
-        
+
         });
       } catch (error) {
         return next(error);
