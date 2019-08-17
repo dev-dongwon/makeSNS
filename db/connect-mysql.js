@@ -24,6 +24,7 @@ const getMysqlConnection = async () => {
     
   } catch (error) {
     console.error(`error occured in mysql connection`);
+    process.exit();
   }
 }
 
