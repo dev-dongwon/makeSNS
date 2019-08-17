@@ -16,8 +16,9 @@ const userController = {
           return;
         }
 
+        req.flash('message', info.message)
+
         if (!user) {
-          req.flash('message', info.message)
           return res.redirect('/signup')
         }
 
@@ -33,7 +34,6 @@ const userController = {
           maxAge: 1000*60*60
         });
 
-        req.flash('INFO', info.message);
         return res.redirect('/');
       
       })(req, res, next)
