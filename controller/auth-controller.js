@@ -23,19 +23,13 @@ const authController = {
         }
 
         req.login(user, { session: false }, async (error) => {
-          if (error) return next(error)
 
-          user = {
-            id: user.id,
-            username: user.username
-          }
-          
           await generateJWTToken(res, user);
-
           req.flash('message', info.message)
           return res.redirect('/');
 
         });
+
       } catch (error) {
         return next(error);
       }
