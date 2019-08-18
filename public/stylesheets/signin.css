@@ -1,6 +1,6 @@
 .signin-box {
   position: absolute;
-  top : 30%;
+  top : 28%;
   left: 35%;
   width: 30%;
   text-align: center;
@@ -26,7 +26,7 @@
   margin: 3% 0;
   width: 70%;
   height:60px;
-  background: pink;
+  background: rgb(134, 134, 255);
   color:#fff;
   border:none;
   position:relative;
@@ -42,11 +42,42 @@
   color: black
 }
 
+hr {
+  width: 70%;
+  margin: auto;
+}
+
+#btn-signin-google {
+  background: rgb(255, 73, 73);
+  color: white;
+  margin-bottom: 3%;
+}
+
+#btn-signin-google:hover {
+  color: black
+}
+
 .siginin-title{
   text-align: left;
   margin-left: 15%;
   margin-bottom: 5%;
-  transition: 0.5s ease all;
+}
+
+
+.signin-link-forgot-password {
+  text-align: left;
+  margin-left: 15%;
+}
+
+.signin-link-forgot-password a {
+  text-decoration: none;
+  font-size: smaller;
+  color: gray
+}
+
+.signin-link-forgot-password a:hover {
+  color: black;
+  text-decoration: underline;
 }
 
 body {

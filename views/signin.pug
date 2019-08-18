@@ -6,4 +6,7 @@ html(lang='ko')
   body
     include component/common/header.pug
     div.main
+      include component/common/flash-message.pug
       include component/page/signin.pug
+  script(src='/javascripts/signin.js')
+  script(src='/javascripts/flash-message.js')

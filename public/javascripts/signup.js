@@ -1,5 +1,6 @@
 const SignupHandler = class {
   constructor() {
+    this.timer;
     this.usernameInput = document.getElementById('input-username');
     this.emailInput = document.getElementById('input-email');
     this.passwordInput = document.getElementById('input-password');
@@ -8,6 +9,7 @@ const SignupHandler = class {
     this.messageBoxOfUsername = document.getElementById('message-username');
     this.messageBoxOfEmail = document.getElementById('message-email');
     this.messageBoxOfPassword = document.getElementById('message-password');
+    this.googleRegisterBtn = document.getElementById('btn-google-signup');
 
     this.reg = {
       validEmail : /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/,
@@ -57,29 +59,49 @@ const SignupHandler = class {
 
   addCheckValidUserEvent() {
     this.signupBtn.addEventListener('click', (event) => {
-      console.log(this.isValidUser());
       if (!this.isValidUser()) {
         event.preventDefault();
-        alert('올바르지 않은 회원가입 정보가 있습니다');
+        alert('회원정보를 정확히 입력해주세요');
       }
     })
   }
 
   addCheckDupleUsernameEvent() {
     this.usernameInput.addEventListener('keyup', (event) => {
-      this.checkDupleUsername(event);
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        this.checkDupleUsername(event);
+      }, 500);
     })
   }
   
   addCheckDupleEmailEvent() {
     this.emailInput.addEventListener('keyup', (event) => {
-      this.checkDupleEmail(event);
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        this.checkDupleEmail(event);
+      }, 500);
     })
   }
 
   addCheckValidPasswordEvent() {
     this.passwordInput.addEventListener('keyup', (event) => {
       this.checkValidPassword(event);
+    })
+  }
+
+  googleRegisterEvent(event) {
+    event.preventDefault();
+    location.href = '/auth/google-register';
+  }
+
+  addGoogleRegisterEvent() {
+    this.googleRegisterBtn.addEventListener('click', (event) => {
+      this.googleRegisterEvent(event);
     })
   }
 
@@ -181,6 +203,7 @@ const SignupHandler = class {
     this.addCheckDupleEmailEvent();
     this.addCheckValidPasswordEvent();
     this.addCheckValidUserEvent();
+    this.addGoogleRegisterEvent();
   }
 }
 

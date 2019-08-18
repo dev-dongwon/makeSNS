@@ -3,8 +3,10 @@ html(lang='ko')
   head
     include component/common/head.pug
     link(rel='stylesheet', href='/stylesheets/signup.css')
-    script(src='/javascripts/signup.js')
   body
     include component/common/header.pug
     div.main
+      include component/common/flash-message.pug
       include component/page/signup.pug
+  script(src='/javascripts/flash-message.js')
+  script(src='/javascripts/signup.js')

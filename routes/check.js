@@ -1,6 +1,6 @@
 const express         = require('express'),
       router          = express.Router(),
-      checkController = require('../controller/checkController');
+      checkController = require('../controller/check-controller');
 
 router.get('/username/:username', (req, res, next) => {
   checkController.checkDupleUsername(req, res, next);

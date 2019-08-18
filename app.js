@@ -11,14 +11,20 @@ const express       = require('express'),
       flash         = require('connect-flash')
 
 // utils
-const connectMongoDb     = require('./db/connectMongoDb'),
-checkJwtToken      = require('./auth/checkJwtToken');
+const connectMongoDb     = require('./db/connect-mongodb'),
+      checkJwtToken      = require('./auth/checkjwttoken');
 
 // routes module
 const indexRouter   = require('./routes/index'),
       authRouter    = require('./routes/auth'),
       usersRouter   = require('./routes/users'),
-      checkRouter   = require('./routes/check')
+      checkRouter   = require('./routes/check'),
+      apiRouter     = require('./routes/api'),
+      postRouter    = require('./routes/post'),
+      discoverRouter= require('./routes/discover'),
+      contentRouter = require('./routes/contents'),
+      commentRouter = require('./routes/comments'),
+      profileRouter = require('./routes/profile')
 
 // DB
 connectMongoDb();
@@ -53,9 +59,15 @@ app.use(checkJwtToken());
 
 // routes
 app.use('/', indexRouter);
+app.use('/contents', contentRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/check', checkRouter);
+app.use('/api', apiRouter);
+app.use('/post', postRouter);
+app.use('/discover', discoverRouter);
+app.use('/comments', commentRouter);
+app.use('/profile', profileRouter)
 
 // error handler
 app.use(function(req, res, next) {
