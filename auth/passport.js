@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../model/User');
+const User = require('../utils/db/user');
 const pool = require('../db/connect-mysql').pool;
 require('dotenv').config()
 
@@ -84,7 +84,7 @@ exports.setup = () => {
           }
           
           password = await User.getCryptoPassword(password);
-          
+
           const [result] = await pool.query(
             `
           INSERT INTO USERS
