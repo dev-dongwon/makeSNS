@@ -8,6 +8,7 @@ const SettingsHandler = class {
     this.bioInput = document.getElementById('input-bio');
     this.linkInput = document.getElementById('input-link');
     this.userIdentifier = document.getElementById('input-user-origin-identifier');
+    this.userPhoto = document.getElementById('input-user-photolink');
 
     this.messageBoxOfUsername = document.getElementById('message-username');
 
@@ -115,12 +116,16 @@ const SettingsHandler = class {
     const location = this.locationInput.value;
     const bio = this.bioInput.value;
     const link = this.linkInput.value;
+    const authGoogleId = this.userIdentifier.value;
+    const userPhoto = this.userPhoto.value;
 
     data.set('image', image);
     data.set('username', username);
     data.set('location', location);
     data.set('bio', bio);
     data.set('link', link);
+    data.set('authGoogleId', authGoogleId);
+    data.set('photolink', userPhoto);
 
     const result = await this.ajax().updateUserInfoAjax(data);
     return result;
@@ -134,6 +139,11 @@ const SettingsHandler = class {
         return;
       }
     const result = await this.updateUserInfoEvent(event);
+
+    if (result === 'dupleUsername') {
+      alert("동일한 유저 네임이 존재합니다.");
+      return;
+    }
 
     if (result === 'success') {
       location.href = '/'
@@ -155,9 +165,9 @@ const SettingsHandler = class {
     }
 
     const updateUserInfoAjax = async (userInfoObj) => {
-      const url = `/users/${this.userIdentifier.value}`;
+      const url = `/users/auth`;
       const response = await fetch(url, {
-        method : 'PATCH',
+        method : 'POST',
         body : userInfoObj
       })
       return await response.text();
