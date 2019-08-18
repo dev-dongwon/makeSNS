@@ -3,32 +3,18 @@ const express = require('express'),
       authController = require('../controller/auth-controller');
 
 // local-login
-router.post('/local-login', (req, res, next) => {
-  authController.localLogin(req, res, next)
-})
+router.post('/local-login', authController.localLogin);
 
-router.get('/google-login', (req, res, next) => {
-  authController.googleLogin(req, res, next);
-})
+router.get('/google-login', authController.googleLogin);
 
-router.get('/google-login/callback', (req, res, next) => {
-  authController.googleLoginCallback(req, res, next);
-})
+router.get('/google-login/callback', authController.googleLoginCallback);
 
-router.get('/google-register', (req, res, next) => {
-  authController.googleRegister(req, res, next);
-})
+router.get('/google-register', authController.googleRegister);
 
-router.get('/google-register/callback', (req, res, next) => {
-  authController.googleRegisterCallback(req, res, next);
-})
+router.get('/google-register/callback', authController.googleRegisterCallback);
 
-router.post('/logout', (req, res, next) => {
-  authController.logout(req, res, next);
-})
+router.post('/logout', authController.logout);
 
-router.get('/resetpassword', (req, res, next) => {
-  authController.resetPassword(req, res, next);
-})
+router.get('/resetpassword', authController.resetPassword);
 
 module.exports = router;

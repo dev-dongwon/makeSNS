@@ -6,28 +6,16 @@ const express     = require('express'),
 
       require('../auth/passport').setup()
 
-router.post('/', (req, res, next) => {
-  userController.addUser(req, res, next);
-})
+router.post('/', userController.addUser);
 
-router.patch('/:usernameOrOauthId', upload.array('image', 4), (req, res, next) => {
-  userController.updateUser(req, res, next);
-})
+router.patch('/:usernameOrOauthId', upload.array('image', 4), userController.updateUser);
 
-router.get('/settings', auth.isLoggedIn, (req, res) => {
-  userController.getSettingsPage(req, res)
-})
+router.get('/settings', auth.isLoggedIn, userController.getSettingsPage);
 
-router.get('/initSettings', auth.isLoggedIn, (req, res) => {
-  userController.getInitSettingsPage(req, res)
-})
+router.get('/initSettings', auth.isLoggedIn, userController.getInitSettingsPage);
 
-router.get('/:username/likes', (req, res, next) => {
-  userController.getLikesPage(req, res, next);
-})
+router.get('/:username/likes', userController.getLikesPage);
 
-router.delete('/:username', auth.isLoggedIn, (req, res, next) => {
-  userController.deleteUser(req, res, next);
-})
+router.delete('/:username', auth.isLoggedIn, userController.deleteUser);
 
 module.exports = router;
