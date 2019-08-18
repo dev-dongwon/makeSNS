@@ -7,15 +7,7 @@ const indexController = {
     try {
 
       let user = req.user;
-
-      if (req.user) {
-        const [row] = await pool.query(`SELECT * FROM USERS WHERE id = ${req.user.id}`);
-        user = row[0];
-      }
-  
-      const page = req.query.page || 0;
-      const limit = req.query.limit || 25;
-      const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
+      const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).limit(10);
   
       res.render('main', {
         title: 'Daily Frame | The creators Network',
@@ -23,6 +15,7 @@ const indexController = {
         posts : postArr,
         message : req.flash('message')
       });
+
     } catch (error) {
       next(error);
     }
@@ -84,7 +77,6 @@ const indexController = {
     const posts = await Array.from(followingArr).reduce( async (acc, following, index) => {
       const target = await User.findById(following[1]._id)
                                 .populate({path : 'posts'})
-      console.log('==== acc', acc);
       target.posts.forEach( async val => acc.push(val) )
       return await acc;
     },[])
