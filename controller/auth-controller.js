@@ -1,7 +1,8 @@
 const passport = require('passport');
 const generateJWTToken = require('../utils/jwt-token-generator');
 const googleAuthApi = require('../auth/googleapis');
-const User = require('../model/user');
+const userHandler = require('../utils/db/user');
+const pool = require('../db/connect-mysql').pool;
 
 require('dotenv').config()
 require('../auth/passport').setup()
@@ -55,17 +56,22 @@ const authController = {
       const me = await plus.people.get({ userId: 'me' });
       const email = me.data.emails[0].value;
       const profilePhoto = me.data.image.url;
-      const existEmail = await User.findOne({ 'auth.googleId' : email });
-  
-      if (existEmail) {
+
+      const [rows] =  await pool.query(`SELECT * FROM USERS WHERE auth_google_id = "${email}"`);
+
+      if (rows.length > 0) {
         req.flash('message', {'info' : '이미 google 회원가입이 되어 있습니다!'});
         res.redirect('/signin');
         return;
       }
-      
-      const user = await User.create({'auth.googleId' : email, 'profilePhoto' :profilePhoto});
-      req.flash('message', {'success' : 'google 회원가입이 완료되었습니다'});
-      return res.redirect('/signin')
+
+      const user = {
+        "authGoogleId" : email,
+        "photolink" : profilePhoto,
+      }
+
+      req.user = user;
+      next();
 
     } catch (error) {
       next(error);
@@ -81,25 +87,18 @@ const authController = {
     const me = await plus.people.get({ userId: 'me' });
 
     const email = me.data.emails && me.data.emails.length && me.data.emails[0].value;
-    const user = await User.findOne({ 'auth.googleId' : email });
+    
+    const [rows] =  await pool.query(`SELECT * FROM USERS WHERE auth_google_id = "${email}"`);
 
-    if(!user) {
-      req.flash('message', {'info' : '아직 회원 가입을 안하셨군요?'});
-      return res.redirect('/signup');
+    if (rows.length < 1) {
+      req.flash('message', {'info' : '아직 회원가입을 하지 않으셨군요?'});
+      res.redirect('/signup');
+      return;
     }
 
-    req.user = user;
-    const token = jwt.sign({ user }, process.env.JWT_SECRET);
-    res.cookie('token', token, {
-      httpOnly : true,
-      maxAge: 1000 * 60 * 60,
-    });
-
-    if (!user.username) {
-      req.flash('message', {'info' : '회원정보를 입력하시면 가입이 완료됩니다 (username 필수)'});
-      return res.redirect('/users/initSettings');
-    }
-
+    const userInfo = rows[0];
+    const user = userHandler.makeUserObj(userInfo.id, userInfo.username, userInfo.photo_link);
+    await generateJWTToken(res, user);
     res.redirect('/')
   },
 
