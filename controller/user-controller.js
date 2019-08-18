@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken')
+const generateJWTToken = require('../utils/jwt-token-generator');
 const User = require('../model/user');
 const Post = require('../model/post');
 const passport = require('passport');
@@ -7,37 +7,27 @@ require('../auth/passport').setup()
 const userController = {
 
   addUser : (req, res, next) => {
+    try {
       passport.authenticate('signup', {
         session : false
       }, async (err, user, info) => {
-
-        if (err) {
-          next(err);
-          return;
-        }
-
+  
         req.flash('message', info.message)
-
+        
         if (!user) {
           return res.redirect('/signup')
         }
-
-        const body = {
-          id: user.id,
-          username: user.username 
-        }
-
-        const token = await jwt.sign({ user: body }, process.env.JWT_SECRET);
-        
-        res.cookie('token', token, {
-          httpOnly : true,
-          maxAge: 1000*60*60
-        });
-
+  
+        // 회원가입 후 자동 로그인 : jwt 토큰 생성 후 메인 페이지로 리다이렉트 
+        await generateJWTToken(res, user);
         return res.redirect('/');
       
       })(req, res, next)
-    },
+
+    } catch (error) {
+      next(error)
+    }
+  },
 
   deleteUser : async (req, res, next) => {
     try {
