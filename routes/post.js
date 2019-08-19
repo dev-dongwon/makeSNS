@@ -4,6 +4,6 @@ const express         = require('express'),
       upload          = require('../utils/multer-upload'),
       authMiddlewares = require('../middlewares/auth')
 
-router.post('/', authMiddlewares.isLoggedIn, upload.array('image', 4), postController.uploadImage);
+router.post('/', authMiddlewares.isLoggedIn, upload.array('image', 4), postController.uploadPost);
 
 module.exports = router;

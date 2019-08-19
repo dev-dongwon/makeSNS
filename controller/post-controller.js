@@ -2,7 +2,7 @@ const User = require('../model/user');
 const Post = require('../model/post');
 
 const postController = {
-  uploadImage: async (req, res, next) => {
+  uploadPost: async (req, res, next) => {
     try {
 
       if (req.files && req.body.content === undefined) {
