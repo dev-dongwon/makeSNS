@@ -5,8 +5,7 @@ const SettingsHandler = class {
 
     this.usernameInput = document.getElementById('input-username');
     this.locationInput = document.getElementById('input-location');
-    this.bioInput = document.getElementById('input-bio');
-    this.linkInput = document.getElementById('input-link');
+    this.introductionInput = document.getElementById('input-bio');
     this.userIdentifier = document.getElementById('input-user-origin-identifier');
     this.userPhoto = document.getElementById('input-user-photolink');
 
@@ -114,16 +113,14 @@ const SettingsHandler = class {
     const image = document.getElementById('post-image-btn').files[0];
     const username = this.usernameInput.value;
     const location = this.locationInput.value;
-    const bio = this.bioInput.value;
-    const link = this.linkInput.value;
+    const introduction = this.introductionInput.value;
     const authGoogleId = this.userIdentifier.value;
     const userPhoto = this.userPhoto.value;
 
     data.set('image', image);
     data.set('username', username);
     data.set('location', location);
-    data.set('bio', bio);
-    data.set('link', link);
+    data.set('introduction', introduction);
     data.set('authGoogleId', authGoogleId);
     data.set('photolink', userPhoto);
 

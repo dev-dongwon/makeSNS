@@ -10,23 +10,6 @@ const userController = {
 
   addAuthUser : async (req, res, next) => {
     try {
-      const [rows] =  await pool.query(
-        `
-        SELECT
-          * 
-        FROM
-          USERS
-        WHERE
-          auth_google_id = "${req.body.authGoogleId}"`
-        );
-
-        console.log(rows);
-
-      if (rows.length > 0) {
-        req.flash('message', {'info' : '이미 google 회원가입이 되어 있습니다!'});
-        return res.redirect('/signin');
-      }
-
       // 클라이언트에서 중복 체크 후 서버에서도 중복 유저 네임 체크
       const checkDupleUsernameInfo = await pool.query(
         `
@@ -49,15 +32,15 @@ const userController = {
         req.body.photolink = req.files[0].location
       }
 
-      const {username, location, bio, link, authGoogleId, photolink} = req.body;
+      const {username, location, introduction, authGoogleId, photolink} = req.body;
 
       const [result] = await pool.query(
       
       `
         INSERT INTO USERS
-        (username, location, bio, link, auth_google_id, photo_link)
+        (username, location, introduction, auth_google_id, photo_link)
         VALUES
-        ("${username}", "${location}", "${bio}", "${link}", "${authGoogleId}", "${photolink}");
+        ("${username}", "${location}", "${introduction}", "${authGoogleId}", "${photolink}");
       `
       )
       
