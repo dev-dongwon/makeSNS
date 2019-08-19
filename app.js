@@ -1,3 +1,6 @@
+// .env 설정
+require('dotenv').config();
+
 // module
 const express       = require('express'),
       app           = express(),
@@ -22,13 +25,10 @@ const indexRouter   = require('./routes/index'),
       checkRouter   = require('./routes/check'),
       apiRouter     = require('./routes/api'),
       postRouter    = require('./routes/post'),
-      discoverRouter= require('./routes/discover'),
       contentRouter = require('./routes/contents'),
       commentRouter = require('./routes/comments'),
       profileRouter = require('./routes/profile')
 
-// .env 설정
-require('dotenv').config();
 
 // DB
 connectMongoDb();
@@ -70,7 +70,6 @@ app.use('/auth', authRouter);
 app.use('/check', checkRouter);
 app.use('/api', apiRouter);
 app.use('/post', postRouter);
-app.use('/discover', discoverRouter);
 app.use('/comments', commentRouter);
 app.use('/profile', profileRouter)
 
