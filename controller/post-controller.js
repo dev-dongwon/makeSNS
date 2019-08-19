@@ -1,32 +1,23 @@
-const User = require('../model/user');
-const Post = require('../model/post');
+const pool = require('../db/connect-mysql').pool;
 
 const postController = {
   uploadPost: async (req, res, next) => {
     try {
+      const [content, photo] = [req.body.content, req.files[0]];
 
-      if (req.files && req.body.content === undefined) {
+      if (photo === undefined) {
+        req.flash('message', {'info' : '사진은 반드시 작성해야 합니다'});
         return res.redirect('/');
       }
 
-      const postObj = req.body;
-      const user = req.user;
-      
-      const targetUser = await User.findOne({username : user.username});
-      const arr = [];
-      
-      req.files.forEach((img) => {
-        arr.push(img.location);
-      });
-
-      const post = await Post.create({
-        'content' : postObj.content,
-        'photo' : arr || [],
-        'author' : targetUser,
-      })
-
-      targetUser.posts.push(post._id);
-      targetUser.save();
+      await pool.query(
+        `
+          INSERT INTO POSTS
+          (CONTENT, PHOTO_LINK, USER_ID)
+          VALUES
+          ("${content}", "${photo.location}", "${req.user.id}");
+        `
+      )
 
       return res.redirect(`/contents/${post._id}`)
 
