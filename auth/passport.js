@@ -96,7 +96,7 @@ exports.setup = () => {
           
           if (result.affectedRows === 1 && result.serverStatus === 2) {
             const user = User.makeUserObj(result.insertId, req.body.username, "/images/profile_dummy.png");
-            return done(null, user, {message : { 'success' :  `${user.username} is Joined Successfully`}});
+            return done(null, user, {message : { 'success' :  `환영합니다, ${user.username} 님!`}});
           }
 
         } catch (error) {
