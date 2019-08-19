@@ -27,6 +27,9 @@ const indexRouter   = require('./routes/index'),
       commentRouter = require('./routes/comments'),
       profileRouter = require('./routes/profile')
 
+// .env 설정
+require('dotenv').config();
+
 // DB
 connectMongoDb();
 connectMysql.getMysqlConnection();
