@@ -45,14 +45,23 @@ const contentController = {
 
       // 게시물과 login user 와의 관계 (좋아요를 눌렀는지, 작성자와 팔로우가 됐는지)
       if (req.user) {
-        const [relationRowData] = await pool.query(
+        const [followRow] = await pool.query(
           `
-          SELECT follower_id, following_id FROM FOLLOW WHERE follower_id = "${req.user.id}" and following_id = "${post.author_id}"
-          UNION
-          SELECT user_id, post_id FROM LIKES WHERE user_id = "${req.user.id}" and post_id = "${post.post_id}";
+          SELECT follower_id, following_id
+          FROM FOLLOW
+          WHERE follower_id = "${req.user.id}" and following_id = "${post.author_id}";
+          `
+          )
+
+        const [likeRow] = await pool.query(
+          `
+          SELECT user_id, post_id
+          FROM LIKES
+          WHERE user_id = "${req.user.id}" and post_id = "${post.post_id}";
           `
         )
-        req.user.relation = relationRowData[0];
+        req.user.follow = followRow[0];
+        req.user.like = likeRow[0];
       }
 
       // 게시물 조회 수 update
@@ -94,20 +103,60 @@ const contentController = {
   },
 
   updateLike : async (req, res, next) => {
-
     try {
-      const user = await User.findById(req.user._id);
-      const content = await Post.findById(req.params.contentNumber);
-      
-      if (content.likeUsers && content.likeUsers.get(`${user._id}`)) {
-        await Post.updateToBeUnLikeStatus(content, user);
-        return res.end('unlike');
+
+      const [userId, postId] = [req.user.id, req.params.contentNumber];
+      const connection = await pool.getConnection(async conn => conn);
+
+      const [likeStatusRow] = await connection.query(
+        `
+        SELECT * FROM LIKES WHERE USER_ID = ${userId} and POST_ID = ${postId};
+        `
+      );
+
+      if (likeStatusRow.length === 0) {
+        // like 테이블에 삽입 후 해당 post의 like_count 업데이트
+        await connection.beginTransaction();
+        await connection.query(
+          "INSERT INTO LIKES (USER_ID, POST_ID) VALUES(?, ?)",
+          [userId, postId]
+        )
+        
+        await connection.query(
+          `
+          UPDATE POSTS
+          SET LIKE_COUNT = LIKE_COUNT + 1
+          WHERE ID = "${postId}";
+          `
+        )
+          
+          await connection.commit();
+          connection.release();
+          return res.end('like');
       }
-  
-      await Post.updateToBeLikeStatus(content, user);
-      return res.end('like')
+
+      // like 테이블에 삭제 후 해당 post의 like_count 업데이트
+      await connection.beginTransaction();
+      await connection.query(
+        `
+        DELETE FROM LIKES WHERE USER_ID = ${userId} and POST_ID = ${postId};
+        `
+      )
+      
+      await connection.query(
+        `
+        UPDATE POSTS
+        SET LIKE_COUNT = LIKE_COUNT - 1
+        WHERE ID = "${postId}";
+        `
+      )
+      
+      await connection.commit();
+      connection.release();
+      return res.end('unlike');
     
     } catch (error) {
+      console.error(error);
       next(error);
     }
   }
