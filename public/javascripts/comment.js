@@ -29,8 +29,8 @@ const CommentHandler = class {
       icon.addEventListener('click', (event) => {
         this.infoModal.style.display = "block";
         this.commentInputArea.value = '';
-        this.addRemoveCommentEvent(event);
       })
+      this.addRemoveCommentEvent(event);
     })
   }
 
@@ -92,10 +92,10 @@ const CommentHandler = class {
           </div>
       </div>
       <div class="content-reply-icon-update">
-        <img class="reply-update-icon" src="/images/content/modify.png" id='update-${comment._id}'>
+        <img class="reply-update-icon" src="/images/content/modify.png" id='update-${comment.id}'>
       </div>
       <div class="content-reply-icon-remove">
-        <img class="reply-remove-icon" src="/images/content/delete.png" id=${comment._id}>
+        <img class="reply-remove-icon" src="/images/content/delete.png" id=${comment.id}>
       </div>
       <div class="content-reply-time">
         ${this.calcDate(comment.createdDate)}
@@ -104,12 +104,12 @@ const CommentHandler = class {
 
     const contentReply = document.createElement('div');
     contentReply.className = 'content-reply';
-    contentReply.id = `content-reply-${comment._id}`;
+    contentReply.id = `content-reply-${comment.id}`;
     contentReply.innerHTML = htmlForm;
 
     const replyLine = document.createElement('hr');
     replyLine.className = 'reply-line';
-    replyLine.id = `reply-line-${comment._id}`;
+    replyLine.id = `reply-line-${comment.id}`;
     
     return {
       contentReply,
@@ -238,29 +238,32 @@ const CommentHandler = class {
 
   calcDate(postDate) {
     const nowDate = Date.now();
-    const parsedDate = Date.parse(postDate);
-    const gapByMinute = Math.floor((nowDate - parsedDate)/(1000*60));
+    const gapByMinute = Math.floor((nowDate - postDate)/(1000*60));
 
+    if (gapByMinute < 10) {
+      return `방금 전`
+    }
     if (gapByMinute < 60) {
-      return `${gapByMinute} m`
+
+      return `${gapByMinute} 분`
     }
 
     const gapByHours = Math.floor(gapByMinute / 60);
 
     if (gapByHours < 24) {
-      return `${gapByHours} h`
+      return `${gapByHours} 시`
     }
 
     const gapByDay = Math.floor(gapByHours / 24);
 
     if (gapByDay < 7) {
-      return `${gapByDay} d`
+      return `${gapByDay} 일`
     }
 
     const gapByWeek = Math.floor(gapByDay / 7);
 
     if (gapByWeek < 4) {
-      return `${gapByWeek} w` 
+      return `${gapByWeek} 주` 
     }
   }
 
