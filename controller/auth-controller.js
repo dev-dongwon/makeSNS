@@ -79,27 +79,32 @@ const authController = {
   },
 
   googleLoginCallback : async (req, res, next) => {
-    const code = req.query.code;
-    const {tokens} = await googleAuthApi.oauth2Client.getToken(code);
-    googleAuthApi.oauth2Client.setCredentials(tokens);
 
-    const plus = googleAuthApi.getGooglePlusApi(googleAuthApi.oauth2Client);
-    const me = await plus.people.get({ userId: 'me' });
+    try {
+      const code = req.query.code;
+      const {tokens} = await googleAuthApi.oauth2Client.getToken(code);
+      googleAuthApi.oauth2Client.setCredentials(tokens);
+  
+      const plus = googleAuthApi.getGooglePlusApi(googleAuthApi.oauth2Client);
+      const me = await plus.people.get({ userId: 'me' });
+      const email = me.data.emails && me.data.emails.length && me.data.emails[0].value;
+      
+      const [rows] =  await pool.query(`SELECT * FROM USERS WHERE auth_google_id = "${email}" and validation = "Y"`);
+  
+      if (rows.length < 1) {
+        req.flash('message', {'info' : '아직 회원가입을 하지 않으셨군요?'});
+        res.redirect('/signup');
+        return;
+      }
+  
+      const userInfo = rows[0];
+      const user = userHandler.makeUserObj(userInfo.ID, userInfo.USERNAME, userInfo.PHOTO_LINK);
+      await generateJWTToken(res, user);
+      res.redirect('/')
 
-    const email = me.data.emails && me.data.emails.length && me.data.emails[0].value;
-    
-    const [rows] =  await pool.query(`SELECT * FROM USERS WHERE auth_google_id = "${email}"`);
-
-    if (rows.length < 1) {
-      req.flash('message', {'info' : '아직 회원가입을 하지 않으셨군요?'});
-      res.redirect('/signup');
-      return;
+    } catch (error) {
+      next(error);      
     }
-
-    const userInfo = rows[0];
-    const user = userHandler.makeUserObj(userInfo.id, userInfo.username, userInfo.photo_link);
-    await generateJWTToken(res, user);
-    res.redirect('/')
   },
 
   logout : (req, res, next) => {
