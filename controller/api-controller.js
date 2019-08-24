@@ -1,6 +1,7 @@
 const User = require('../model/user');
 const emailsendUtil = require('../utils/nodemailer');
 const jwt = require('jsonwebtoken');
+const pool = require('../db/connect-mysql').pool;
 
 const apiController = {
   sendPasswordCheckEmail : async (req, res, next) =>{
@@ -32,16 +33,38 @@ const apiController = {
   },
 
   updateFollowStatus : async (req, res, next) => {
-    const user = await User.findById(req.user._id);
-    const followTarget = await User.findById(req.params.userId);
 
-    if (user.followings.has(req.params.userId)) {
-      await User.cancelFollow(user, followTarget);
+    try {
+      const followingId = req.params.userId;
+      
+      // follow 상태인지 확인
+      const [followStatusRow] = await pool.query(
+        `
+          SELECT * FROM FOLLOW WHERE FOLLOWER_ID = ${req.user.id} and FOLLOWING_ID = ${followingId};
+        `
+      )
+
+      // follow 상태가 아니라면 insert
+      if (followStatusRow.length === 0) {
+       await pool.query(
+          `
+          INSERT INTO FOLLOW (FOLLOWER_ID, FOLLOWING_ID) VALUES(${req.user.id}, ${followingId});
+          `
+        )
+        return res.end('follow');
+      }
+
+      // follow 상태라면 delete
+      await pool.query(
+        `
+          DELETE FROM FOLLOW WHERE FOLLOWER_ID = ${req.user.id} and FOLLOWING_ID = ${followingId};
+        `
+      )
       return res.end('unfollow');
+      
+    } catch (error) {
+      next(error);
     }
-
-    await User.addFollow(user, followTarget);
-    return res.end('follow');
   },
 }
 
