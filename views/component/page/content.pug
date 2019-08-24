@@ -32,7 +32,7 @@ if post
             p @#{post.author_username}
         .content-header-follow
           if user && (user.id !== post.author_id)
-            if user.relation && (user.relation.follower_id === user.id)
+            if user.follow
               img.box-header-follow.status-follow(src='/images/board/check.png' id=`follow-btn-${post.author_id}`)
             else
               img.box-header-follow.status-unfollow(src='/images/board/plus.svg' id=`follow-btn-${post.author_id}`)
@@ -60,15 +60,15 @@ if post
         div.box-icon-box
           p.box-comment-count #{post.post_comment_count}
         div.box-icon-box
-          if user && user.likePosts
-            if user.likePosts.has(`${post.post_id}`)
+          if user
+            if user.like
               img.box-bottom-like(src='/images/board/fill-like.png')
             else
               img.box-bottom-like(src='/images/board/like.png')
           else
             img.box-bottom-like(src='/images/board/like.png')
         div.box-icon-box
-          p.box-like-count #{post_like_count}
+          p.box-like-count #{post.post_like_count}
       hr
       .content-comment-box
         textarea#content-comment-area(name="comment", cols="30", rows="5" placeholder="commnet here")
