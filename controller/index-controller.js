@@ -6,13 +6,34 @@ const indexController = {
   home: async (req, res, next) => {
     try {
 
-      let user = req.user;
-      const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).limit(10);
+      // 테이블 풀스캔 대신 인덱스 먼저 접근 후 join 실행
+      const [posts] = await pool.query(
+        `
+        SELECT
+        post.ID as post_id, post.content as content, post.photo_link as photo_link,
+        post.like_count as like_count, user.username as username
+        FROM
+          POSTS as post
+        JOIN
+          USERS as user
+        ON
+          post.user_id = user.id
+        JOIN
+        (
+          SELECT id
+          FROM POSTS
+          ORDER BY id desc
+        ) post2
+        ON
+          post.id = post2.id
+        limit 20
+        `
+      )
   
       res.render('main', {
         title: 'Daily Frame | The creators Network',
-        user: user,
-        posts : postArr,
+        user: req.user,
+        posts,
         message : req.flash('message')
       });
 
@@ -47,20 +68,33 @@ const indexController = {
   discover : async (req, res, next) => {
 
     try {
-      const page = req.query.page || 0;
-      const limit = req.query.limit || 25;
-  
-      let user;
-  
-      if (req.user) {
-        user = await User.findById(req.user._id);
-      }
-  
-      const postArr = await Post.find({'display' : true}).sort({createdDate : -1}).skip(page*limit).limit(limit);
+      const [posts] = await pool.query(
+        `
+        SELECT
+        post.ID as post_id, post.content as content, post.photo_link as photo_link,
+        post.like_count as like_count, user.username as username
+        FROM
+          POSTS as post
+        JOIN
+          USERS as user
+        ON
+          post.user_id = user.id
+        JOIN
+        (
+          SELECT id
+          FROM POSTS
+          ORDER BY id desc
+        ) post2
+        ON
+          post.id = post2.id
+        limit 20
+        `
+      )
+
       res.render('discover', {
         title: 'Discover | Daily Frame',
-        posts : postArr,
-        user : user || null,
+        posts,
+        user : req.user,
       });
       
     } catch (error) {
