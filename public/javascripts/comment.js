@@ -181,7 +181,6 @@ const CommentHandler = class {
        const result = await this.ajax().updateCommentAjax(replyId, updatedForm.value);
        if (result === 'success') {
          const originText = originReply.getElementsByClassName('content-reply-comment-text')[0]
-         console.log(updatedForm.value)
          originText.innerHTML = updatedForm.value
          updateForm.style.display = 'none';
          originReply.style.display = 'grid';
@@ -241,29 +240,29 @@ const CommentHandler = class {
     const gapByMinute = Math.floor((nowDate - postDate)/(1000*60));
 
     if (gapByMinute < 10) {
-      return `방금 전`
+      return `방금`
     }
     if (gapByMinute < 60) {
 
-      return `${gapByMinute} 분`
+      return `${gapByMinute}분`
     }
 
     const gapByHours = Math.floor(gapByMinute / 60);
 
     if (gapByHours < 24) {
-      return `${gapByHours} 시`
+      return `${gapByHours}시간`
     }
 
     const gapByDay = Math.floor(gapByHours / 24);
 
     if (gapByDay < 7) {
-      return `${gapByDay} 일`
+      return `${gapByDay}일`
     }
 
     const gapByWeek = Math.floor(gapByDay / 7);
 
     if (gapByWeek < 4) {
-      return `${gapByWeek} 주` 
+      return `${gapByWeek}주` 
     }
   }
 
