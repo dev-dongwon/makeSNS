@@ -5,12 +5,13 @@ const postController = {
     try {
       const [content, photo] = [req.body.content, req.files[0]];
 
+      // 사진이 없을 경우
       if (photo === undefined) {
         req.flash('message', {'info' : '사진은 반드시 작성해야 합니다'});
         return res.redirect('/');
       }
 
-      await pool.query(
+      const [result] = await pool.query(
         `
           INSERT INTO POSTS
           (CONTENT, PHOTO_LINK, USER_ID)
@@ -19,7 +20,8 @@ const postController = {
         `
       )
 
-      return res.redirect(`/contents/${post._id}`)
+      // 포스팅한 게시물로 이동
+      return res.redirect(`/contents/${result.insertId}`)
 
     } catch (err) {
       next(err);
