@@ -54,6 +54,15 @@ const contentController = {
         )
         req.user.relation = relationRowData[0];
       }
+
+      // 게시물 조회 수 update
+      await pool.query(
+        `
+        UPDATE POSTS
+        SET VIEW_COUNT = VIEW_COUNT + 1
+        WHERE ID = "${req.params.contentNumber}";
+        `
+      )
       
       res.render('content', {
         title: 'Daily Frame | The creators Network',
