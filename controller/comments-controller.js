@@ -1,6 +1,5 @@
 const Post = require("../model/post");
 const pool = require("../db/connect-mysql").pool;
-const Comment = require("../model/comment");
 
 const commentsController = {
   addComment: async (req, res, next) => {
@@ -58,7 +57,7 @@ const commentsController = {
         `
         UPDATE POSTS
         SET COMMENT_COUNT = COMMENT_COUNT - 1
-        WHERE ID = "${postId}";
+        WHERE ID = ${postId};
         `
       );
 
