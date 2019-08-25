@@ -22,6 +22,7 @@ const indexController = {
         (
           SELECT id
           FROM POSTS
+          WHERE VALIDATION = "Y"
           ORDER BY id desc
         ) post2
         ON
@@ -95,6 +96,7 @@ const indexController = {
         (
           SELECT id
           FROM POSTS
+          WHERE VALIDATION = "Y"
           ORDER BY id desc
         ) post2
         ON
@@ -187,7 +189,7 @@ const indexController = {
         FROM
           USERS as author
         JOIN
-          ( select * from POSTS where USER_ID = ${followingId} ) as post
+          ( select * from POSTS where USER_ID = ${followingId} and validation = "Y" ) as post
         ON
           post.USER_ID = author.ID
         limit
