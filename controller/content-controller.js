@@ -1,5 +1,3 @@
-const Post = require('../model/post');
-const User = require('../model/user');
 const pool = require('../db/connect-mysql').pool;
 
 const contentController = {
@@ -90,7 +88,14 @@ const contentController = {
 
   deleteContent : async (req, res, next) => {
     try {
-      await Post.deleteContentByContentNumber(req.content);
+      await pool.query(
+        `
+        UPDATE POSTS
+        SET VALIDATION = "N"
+        WHERE ID = ${req.content.ID};
+        `
+      );
+
       return res.end('success');
     } catch (error) {
       next(error);
@@ -99,9 +104,27 @@ const contentController = {
 
   updateContent : async (req, res, next) => {
     try {
-      await Post.updateContent(req.content, req.files, req.body.content);
+      let updatedImg, updatedContent;
+
+      if (req.files.length > 0) {
+        updatedImg = req.files[0].location;
+      }
+
+      if (req.body.content) {
+        updatedContent = req.body.content;
+      }
+
+      await pool.query(`
+        UPDATE POSTS
+        SET
+          PHOTO_LINK = "${updatedImg || req.content.PHOTO_LINK}",
+          CONTENT = "${updatedContent || req.content.CONTENT}"
+        WHERE ID = ${req.content.ID};
+      `)
       return res.end('success');
+
     } catch (error) {
+      console.error(error);
       next(error);
     }
   },
