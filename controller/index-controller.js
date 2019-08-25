@@ -161,6 +161,20 @@ const indexController = {
       },{})
   
       user.follow = followObj;
+
+      // 좋아요 목록 가져오기
+      const [likeRow] = await pool.query(
+        `
+        SELECT * FROM LIKES WHERE user_id = ${user.id};
+        `
+      )
+
+      const likeObj = likeRow.reduce((acc, row) => {
+        const post = row.POST_ID;
+        acc[post] = post;
+        return acc;
+      },{})
+      user.like = likeObj;
   
       // follow한 사용자의 post 목록 가져오기
       const posts = await followingRow.reduce(async (acc, row) => {
@@ -175,7 +189,9 @@ const indexController = {
         JOIN
           ( select * from POSTS where USER_ID = ${followingId} ) as post
         ON
-          post.USER_ID = author.ID;
+          post.USER_ID = author.ID
+        limit
+          20;
         `)
   
         followPosts.forEach(async row => {
@@ -193,7 +209,7 @@ const indexController = {
       });
       
     } catch (error) {
-      
+      next(error);
     }
   }
 }
