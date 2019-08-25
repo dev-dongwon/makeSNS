@@ -33,11 +33,15 @@ const contentController = {
         FROM
           COMMENTS as comment
         JOIN
+          (SELECT * from POSTS where id = "${req.params.contentNumber}") as post
+        ON
+          post.ID = comment.post_id
+        JOIN
           USERS as user
         ON
-          comment.validation = 'Y'
-          and
           comment.USER_ID = user.ID;
+          and
+          comment.validation = 'Y'
         `
       )
 
