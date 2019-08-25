@@ -146,26 +146,55 @@ const indexController = {
 
   following : async (req, res, next) => {
 
-    const user = await User.findById(req.user._id)
-                           .populate({path : 'followings'});
-
-    const followingArr = user.followings;
-    const posts = await Array.from(followingArr).reduce( async (acc, following, index) => {
-      const target = await User.findById(following[1]._id)
-                                .populate({path : 'posts'})
-      target.posts.forEach( async val => acc.push(val) )
-      return await acc;
-    },[])
-
-    posts.sort((a, b) => {
-      return a.createdDate < b.createdDate
-    })
-
-    res.render('following', {
-      title: 'Following | Daily Frame',
-      user,
-      posts
-    });
+    try {
+      const user = req.user;
+    
+      // follow 정보 가져오기
+      const [followingRow] = await pool.query(`
+        SELECT FOLLOWING_ID FROM FOLLOW WHERE FOLLOWER_ID = ${user.id};
+      `);
+  
+      const followObj = followingRow.reduce((acc, row) => {
+        const following = row.FOLLOWING_ID;
+        acc[following] = following;
+        return acc;
+      },{})
+  
+      user.follow = followObj;
+  
+      // follow한 사용자의 post 목록 가져오기
+      const posts = await followingRow.reduce(async (acc, row) => {
+        const followingId = row.FOLLOWING_ID;
+        const [followPosts] = await pool.query(`
+  
+        SELECT
+          author.id author_id, author.username author_username, author.photo_link author_photolink,
+          post.id post_id, post.content post_content, post.photo_link post_photolink, post.created_date post_created_Date, post.view_count post_view_count, post.like_count post_like_count, post.comment_count post_comment_count
+        FROM
+          USERS as author
+        JOIN
+          ( select * from POSTS where USER_ID = ${followingId} ) as post
+        ON
+          post.USER_ID = author.ID;
+        `)
+  
+        followPosts.forEach(async row => {
+          acc = await acc;
+          acc.push(row)
+        });
+        
+        return await acc;
+      }, []);
+  
+      res.render('following', {
+        title: 'Following | Daily Frame',
+        user,
+        posts
+      });
+      
+    } catch (error) {
+      
+    }
   }
 }
 
