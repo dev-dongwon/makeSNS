@@ -39,9 +39,9 @@ const contentController = {
         JOIN
           USERS as user
         ON
-          comment.USER_ID = user.ID;
+          comment.USER_ID = user.ID
           and
-          comment.validation = 'Y'
+          comment.VALIDATION = 'Y';
         `
       )
 
