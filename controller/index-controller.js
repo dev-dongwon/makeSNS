@@ -68,17 +68,29 @@ const indexController = {
   discover : async (req, res, next) => {
 
     try {
+      const user = req.user;
+
+      // 날짜별 최신 상위 20개 포스트 가져오기
       const [posts] = await pool.query(
         `
         SELECT
-        post.ID as post_id, post.content as content, post.photo_link as photo_link,
-        post.like_count as like_count, user.username as username
+          post.ID as post_id,
+          post.content as content,
+          post.photo_link as photo_link,
+          post.like_count as like_count,
+          post.created_date as created_date,
+          post.view_count as view_count,
+          post.like_count as like_count,
+          post.comment_count as comment_count,
+          author.username as author_username,
+          author.id as author_id,
+          author.photo_link as author_photolink
         FROM
           POSTS as post
         JOIN
-          USERS as user
+          USERS as author
         ON
-          post.user_id = user.id
+          post.user_id = author.id
         JOIN
         (
           SELECT id
@@ -91,12 +103,42 @@ const indexController = {
         `
       )
 
+      if (user) {
+        // 로그인한 유저일 경우, 팔로우 목록 가져오기
+        const [followRow] = await pool.query(
+          `
+          SELECT * FROM FOLLOW WHERE follower_id = ${user.id};
+          `
+        );
+
+        const followObj = followRow.reduce((acc, row) => {
+          const following = row.FOLLOWING_ID;
+          acc[following] = following;
+          return acc;
+        },{})
+
+        user.follow = followObj;
+
+        // 좋아요 목록 가져오기
+        const [likeRow] = await pool.query(
+          `
+          SELECT * FROM LIKES WHERE user_id = ${user.id};
+          `
+        )
+
+        const likeObj = likeRow.reduce((acc, row) => {
+          const post = row.POST_ID;
+          acc[post] = post;
+          return acc;
+        },{})
+        user.like = likeObj;
+      }
+
       res.render('discover', {
         title: 'Discover | Daily Frame',
         posts,
-        user : req.user,
+        user
       });
-      
     } catch (error) {
       next(error);
     }
