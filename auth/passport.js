@@ -26,11 +26,11 @@ exports.setup = () => {
         }
 
         // validation check : 해당 패스워드가 일치하지 않는 경우
-        if (!await User.isValidPassword(password, userInfo.password)) {
+        if (!await User.isValidPassword(password, userInfo.PASSWORD)) {
           return done(null, false, {message : {'warning' : 'invaild username or password'}});
         }
 
-        const user = User.makeUserObj(userInfo.id, userInfo.username, userInfo.photo_link);
+        const user = User.makeUserObj(userInfo.ID, userInfo.USERNAME, userInfo.PHOTO_LINK);
         return done(null, user, {message : {'success' : `${user.username} 님, 환영합니다!`}});
       
       } catch (error) {
