@@ -13,7 +13,8 @@ const CommentHandler = class {
   }
 
   async removeEvent(event) {
-    const result = await this.ajax().removeCommentAjax(event.target.id);
+    const result = await this.ajax().removeCommentAjax(this.contentId, event.target.id);
+
     if (result === 'success') {
       const removeTarget = document.getElementById(`content-reply-${event.target.id}`);
       const replyLine = document.getElementById(`reply-line-${event.target.id}`);
@@ -29,6 +30,7 @@ const CommentHandler = class {
       icon.addEventListener('click', (event) => {
         this.infoModal.style.display = "block";
         this.commentInputArea.value = '';
+        this.excuteDeleteBtn.id = event.target.id;
       })
       this.addRemoveCommentEvent(event);
     })
@@ -40,8 +42,8 @@ const CommentHandler = class {
     })
   }
 
-  addRemoveCommentEvent(event) {
-    this.excuteDeleteBtn.addEventListener('click', () => {
+  addRemoveCommentEvent() {
+    this.excuteDeleteBtn.addEventListener('click', (event) => {
       this.removeEvent(event);
     })
   }
@@ -189,12 +191,12 @@ const CommentHandler = class {
   }
 
   ajax() {
-    const removeCommentAjax = async (id) => {
-      const url = `/comments/${id}`;
+    const removeCommentAjax = async (postID, commentId) => {
+      const url = `/comments/${postID}/${commentId}`;
       const response = await fetch(url, {
         method : 'DELETE'
       })
-      return await response.json();
+      return await response.text();
     }
 
     const updateCommentAjax = async (id, updatedReply) => {

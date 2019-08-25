@@ -1,5 +1,4 @@
 const Post = require("../model/post");
-const User = require("../model/user");
 const pool = require("../db/connect-mysql").pool;
 const Comment = require("../model/comment");
 
@@ -37,27 +36,36 @@ const commentsController = {
       }
 
       return res.json(updatedComment);
-    
+      
     } catch (error) {
       next(error);
     }
   },
-
+  
   removeComment: async (req, res, next) => {
     try {
-      const commentId = req.params.commentId;
-      const comment = await Comment.findById(commentId);
-      comment.display = false;
-      comment.save();
+      const {postId, commentId} = req.params;
+      const connection = await pool.getConnection(async conn => conn);
+      await connection.beginTransaction();
 
-      const post = await Post.findById(comment.postId);
-      post.comments.filter(
-        val => `${val._id}` === commentId
-      )[0].display = false;
-      post.meta.comments -= 1;
-      post.save();
+      const [commentRow] = await connection.query(`
+        UPDATE COMMENTS
+        SET VALIDATION = "N"
+        WHERE ID = ${commentId};
+      `);
 
-      res.json("success");
+      const [postRow] = await connection.query(
+        `
+        UPDATE POSTS
+        SET COMMENT_COUNT = COMMENT_COUNT - 1
+        WHERE ID = "${postId}";
+        `
+      );
+
+      await connection.commit();
+      connection.release();
+
+      res.end("success");
     } catch (error) {
       next(error);
     }

@@ -93,11 +93,11 @@ if post
                     img.reply-update-icon(src='/images/content/modify.png' id=`update-${comment.comment_id}`)
                 .content-reply-icon-remove
                   if user && (comment.user_id === user.id)
-                    img.reply-remove-icon(src='/images/content/delete.png' id=`${comment.comment_id}`)
+                    img.reply-remove-icon(src='/images/content/delete.png' id= comment.comment_id)
                 .content-reply-time
                   input.reply-created-time(type='hidden' value=`${comment.comment_created_date}`)
               .content-update-text-area-wrapper(id=`content-update-text-area-${comment.comment_id}`)
                 textarea.content-update-text-area(id=`content-update-form-${comment.comment_id}` name="content" placeholder="Texting here" autofocus="" value='')
                 .btn-comment-update-cancel(id=`btn-comment-update-cancel-${comment.comment_id}`) cancel
                 button.btn.btn-comment-update(id=`btn-comment-update-${comment.comment_id}`) update
-              hr.reply-line(id=`reply-line-${comment._id}`)
+              hr.reply-line(id=`reply-line-${comment.comment_id}`)

@@ -5,7 +5,7 @@ const express         = require('express'),
 
 router.post('/', authMiddlewares.isLoggedInforAjax, commentsController.addComment);
 
-router.delete('/:commentId', commentsController.removeComment);
+router.delete('/:postID/:commentId', commentsController.removeComment);
 
 router.patch('/:commentId', commentsController.updateComment);
 
