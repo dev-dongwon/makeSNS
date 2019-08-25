@@ -206,7 +206,6 @@ const CommentHandler = class {
         body : JSON.stringify({
           id,
           updatedReply,
-          contentId : this.contentId
         }),
         headers: {
           'Accept': 'application/json',

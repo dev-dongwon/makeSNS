@@ -1,4 +1,3 @@
-const Post = require("../model/post");
 const pool = require("../db/connect-mysql").pool;
 
 const commentsController = {
@@ -71,13 +70,20 @@ const commentsController = {
   },
 
   updateComment: async (req, res, next) => {
-    const { id, updatedReply, contentId } = req.body;
-    const post = await Post.findById(contentId);
-    post.comments.filter(
-      comment => `${comment._id}` === id
-    )[0].content = updatedReply;
-    await post.save();
-    return res.end("success");
+    try {
+      const { id, updatedReply } = req.body;
+  
+      await pool.query(`
+        UPDATE COMMENTS
+        SET COMMENT = "${updatedReply}"
+        WHERE ID = ${id};
+      `)
+    
+      return res.end("success");
+    
+    } catch (error) {
+      next(error);
+    }
   }
 };
 
