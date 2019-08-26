@@ -26,13 +26,13 @@ const profileController = {
         `
         SELECT *
         FROM 
-        (select count(*) like_count from LIKES where user_id = 36) as likes
+        (select count(*) like_count from LIKES where user_id = ${author.id}) as likes
         JOIN
-        (select count(*) post_count from POSTS where user_id = 36) as posts
+        (select count(*) post_count from POSTS where user_id = ${author.id}) as posts
         JOIN
-        (select count(*) following_count from FOLLOW where follower_id = 36) as following
+        (select count(*) following_count from FOLLOW where follower_id = ${author.id}) as following
         JOIN
-        (select count(*) follower_count from FOLLOW where follower_id = 36) as follower
+        (select count(*) follower_count from FOLLOW where follower_id = ${author.id}) as follower
         `
       )
       author.info = authorInfoRow[0];
