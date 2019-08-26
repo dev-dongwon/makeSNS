@@ -1,6 +1,6 @@
 const generateJWTToken = require('../utils/jwt-token-generator');
+const userUtil = require('../utils/db/user');
 const User = require('../model/user');
-const Post = require('../model/post');
 const passport = require('passport');
 const userHandler = require('../utils/db/user');
 const pool = require('../db/connect-mysql').pool;
@@ -96,37 +96,39 @@ const userController = {
   },
 
   updateUser : async (req, res, next) => {
-
     try {
-      let user = await User.findOne().or([{ username : req.params.usernameOrOauthId }, { 'auth.googleId' : req.params.usernameOrOauthId}])
-                            .populate({path : 'posts'})
-                            .populate({path : 'comments'})
-      
+      const userId = req.params.userId;
+
+      const [userRow] = await pool.query(`
+        SELECT * FROM USERS WHERE ID = ${userId};
+      `)
+      const user = userRow[0];
+
+      let {location, introduction, password} = req.body;
+
+      let updatedPhotolink, updatedPassword;
+
       if (req.files.length > 0) {
-        req.body.profilePhoto = req.files[0].location
+        updatedPhotolink = req.files[0].location;
       }
-      
-      Object.assign(user, req.body);
+      if (password && password !== '') {
+        updatedPassword = await userUtil.getCryptoPassword(password);
+      }
 
-      user.posts.forEach(async (post) => {
-        post.author = user;
-        await post.save();
-      })
+      await pool.query(`
+        UPDATE USERS
+        SET
+          LOCATION = "${location}",
+          INTRODUCTION = "${introduction}",
+          PASSWORD = "${updatedPassword || user.PASSWORD}",
+          PHOTO_LINK = "${updatedPhotolink || user.PHOTO_LINK}"
+        WHERE ID = ${user.ID};
+      `);
 
-      user.comments.forEach(async (comment) => {
-        const existPost = await Post.findById({_id : comment.postId});
-        if (existPost) {
-          existPost.comments.forEach(async (postComment) => {
-            postComment.userAvatar = user.profilePhoto;
-            await postComment.save();
-          })
-        }
-        await existPost.save();
-      })
-
-      await user.save();
       return res.end('success');
+
     } catch (error) {
+      console.error(error)
       next(error);
     }
   },
@@ -145,10 +147,12 @@ const userController = {
     const userInfo = userRow[0];
 
     const user = {
+      id : userInfo.ID,
       photolink: userInfo.PHOTO_LINK,
       username: userInfo.USERNAME,
       location: userInfo.LOCATION,
       introduction: userInfo.INTRODUCTION,
+      authId: userInfo.AUTH_GOOGLE_ID,
     }
 
     res.render('settings', {
