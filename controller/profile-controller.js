@@ -58,11 +58,15 @@ const profileController = {
           SELECT * FROM LIKES WHERE user_id = ${user.id};
         `)
 
-        const likeObj = likeRow.reduce((acc, val) => {
-          const post = val.POST_ID;
-          acc[post] = post;
-          return acc;
-        })
+        let likeObj;
+
+        if (likeRow.length > 0) {
+          likeObj = likeRow.reduce((acc, val) => {
+            const post = val.POST_ID;
+            acc[post] = post;
+            return acc;
+          })
+        }
         user.like = likeObj;
       }
 
