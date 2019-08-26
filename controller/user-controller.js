@@ -1,6 +1,4 @@
 const generateJWTToken = require('../utils/jwt-token-generator');
-const userUtil = require('../utils/db/user');
-const User = require('../model/user');
 const passport = require('passport');
 const userHandler = require('../utils/db/user');
 const pool = require('../db/connect-mysql').pool;
@@ -112,7 +110,7 @@ const userController = {
         updatedPhotolink = req.files[0].location;
       }
       if (password && password !== '') {
-        updatedPassword = await userUtil.getCryptoPassword(password);
+        updatedPassword = await userHandler.getCryptoPassword(password);
       }
 
       await pool.query(`

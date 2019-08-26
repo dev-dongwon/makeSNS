@@ -1,4 +1,3 @@
-const User = require('../model/user');
 const emailsendUtil = require('../utils/nodemailer');
 const jwt = require('jsonwebtoken');
 const pool = require('../db/connect-mysql').pool;

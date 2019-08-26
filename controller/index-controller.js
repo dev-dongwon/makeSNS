@@ -1,5 +1,3 @@
-const Post = require('../model/post');
-const User =require('../model/user');
 const pool = require('../db/connect-mysql').pool;
 
 const indexController = {
