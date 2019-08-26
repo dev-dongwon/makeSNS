@@ -35,7 +35,6 @@ const userController = {
       const {username, location, introduction, authGoogleId, photolink} = req.body;
 
       const [result] = await pool.query(
-      
       `
         INSERT INTO USERS
         (username, location, introduction, auth_google_id, photo_link)
@@ -81,8 +80,15 @@ const userController = {
 
   deleteUser : async (req, res, next) => {
     try {
-      await User.deleteOne({username : req.user.username});
+      await pool.query(`
+        UPDATE USERS
+        SET validation = 'N'
+        WHERE ID = ${req.user.id};
+      `);
+
+      req.flash('message', {'info' : '회원 탈퇴가 완료되었습니다'});
       res.clearCookie('token', { path: '/' })
+
       res.end('success');
     } catch (error) {
       next(error);
@@ -126,15 +132,28 @@ const userController = {
   },
 
   getSettingsPage : async (req, res) => {
-    
-    let user;
-    if (req.user) {
-      user = await User.findById(req.user._id);
+
+    const [userRow] = await pool.query(`
+      SELECT * FROM USERS WHERE ID = ${req.user.id};
+    `)
+
+    if (userRow.length === 0) {
+      req.flash('message', {'info' : '해당하는 회원 정보가 없습니다'});
+      res.redirect('/');
+    }
+
+    const userInfo = userRow[0];
+
+    const user = {
+      photolink: userInfo.PHOTO_LINK,
+      username: userInfo.USERNAME,
+      location: userInfo.LOCATION,
+      introduction: userInfo.INTRODUCTION,
     }
 
     res.render('settings', {
       title: 'Settings | Daily Frame',
-      user : user,
+      user
     });
   },
 
