@@ -3,7 +3,7 @@ const SettingsHandler = class {
     this.completeBtn = document.getElementById('btn-settings');
     this.infoModal = document.getElementById('content-modal');
     this.locationInput = document.getElementById('input-location');
-    this.bioInput = document.getElementById('input-bio');
+    this.introductionInput = document.getElementById('input-introduction');
     this.linkInput = document.getElementById('input-link');
     this.userIdentifier = document.getElementById('input-user-origin-identifier');
     this.previewArea = document.getElementsByClassName('settings-profile-image-preview')[0];
@@ -17,13 +17,11 @@ const SettingsHandler = class {
   const data = new FormData();
   const image = document.getElementById('post-image-btn').files[0];
   const location = this.locationInput.value;
-  const bio = this.bioInput.value;
-  const link = this.linkInput.value;
+  const introduction = this.introductionInput.value;
   
   data.set('image', image);
   data.set('location', location);
-  data.set('bio', bio);
-  data.set('link', link);
+  data.set('introduction', introduction);
 
   const result = await this.ajax().updateUserInfoAjax(data);
   return result;
