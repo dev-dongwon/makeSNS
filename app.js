@@ -14,9 +14,8 @@ const express       = require('express'),
       flash         = require('connect-flash')
 
 // utils
-const connectMongoDb     = require('./db/connect-mongodb'),
-      connectMysql       = require('./db/connect-mysql'),
-      checkJwtToken      = require('./auth/checkjwttoken');
+const connectMysql  = require('./db/connect-mysql'),
+      checkJwtToken = require('./auth/checkjwttoken');
 
 // routes module
 const indexRouter   = require('./routes/index'),
@@ -31,7 +30,6 @@ const indexRouter   = require('./routes/index'),
 
 
 // DB
-connectMongoDb();
 connectMysql.getMysqlConnection();
 
 // http
