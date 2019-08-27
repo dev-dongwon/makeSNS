@@ -43,7 +43,7 @@ app.set('view engine', 'pug');
 
 // session for flash
 app.use(session({
-  secret: 'secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
