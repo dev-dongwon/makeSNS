@@ -26,7 +26,7 @@ div.profile-info-wrapper#profile-info-wrapper
     .profile-info-content.profile-info-bio
         p #{author.indroduction || 'Bio info is empty'}
   if user && (user.id === author.id)
-    a.profile-settings(href='/users/settings') Settings
+    a.profile-settings(href=`/users/settings/${author.id}`) Settings
 hr.wrapper-line
 div.discover-content
   if posts.length > 0

@@ -169,24 +169,109 @@ const userController = {
 
   getLikesPage : async (req, res, next) => {
     try {
-      const author = await User.findOne({username : req.params.username}).populate({path : 'likePosts'});
-      const posts = [];
-      Array.from(author.likePosts).filter(val => val[1].display === true)
-                                  .forEach(post => posts.push(post[1]));
-  
-      let user;
-      if (req.user) {
-        user = await User.findById(req.user._id);
+      let authorUsername = req.params.username;
+
+      // 해당 profile 정보 가져오기
+      const [authorRow] = await pool.query(`
+        SELECT id, username, location, introduction, photo_link
+        FROM USERS
+        WHERE
+        username = "${authorUsername}"
+        AND
+        validation = "Y";
+      `);
+      
+      if (authorRow.length === 0) {
+        req.flash('message', {'info' : '존재하지 않는 회원입니다'});
+        return res.redirect('/');
       }
+      const author = authorRow[0];
+
+      console.log(author);
+      
+      // profile에 필요한 좋아요, 작성 게시글, 팔로워, 팔로우 수 가져오기
+      const [authorInfoRow] = await pool.query(
+        `
+        SELECT *
+        FROM 
+        (select count(*) like_count from LIKES where user_id = ${author.id}) as likes
+        JOIN
+        (select count(*) post_count from POSTS where user_id = ${author.id}) as posts
+        JOIN
+        (select count(*) following_count from FOLLOW where follower_id = ${author.id}) as following
+        JOIN
+        (select count(*) follower_count from FOLLOW where follower_id = ${author.id}) as follower
+        `
+      )
+      author.info = authorInfoRow[0];
+
+      // 좋아요를 누른 게시물 가져오기
+      const [likeRow] = await pool.query(`
+        SELECT * FROM LIKES WHERE user_id = ${author.id};
+    `)
+
+      const posts = await likeRow.reduce(async (acc, row) => {
+        const postId = row.POST_ID;
+        const [likePosts] = await pool.query(`
   
-      res.render('likes', {
-        title: 'likes | Daily Frame',
+        SELECT
+          author.id author_id, author.username author_username, author.photo_link author_photolink,
+          post.id post_id, post.content post_content, post.photo_link post_photolink, post.created_date post_created_Date, post.view_count post_view_count, post.like_count post_like_count, post.comment_count post_comment_count
+        FROM
+          USERS as author
+        JOIN
+          ( select * from POSTS where ID = ${postId} and validation = "Y" ) as post
+        ON
+          post.USER_ID = author.ID
+        limit
+          20;
+        `)
+  
+        likePosts.forEach(async row => {
+          acc = await acc;
+          acc.push(row)
+        });
+        
+        return await acc;
+      }, []);
+      
+
+      // 접속한 로그인 유저 정보
+      const user = req.user;
+      if (user) {
+
+        // profile author 와 follow 관계인지 확인
+        const [followRow] = await pool.query(`
+          SELECT COUNT(*) as isFollow FROM FOLLOW WHERE follower_id = "${user.id}" and following_id = "${author.id}"
+        `)
+
+        user.isFollow = followRow[0].isFollow;
+
+        // 좋아요를 누른 게시물 가져오기
+        const [likeRow] = await pool.query(`
+          SELECT * FROM LIKES WHERE user_id = ${user.id};
+        `)
+
+        let likeObj;
+
+        if (likeRow.length > 0) {
+          likeObj = likeRow.reduce((acc, val) => {
+            const post = val.POST_ID;
+            acc[post] = post;
+            return acc;
+          })
+        }
+        user.like = likeObj;
+      }
+
+      res.render("likes", {
+        title: "Likes | The creators Network",
+        author,
         user,
-        posts,
-        author
+        posts
       });
     } catch (error) {
-      next(error);
+      next(error);      
     }
     }
 }
