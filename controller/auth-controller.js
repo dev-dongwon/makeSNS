@@ -2,6 +2,7 @@ const passport = require('passport');
 const generateJWTToken = require('../utils/jwt-token-generator');
 const googleAuthApi = require('../auth/googleapis');
 const userHandler = require('../utils/db/user');
+const jwt = require('jsonwebtoken')
 const pool = require('../db/connect-mysql').pool;
 
 require('dotenv').config()
