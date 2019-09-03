@@ -1,4 +1,3 @@
-const Post = require('../model/post');
 const pool = require('../db/connect-mysql').pool;
 
 const isSameUser = (req, content) => {
