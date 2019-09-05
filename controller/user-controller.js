@@ -123,6 +123,8 @@ const userController = {
         WHERE ID = ${user.ID};
       `);
 
+      const userInfoObj = userHandler.makeUserObj(req.user.id, req.user.username, updatedPhotolink || req.user.photolink);
+      await generateJWTToken(res, userInfoObj);
       return res.end('success');
 
     } catch (error) {
