@@ -24,7 +24,7 @@ div.profile-info-wrapper#profile-info-wrapper
           p.meta-title Likes
     hr.info-line
     .profile-info-content.profile-info-bio
-        p #{author.indroduction || 'Bio info is empty'}
+      p #{author.introduction || 'Bio info is empty'}
   if user && (user.id === author.id)
     a.profile-settings(href=`/users/settings/${author.id}`) Settings
 hr.wrapper-line
