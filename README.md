@@ -12,7 +12,7 @@ Daily Frame
 
 ## demo video link (시연 연상)
 
-- https://youtu.be/z1xjb7_xsLI
+- https://drive.google.com/file/d/1SkrtFBK1INZ1FMAZMriJ25jpFx_W-xtx/view?usp=share_link
 
 
 
