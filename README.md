@@ -5,10 +5,6 @@ Daily Frame
 
 ![image](https://user-images.githubusercontent.com/43179397/67194587-5bf78100-f432-11e9-8dac-3bb828eb78a1.png)
 
-## demo link
-
-- https://dailyframe.herokuapp.com
-
 
 ## demo video link (시연 연상)
 
